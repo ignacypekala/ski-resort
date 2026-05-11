@@ -20,9 +20,23 @@ java {
 }
 
 application {
-    mainClass = 'io.github.ignacypekala'
+    mainClass = 'io.github.ignacypekala.SkiResort'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+
+    testLogging {
+        // Options: "started", "passed", "skipped", "failed", "standardOut", "standardError"
+        events "passed", "skipped", "failed"
+        
+        // Show detailed failure information (stack traces, etc.)
+        showExceptions true
+        exceptionFormat "full"
+        showStackTraces true
+        
+        // Optional: show the standard output from the tests
+        showStandardStreams = true
+    }
+
 }
