@@ -1,9 +1,7 @@
 package io.github.ignacypekala;
 
 import org.junit.jupiter.api.Test;
-
 import io.github.ignacypekala.utils.Coordinates;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LiftQueueTest {

@@ -1,9 +1,13 @@
 package io.github.ignacypekala;
 
 public class EventQueueList implements EventQueue {
-    private class EventListNode {
+    public static class EventListNode {
         Event event;
         EventListNode next;
+
+        public EventListNode(Event event) {
+            this.event = event;
+        }
 
         public EventListNode(Event event, EventListNode next) {
             this.event = event;
@@ -22,25 +26,25 @@ public class EventQueueList implements EventQueue {
             next = node;
         }
     }
-    EventListNode start;
+
+    EventListNode head;
 
     public EventQueueList() {
-        start = null;
+        head = null;
     }
 
     @Override
     public void enqueue(Event event) {
         EventListNode previous = null;
-        EventListNode current = start;
-        while (
-            current != null && current.getEvent().getTime() < event.getTime()
-        ) {
+        EventListNode current = head;
+        while (current != null && current.getEvent().getTime() < event.getTime()) {
             previous = current;
             current = current.getNext();
         }
-        EventListNode newNode = new EventListNode(event, current);
+        EventListNode newNode = new EventListNode(event);
+        newNode.setNext(current);
         if (previous == null) {
-            start = newNode;
+            head = newNode;
         } else {
             previous.setNext(newNode);
         }
@@ -48,8 +52,13 @@ public class EventQueueList implements EventQueue {
 
     @Override
     public Event dequeue() {
-        Event event = start.getEvent();
-        start = start.getNext();
+        if (head == null) {
+            throw new IllegalStateException(
+                "Cannot dequeue an event from an empty queue."
+            );
+        }
+        Event event = head.getEvent();
+        head = head.getNext();
         return event;
     }
 
