@@ -1,6 +1,5 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.EventQueue;
 
-import io.github.ignacypekala.EventQueueList.EventListNode;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

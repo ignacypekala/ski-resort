@@ -1,4 +1,4 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.EventQueue;
 
 public interface EventQueue {
     public void enqueue(Event event);
