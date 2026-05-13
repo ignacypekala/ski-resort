@@ -1,5 +1,6 @@
 package io.github.ignacypekala;
 
-public class EventQueue {
-
+public interface EventQueue {
+    public void enqueue(Event event);
+    public Event dequeue();
 }

@@ -12,8 +12,7 @@ public class Skier {
         int proficiency,
         int identifier,
         int startTime,
-        double spontaneity,
-        boolean spectated
+        double spontaneity
     ) {
         this.startPoint = startPoint;
         this.proficiency = proficiency;

@@ -40,11 +40,11 @@ public class LiftQueue {
         start = 0;
     }
 
-    public void push(Skier sportsman) {
+    public void push(Skier skier) {
         if (length == queue.length) {
             realloc(length * REALLOC_MULTIPLIER);
         }
-        queue[(getLastIndex() + 1) % queue.length] = sportsman;
+        queue[(getLastIndex() + 1) % queue.length] = skier;
         length++;
     }
 
