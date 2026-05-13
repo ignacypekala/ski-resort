@@ -31,9 +31,9 @@ tasks.named('test') {
         events "passed", "skipped", "failed"
         
         // Show detailed failure information (stack traces, etc.)
-        showExceptions true
-        exceptionFormat "full"
-        showStackTraces true
+        showExceptions = true
+        exceptionFormat = "full"
+        showStackTraces = true
         
         // Optional: show the standard output from the tests
         showStandardStreams = true
