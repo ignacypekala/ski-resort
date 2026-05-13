@@ -16,7 +16,12 @@ public class LiftQueueTest {
         for (int i = 0; i < 42; i++) {
             Skier sportsman = new Skier(
                 new Vertex(0, new Coordinates(0, 0), 0),
-                0, 0, 0, 0.1 
+                0,
+                0.1,
+                0.1,
+                0.1,
+                0,
+                0
             );
             sportsmen[i] = sportsman;
             queue.push(sportsman);
