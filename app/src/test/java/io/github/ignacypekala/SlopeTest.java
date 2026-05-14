@@ -15,6 +15,17 @@ public class SlopeTest {
             super(a, b, durability, difficulty, 0, baseAppeal);
         }
     }
+    private class TestSkier extends Skier {
+        static Coordinates pos = new Coordinates(0, 0);
+        static Vertex a = new Vertex(0, pos, 0);
+        public TestSkier(
+            int proficiency,
+            double difficultyWeight,
+            double surfaceWeight
+        ) {
+            super(a, proficiency, 0, difficultyWeight, surfaceWeight, 0, 0);
+        }
+    }
 
     @Test
     void difficultyAppealVeryHard() {
@@ -64,5 +75,20 @@ public class SlopeTest {
         assertEquals(0.75 + 0.25 * 0.5, slope.surfaceAppeal());
         slope.ride();
         assertEquals(0.75 + 0.25 * 0.5 * 0.5, slope.surfaceAppeal());
+    }
+
+    @Test
+    void accumulativeAppeal() {
+        Slope surfaceSlope = new TestSlope(1, 10, 1);
+        Skier surfaceSkier = new TestSkier(0, 0, 1);
+        assertEquals(1.0, surfaceSlope.appeal(surfaceSkier));
+
+        Slope difficultySlope = new TestSlope(0, 10, 0);
+        Skier proficientSkier = new TestSkier(10, 1, 0);
+        assertEquals(1.0, difficultySlope.appeal(proficientSkier));
+
+        Slope allRoundSlope = new TestSlope(0.5, 5, 0.5);
+        Skier allRoundSkier = new TestSkier(5, 0.5, 0.5);
+        assertEquals(1.0, allRoundSlope.appeal(allRoundSkier));
     }
 }
