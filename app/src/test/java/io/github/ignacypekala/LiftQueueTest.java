@@ -6,7 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LiftQueueTest {
     @Test
-    void test() {
+    void popEmpty() {
+        LiftQueue queue = new LiftQueue();
+        assertThrows(IllegalStateException.class, () -> queue.pop());
+    }
+    @Test
+    void arbitrary() {
         LiftQueue queue = new LiftQueue();
         assertNotNull(queue, "Queue shouldn't be null.");
         assertTrue(queue.isEmpty(), "Queue should be empty.");
@@ -27,13 +32,13 @@ public class LiftQueueTest {
             queue.push(sportsman);
             assertSame(queue.front(), sportsmen[j]);
             if (i % 3 == 0) {
-                queue.pop();
+                assertDoesNotThrow(() -> queue.pop());
                 j++;
             }
         }
         while(j < 42) {
             assertFalse(queue.isEmpty());
-            queue.pop();
+            assertDoesNotThrow(() -> queue.pop());
             j++;
         }
         assertTrue(queue.isEmpty(), "Queue should be empty.");

@@ -6,6 +6,7 @@ public class LiftQueue {
     private Skier[] queue;
     private int start;
     private int length;
+
     public LiftQueue() {
         queue = new Skier[INITIAL_SIZE];
         start = 0;
