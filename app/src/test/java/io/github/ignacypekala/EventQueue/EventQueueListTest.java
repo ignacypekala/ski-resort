@@ -17,9 +17,9 @@ public class EventQueueListTest {
         Event c = new TestEvent(2);
         eq.enqueue(c);
 
-        assertSame(eq.dequeue(), a);
-        assertSame(eq.dequeue(), b);
-        assertSame(eq.dequeue(), c);
+        assertSame(a, eq.dequeue());
+        assertSame(b, eq.dequeue());
+        assertSame(c, eq.dequeue());
     }
 
     @Test
@@ -33,9 +33,9 @@ public class EventQueueListTest {
         Event c = new TestEvent(0);
         eq.enqueue(c);
 
-        assertSame(eq.dequeue(), c);
-        assertSame(eq.dequeue(), b);
-        assertSame(eq.dequeue(), a);
+        assertSame(c, eq.dequeue());
+        assertSame(b, eq.dequeue());
+        assertSame(a, eq.dequeue());
     }
 
     @Test
@@ -49,9 +49,9 @@ public class EventQueueListTest {
         Event c = new TestEvent(1);
         eq.enqueue(c);
 
-        assertSame(eq.dequeue(), a);
-        assertSame(eq.dequeue(), c);
-        assertSame(eq.dequeue(), b);
+        assertSame(a, eq.dequeue());
+        assertSame(c, eq.dequeue());
+        assertSame(b, eq.dequeue());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class EventQueueListTest {
         }
 
         for (int i = 0; i < eventCount; i++) {
-            assertSame(eq.dequeue(), events[i]);
+            assertSame(events[i], eq.dequeue());
         }
     }
 }

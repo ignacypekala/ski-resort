@@ -7,6 +7,6 @@ public class EventTest {
     @Test
     void list() {
         Event event = new TestEvent(0);
-        assertSame(event.getTime(), 0);
+        assertSame(0, event.getTime());
     }
 }
