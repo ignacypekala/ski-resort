@@ -22,7 +22,7 @@ public class Skier {
 
         if (proficiency < 0 || proficiency > 10) {
             throw new IllegalArgumentException(
-                "Proficiency must be in range [0, 1]"
+                "Proficiency must be in range [0, 10]"
             );
         }
         this.proficiency = proficiency;

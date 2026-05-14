@@ -21,9 +21,9 @@ public class Slope extends Edge {
             );
         }
         this.durability = durability;
-        if (difficulty < 0 || difficulty > 1) {
+        if (difficulty < 0 || difficulty > 10) {
             throw new IllegalArgumentException(
-                "Difficulty must be in the range [0, 1]"
+                "Difficulty must be in the range [0, 10]"
             );
         }
         this.difficulty = difficulty;
@@ -35,9 +35,9 @@ public class Slope extends Edge {
         if (difficulty >= proficiency + 5) {
             return 0;
         } else if (proficiency + 5 > difficulty && difficulty >= proficiency) {
-            return 1 - (difficulty - proficiency) / 5;
+            return 1.0 - (difficulty - proficiency) / 5.0;
         } else {
-            return Math.max(0.2, 1 - (proficiency - difficulty) / 7);
+            return Math.max(0.2, 1.0 - (proficiency - difficulty) / 7.0);
         }
     }
 
