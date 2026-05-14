@@ -9,17 +9,17 @@ public class EventListNodeTest {
         Event eventA = new TestEvent(0);
         Event eventB = new TestEvent(1);
         EventListNode nodeA = new EventListNode(eventA);
-        assertSame(nodeA.getEvent(), eventA);
+        assertSame(eventA, nodeA.getEvent());
 
         EventListNode nodeB = new EventListNode(eventB);
-        assertSame(nodeB.getEvent(), eventB);
+        assertSame(eventB, nodeB.getEvent());
 
         nodeA.setNext(nodeB);
-        assertSame(nodeA.getNext(), nodeB);
+        assertSame(nodeB, nodeA.getNext());
 
         Event eventC = new TestEvent(2);
         EventListNode nodeC = new EventListNode(eventC, nodeA);
-        assertSame(nodeC.getEvent(), eventC);
-        assertSame(nodeC.getNext(), nodeA);
+        assertSame(eventC, nodeC.getEvent());
+        assertSame(nodeA, nodeC.getNext());
     }
 }
