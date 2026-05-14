@@ -1,4 +1,5 @@
-.gradle
-build
+.gradle/
+build/
 .kotlin
 app/bin
+.settings/
