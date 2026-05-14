@@ -42,7 +42,7 @@ public class Slope extends Edge {
     }
 
     public double surfaceAppeal() {
-        return baseAppeal + (1 - baseAppeal) * Math.pow(
+        return baseAppeal + (1.0 - baseAppeal) * Math.pow(
             durability,
             getRideCount()
         );

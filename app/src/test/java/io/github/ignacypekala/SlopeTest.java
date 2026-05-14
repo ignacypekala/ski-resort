@@ -1,9 +1,7 @@
 package io.github.ignacypekala;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.ignacypekala.utils.Coordinates;
 
@@ -12,10 +10,12 @@ public class SlopeTest {
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, pos, 0);
         static Vertex b = new Vertex(0, pos, 1);
+
         public TestSlope(double durability, int difficulty, double baseAppeal) {
             super(a, b, durability, difficulty, 0, baseAppeal);
         }
     }
+
     @Test
     void difficultyAppealVeryHard() {
         Slope slope = new TestSlope(0, 5, 0);
@@ -42,5 +42,27 @@ public class SlopeTest {
     void difficultyAppealVeryEasy() {
         Slope slope = new TestSlope(0, 0, 0);
         assertEquals(0.2, slope.difficultyAppeal(6), 0.000001);
+    }
+
+    @Test
+    void surfaceInvulnerable() {
+        Slope slope = new TestSlope(1, 0, 0);
+        assertEquals(1.0, slope.surfaceAppeal());
+        slope.ride();
+        assertEquals(1.0, slope.surfaceAppeal());
+        for (int i = 0; i < 25; i++) {
+            slope.ride();
+        }
+        assertEquals(1.0, slope.surfaceAppeal());
+    }
+
+    @Test
+    void surfaceVulnerable() {
+        Slope slope = new TestSlope(0.5, 0, 0.75);
+        assertEquals(0.75 + 0.25 * 1, slope.surfaceAppeal());
+        slope.ride();
+        assertEquals(0.75 + 0.25 * 0.5, slope.surfaceAppeal());
+        slope.ride();
+        assertEquals(0.75 + 0.25 * 0.5 * 0.5, slope.surfaceAppeal());
     }
 }
