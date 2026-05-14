@@ -2,6 +2,7 @@ package io.github.ignacypekala;
 
 public class Skier {
     private Vertex startPoint;
+    private Vertex location;
     private int proficiency;
     private double spontaneity;
     private double difficultyWeight;
@@ -19,6 +20,7 @@ public class Skier {
         int startTime
     ) {
         this.startPoint = startPoint;
+        location = startPoint;
 
         if (proficiency < 0 || proficiency > 10) {
             throw new IllegalArgumentException(
