@@ -33,6 +33,7 @@ tasks.named('test') {
         // Show detailed failure information (stack traces, etc.)
         showExceptions = true
         exceptionFormat = "full"
+        showCauses = true
         showStackTraces = true
         
         // Optional: show the standard output from the tests
