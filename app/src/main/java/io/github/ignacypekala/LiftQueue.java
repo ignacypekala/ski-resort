@@ -41,7 +41,7 @@ public class LiftQueue {
         start = 0;
     }
 
-    public void join(Skier skier) {
+    public void enqueue(Skier skier) {
         if (length == queue.length) {
             realloc(length * REALLOC_MULTIPLIER);
         }
@@ -49,14 +49,14 @@ public class LiftQueue {
         length++;
     }
 
-    public Skier front() {
+    public Skier peek() {
         if (length == 0) {
             throw new IllegalStateException("The queue is empty");
         }
         return queue[start];
     }
 
-    public void leave() {
+    public void dequeue() {
         if (length == 0) {
             throw new IllegalStateException("The queue is empty");
         }
@@ -64,7 +64,7 @@ public class LiftQueue {
         length--;
     }
 
-    public boolean isEmpty() {
+    public boolean empty() {
         return length == 0;
     }
 }
