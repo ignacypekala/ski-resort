@@ -26,4 +26,6 @@ public abstract class Edge {
     public int getRideCount() {
         return rideCount;
     }
+
+    public abstract double appeal(Skier skier);
 }

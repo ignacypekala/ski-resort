@@ -30,4 +30,16 @@ public class Lift extends Edge {
         return rideTime;
     }
 
+    @Override
+    public double appeal(Skier skier) {
+        double maxAppeal = 0;
+        for (Slope slope : getEnd().getSlopes()) {
+            double appeal = slope.appeal(skier);
+            if (appeal >= maxAppeal) {
+                maxAppeal = appeal;
+            }
+        }
+        return maxAppeal;
+    }
+
 }

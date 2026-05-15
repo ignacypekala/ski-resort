@@ -48,6 +48,7 @@ public class Slope extends Edge {
         );
     }
 
+    @Override
     public double appeal(Skier skier) {
         double weightedSkillMatch = skier.getDifficultyWeight() * difficultyAppeal( skier.getProficiency());
         double weightedSurfaceCondition = skier.getSurfaceWeight() * surfaceAppeal();
