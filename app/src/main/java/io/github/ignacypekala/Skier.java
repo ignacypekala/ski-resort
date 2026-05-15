@@ -76,7 +76,7 @@ public class Skier {
         eventPublisher.send(event);
     }
 
-    public void ski() { rideEdge(chooseEdge()); }
+    public void ski() { chooseEdge().ride(this); }
 
     public Edge chooseEdge() {
         Edge[] edges = location.getEdges();
@@ -96,26 +96,26 @@ public class Skier {
         }
     }
 
-    public void rideEdge(Edge edge) {
-        RideFinished event = new RideFinished(edge, clock);
+    public void rideSlope(Slope slope) {
+        SlopeRideFinished event = new SlopeRideFinished(slope, clock);
         eventPublisher.send(event);
-        rideStartedHook(edge);
+        rideStartedHook(slope);
     }
 
     public void rideFinished(Edge edge) {
-        edge.ride();
         rideFinished(edge);
         location = edge.getEnd();
         rideFinishedHook(edge);
         ski();
     }
+
     // Empty hooks to be overridden by subclasses
     public void rideStartedHook(Edge edge) {}
     private void rideFinishedHook(Edge edge) {}
 
-    private class RideFinished extends RelativeEvent {
+    private class SlopeRideFinished extends RelativeEvent {
         private Edge edge;
-        public RideFinished(Edge edge, Clock clock) {
+        public SlopeRideFinished(Edge edge, Clock clock) {
             super(clock, edge.getRideTime());
             this.edge = edge;
         }

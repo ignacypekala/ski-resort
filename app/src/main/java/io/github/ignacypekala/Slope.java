@@ -62,4 +62,9 @@ public class Slope extends Edge {
         return skillMatch + surfMatch;
     }
 
+    @Override
+    public void ride(Skier skier) {
+        skier.rideSlope(this);
+    }
+
 }
