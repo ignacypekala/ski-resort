@@ -61,6 +61,7 @@ public class Time {
         );
     }
 
+    @Override
     public int compareTo(Time other) {
         return Integer.compare(this.toSeconds(), other.toSeconds());
     }
