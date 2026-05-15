@@ -16,13 +16,8 @@ public class Lift extends Edge {
         this.passengerCapacity = passengerCapacity;
     }
 
-    public int getWaitTime() {
-        return waitTime;
-    }
-
-    public int getPassengerCapacity() {
-        return passengerCapacity;
-    }
+    public int getWaitTime() { return waitTime; }
+    public int getPassengerCapacity() { return passengerCapacity; }
 
     @Override
     public double appeal(Skier skier) {
