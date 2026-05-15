@@ -13,7 +13,7 @@ public class SkierTracked extends Skier {
         double surfaceWeight,
         int identifier,
         Time startTime,
-        EventProducer eventProducer,
+        EventPublisher eventPublisher,
         Clock clock
     ) {
         super(
@@ -24,7 +24,7 @@ public class SkierTracked extends Skier {
             surfaceWeight,
             identifier,
             startTime,
-            eventProducer,
+            eventPublisher,
             clock
         );
     }

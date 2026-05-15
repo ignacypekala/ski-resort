@@ -1,3 +1,3 @@
 package io.github.ignacypekala.EventQueue;
 
-public interface EventQueue extends EventProducer, EventConsumer {}
+public interface EventQueue extends EventPublisher, EventConsumer {}

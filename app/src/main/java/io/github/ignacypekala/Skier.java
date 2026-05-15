@@ -16,7 +16,7 @@ public class Skier {
 
     private Random generator = new Random();
 
-    private EventProducer eventProducer;
+    private EventPublisher eventPublisher;
     private Clock clock;
 
 
@@ -28,7 +28,7 @@ public class Skier {
         double surfaceWeight,
         int identifier,
         Time startTime,
-        EventProducer eventProducer,
+        EventPublisher eventPublisher,
         Clock clock
     ) {
         this.startPoint = startPoint;
@@ -65,7 +65,7 @@ public class Skier {
         this.identifier = identifier;
         this.startTime = startTime;
         
-        this.eventProducer = eventProducer;
+        this.eventPublisher = eventPublisher;
         this.clock = clock;
     }
 
@@ -97,7 +97,7 @@ public class Skier {
         return startTime;
     }
 
-    public Edge decide() {
+    public Edge chooseEdge() {
         Edge[] edges = location.getEdges();
         if (generator.nextDouble() < spontaneity) {
             return edges[generator.nextInt(0, location.getEdgeCount())];
@@ -115,6 +115,9 @@ public class Skier {
         }
     }
 
+    public void rideEdge(Edge edge) {
+    }
+
     public void rideStarted(Edge edge) {}
     public void rideFinished(Edge edge) {}
 
@@ -127,6 +130,16 @@ public class Skier {
         public void handle() {
             edge.ride();
             rideFinished(edge);
+        }
+    }
+
+    private class Arrival extends Event {
+        public Arrival(Time time) {
+            super(time);
+        }
+
+        public void handle() {
+            
         }
     }
 

@@ -22,7 +22,7 @@ public class TestClass {
     public static class TestSkier extends Skier {
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, pos, 0);
-        static EventProducer eventProducer = new EventQueueList();
+        static EventPublisher eventPublisher = new EventQueueList();
         static Clock clock = new Simulation();
 
         public TestSkier(
@@ -38,7 +38,7 @@ public class TestClass {
                 surfaceWeight,
                 0,
                 new Time(0, 0, 0),
-                eventProducer,
+                eventPublisher,
                 clock
             );
         }
