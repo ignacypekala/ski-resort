@@ -33,6 +33,10 @@ public class Time {
         return new Time(time.getHours(), time.getMinutes(), time.getSeconds() + delay);
     }
 
+    public int toSeconds() {
+        return seconds + minutes * 60 + hours * 3600;
+    }
+
     public int getHours() {
         return hours;
     }
@@ -55,5 +59,9 @@ public class Time {
             paddedInt(minutes),
             paddedInt(seconds)
         );
+    }
+
+    public int compareTo(Time other) {
+        return Integer.compare(this.toSeconds(), other.toSeconds());
     }
 }
