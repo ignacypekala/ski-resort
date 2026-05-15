@@ -67,35 +67,16 @@ public class Skier {
         
         this.eventPublisher = eventPublisher;
         this.clock = clock;
+
+        scheduleArrival();
     }
 
-    public Vertex getStartPoint() {
-        return startPoint;
+    private void scheduleArrival() {
+        Arrival event = new Arrival();
+        eventPublisher.send(event);
     }
 
-    public int getProficiency() {
-        return proficiency;
-    }
-
-    public double getSpontaneity() {
-        return spontaneity;
-    }
-
-    public double getDifficultyWeight() {
-        return difficultyWeight;
-    }
-
-    public double getSurfaceWeight() {
-        return surfaceWeight;
-    }
-
-    public int getIdentifier() {
-        return identifier;
-    }
-
-    public Time getStartTime() {
-        return startTime;
-    }
+    public void ski() { rideEdge(chooseEdge()); }
 
     public Edge chooseEdge() {
         Edge[] edges = location.getEdges();
@@ -118,14 +99,19 @@ public class Skier {
     public void rideEdge(Edge edge) {
         RideFinished event = new RideFinished(edge, clock);
         eventPublisher.send(event);
+        rideStartedHook(edge);
     }
 
-    public void ski() {
-        rideEdge(chooseEdge());
+    public void rideFinished(Edge edge) {
+        edge.ride();
+        rideFinished(edge);
+        location = edge.getEnd();
+        rideFinishedHook(edge);
+        ski();
     }
-
-    public void rideStarted(Edge edge) {}
-    public void rideFinished(Edge edge) {}
+    // Empty hooks to be overridden by subclasses
+    public void rideStartedHook(Edge edge) {}
+    private void rideFinishedHook(Edge edge) {}
 
     private class RideFinished extends RelativeEvent {
         private Edge edge;
@@ -133,24 +119,20 @@ public class Skier {
             super(clock, edge.getRideTime());
             this.edge = edge;
         }
-        public void handle() {
-            edge.ride();
-            rideFinished(edge);
-            ski();
-        }
+        public void handle() { rideFinished(edge); }
     }
 
-    private void scheduleArrival() {
-        Arrival event = new Arrival();
-        eventPublisher.send(event);
-    }
     private class Arrival extends Event {
-        public Arrival() {
-            super(startTime);
-        }
-        public void handle() {
-            ski();
-        }
+        public Arrival() { super(startTime); }
+        public void handle() { ski(); }
     }
+
+    public Vertex getStartPoint() { return startPoint; }
+    public int getProficiency() { return proficiency; }
+    public double getSpontaneity() { return spontaneity; }
+    public double getDifficultyWeight() { return difficultyWeight; }
+    public double getSurfaceWeight() { return surfaceWeight; }
+    public int getIdentifier() { return identifier; }
+    public Time getStartTime() { return startTime; }
 
 }
