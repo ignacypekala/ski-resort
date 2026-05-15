@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SlopeTest {
+    private Skier skier = new TestClass.TestSkier(0, 0.0, 0.0);
     @Test
     void rideTime() {
         Slope slope = new TestClass.TestSlope(0, 0, 0);
@@ -54,10 +55,10 @@ public class SlopeTest {
     void surfaceInvulnerable() {
         Slope slope = new TestClass.TestSlope(1, 0, 0);
         assertEquals(1.0, slope.surfaceAppeal());
-        slope.ride();
+        slope.ride(skier);
         assertEquals(1.0, slope.surfaceAppeal());
         for (int i = 0; i < 25; i++) {
-            slope.ride();
+            slope.ride(skier);
         }
         assertEquals(1.0, slope.surfaceAppeal());
     }
@@ -66,9 +67,9 @@ public class SlopeTest {
     void surfaceVulnerable() {
         Slope slope = new TestClass.TestSlope(0.5, 0, 0.75);
         assertEquals(0.75 + 0.25 * 1, slope.surfaceAppeal());
-        slope.ride();
+        slope.incrementRideCount();
         assertEquals(0.75 + 0.25 * 0.5, slope.surfaceAppeal());
-        slope.ride();
+        slope.incrementRideCount();
         assertEquals(0.75 + 0.25 * 0.5 * 0.5, slope.surfaceAppeal());
     }
 

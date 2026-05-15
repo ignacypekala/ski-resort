@@ -12,6 +12,9 @@ public class EdgeTest {
         public double appeal(Skier skier) {
             return 4.20;
         }
+        public void ride(Skier skier) {
+            super.incrementRideCount();
+        }
     }
 
     @Test
@@ -25,8 +28,7 @@ public class EdgeTest {
         assertSame(b, edge.getEnd());
 
         assertEquals(0, edge.getRideCount());
-        edge.ride();
-        edge.ride();
-        assertEquals(2, edge.getRideCount());
+        edge.ride(new TestClass.TestSkier(0, 0.0, 0.0));
+        assertEquals(1, edge.getRideCount());
     }
 }
