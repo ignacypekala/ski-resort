@@ -1,6 +1,6 @@
 package io.github.ignacypekala.EventQueue;
 
-public class EventQueueList implements EventQueue {
+public class EventQueueList implements EventBroker {
     EventListNode head;
 
     public EventQueueList() {
@@ -8,7 +8,7 @@ public class EventQueueList implements EventQueue {
     }
 
     @Override
-    public void enqueue(Event event) {
+    public void send(Event event) {
         EventListNode previous = null;
         EventListNode current = head;
         while (
@@ -28,7 +28,7 @@ public class EventQueueList implements EventQueue {
     }
 
     @Override
-    public Event dequeue() {
+    public Event poll() {
         if (head == null) {
             throw new IllegalStateException(
                 "Cannot dequeue an event from an empty queue."
@@ -40,7 +40,7 @@ public class EventQueueList implements EventQueue {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean hasEvents() {
         return head == null;
     }
 }

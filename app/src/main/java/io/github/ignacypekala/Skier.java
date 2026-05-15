@@ -116,6 +116,12 @@ public class Skier {
     }
 
     public void rideEdge(Edge edge) {
+        RideFinished event = new RideFinished(edge, clock);
+        eventPublisher.send(event);
+    }
+
+    public void ski() {
+        rideEdge(chooseEdge());
     }
 
     public void rideStarted(Edge edge) {}
@@ -123,23 +129,27 @@ public class Skier {
 
     private class RideFinished extends RelativeEvent {
         private Edge edge;
-        public RideFinished(Edge edge, Clock clock, int duration) {
-            super(clock, duration);
+        public RideFinished(Edge edge, Clock clock) {
+            super(clock, edge.getRideTime());
             this.edge = edge;
         }
         public void handle() {
             edge.ride();
             rideFinished(edge);
+            ski();
         }
     }
 
+    private void scheduleArrival() {
+        Arrival event = new Arrival();
+        eventPublisher.send(event);
+    }
     private class Arrival extends Event {
-        public Arrival(Time time) {
-            super(time);
+        public Arrival() {
+            super(startTime);
         }
-
         public void handle() {
-            
+            ski();
         }
     }
 
