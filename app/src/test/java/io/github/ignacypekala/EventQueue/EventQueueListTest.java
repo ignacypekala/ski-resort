@@ -1,5 +1,6 @@
 package io.github.ignacypekala.EventQueue;
 
+import io.github.ignacypekala.utils.Time;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -10,11 +11,11 @@ public class EventQueueListTest {
     void queueEnd() {
         EventQueueList eq = new EventQueueList();
 
-        Event a = new TestEvent(0);
+        Event a = new TestEvent(new Time(15, 0, 0));
         eq.enqueue(a);
-        Event b = new TestEvent(1);
+        Event b = new TestEvent(new Time(15, 0, 1));
         eq.enqueue(b);
-        Event c = new TestEvent(2);
+        Event c = new TestEvent(new Time(15, 0, 2));
         eq.enqueue(c);
 
         assertSame(a, eq.dequeue());
@@ -26,11 +27,11 @@ public class EventQueueListTest {
     void queueStart() {
         EventQueueList eq = new EventQueueList();
 
-        Event a = new TestEvent(2);
+        Event a = new TestEvent(new Time(15, 0, 2));
         eq.enqueue(a);
-        Event b = new TestEvent(1);
+        Event b = new TestEvent(new Time(15, 0, 1));
         eq.enqueue(b);
-        Event c = new TestEvent(0);
+        Event c = new TestEvent(new Time(15, 0, 0));
         eq.enqueue(c);
 
         assertSame(c, eq.dequeue());
@@ -42,11 +43,11 @@ public class EventQueueListTest {
     void queueMiddle() {
         EventQueueList eq = new EventQueueList();
 
-        Event a = new TestEvent(0);
+        Event a = new TestEvent(new Time(15, 0, 0));
         eq.enqueue(a);
-        Event b = new TestEvent(2);
+        Event b = new TestEvent(new Time(15, 0, 2));
         eq.enqueue(b);
-        Event c = new TestEvent(1);
+        Event c = new TestEvent(new Time(15, 0, 1));
         eq.enqueue(c);
 
         assertSame(a, eq.dequeue());
@@ -67,7 +68,7 @@ public class EventQueueListTest {
         int eventCount = 25;
         Event[] events = new Event[eventCount];
         for (int i = 0; i < eventCount; i++) {
-            events[i] = new TestEvent(i);
+            events[i] = new TestEvent(new Time(15, 0, i));
         }
 
         for (int i : new int[] {

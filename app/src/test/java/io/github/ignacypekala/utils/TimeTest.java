@@ -25,4 +25,23 @@ public class TimeTest {
         assertThrows(IllegalArgumentException.class, () -> new Time(0, -1, 0));
         assertThrows(IllegalArgumentException.class, () -> new Time(0, 0, -1));
     }
+
+    @Test
+    void secondsAfter() {
+        Time time = new Time(14, 20, 50);
+        assertEquals("14:20:51", Time.secondsLater(time, 1).toString());
+        assertEquals("14:21:00", Time.secondsLater(time, 10).toString());
+        assertEquals("14:22:00", Time.secondsLater(time, 70).toString());
+        assertEquals("00:00:00", Time.secondsLater(
+            time,
+            10 + 39 * 60 + 9 * 3600
+        ).toString());
+    }
+
+    @Test
+    void compare() {
+        assertEquals(0, new Time(6, 59, 60).compareTo(new Time(7, 0, 0)));
+        assertEquals(1, new Time(23, 59, 59).compareTo(new Time(0, 0, 0)));
+        assertEquals(-1, new Time(12, 0, 3).compareTo(new Time(12, 0, 4)));
+    }
 }

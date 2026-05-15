@@ -1,5 +1,6 @@
 package io.github.ignacypekala;
 
+import io.github.ignacypekala.utils.Time;
 import java.util.Random;
 
 public class Skier {
@@ -10,7 +11,7 @@ public class Skier {
     private double difficultyWeight;
     private double surfaceWeight;
     private int identifier;
-    private int startTime;
+    private Time startTime;
 
     private Random generator = new Random();
 
@@ -21,14 +22,14 @@ public class Skier {
         double difficultyWeight,
         double surfaceWeight,
         int identifier,
-        int startTime
+        Time startTime
     ) {
         this.startPoint = startPoint;
         location = startPoint;
 
         if (proficiency < 0 || proficiency > 10) {
             throw new IllegalArgumentException(
-                "Proficiency must be in range [0, 10]"
+                "Proficiency must be in range {0, ..., 10}"
             );
         }
         this.proficiency = proficiency;
@@ -82,7 +83,7 @@ public class Skier {
         return identifier;
     }
 
-    public int getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 

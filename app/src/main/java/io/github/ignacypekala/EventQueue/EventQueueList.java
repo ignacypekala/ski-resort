@@ -12,7 +12,10 @@ public class EventQueueList implements EventQueue {
     public void enqueue(Event event) {
         EventListNode previous = null;
         EventListNode current = head;
-        while (current != null && current.getEvent().getTime() < event.getTime()) {
+        while (
+            current != null && 
+            event.getTime().compareTo(current.getEvent().getTime()) > 0
+        ) {
             previous = current;
             current = current.getNext();
         }

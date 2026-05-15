@@ -1,13 +1,14 @@
 package io.github.ignacypekala.EventQueue;
 
+import io.github.ignacypekala.utils.Time;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EventListNodeTest {
     @Test
     void list() {
-        Event eventA = new TestEvent(0);
-        Event eventB = new TestEvent(1);
+        Event eventA = new TestEvent(new Time(15, 0, 0));
+        Event eventB = new TestEvent(new Time(15, 0, 1));
         EventListNode nodeA = new EventListNode(eventA);
         assertSame(eventA, nodeA.getEvent());
 
@@ -17,7 +18,7 @@ public class EventListNodeTest {
         nodeA.setNext(nodeB);
         assertSame(nodeB, nodeA.getNext());
 
-        Event eventC = new TestEvent(2);
+        Event eventC = new TestEvent(new Time(15, 0, 2));
         EventListNode nodeC = new EventListNode(eventC, nodeA);
         assertSame(eventC, nodeC.getEvent());
         assertSame(nodeA, nodeC.getNext());

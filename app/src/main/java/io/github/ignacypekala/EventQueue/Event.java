@@ -1,13 +1,15 @@
 package io.github.ignacypekala.EventQueue;
 
-public abstract class Event {
-    private int time;
+import io.github.ignacypekala.utils.Time;
 
-    protected Event(int time) {
+public abstract class Event {
+    private Time time;
+
+    protected Event(Time time) {
         this.time = time;
     }
 
-    public int getTime() {
+    public Time getTime() {
         return time;
     }
 
