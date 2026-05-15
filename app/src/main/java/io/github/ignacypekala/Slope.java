@@ -17,21 +17,19 @@ public class Slope extends Edge {
 
         if (durability < 0 || durability > 1) {
             throw new IllegalArgumentException(
-                "Durability must be in the range [0, 1]"
-            );
+                    "Durability must be in the range [0, 1]");
         }
         this.durability = durability;
+
         if (difficulty < 0 || difficulty > 10) {
             throw new IllegalArgumentException(
-                "Difficulty must be in the range {0, ..., 10}"
-            );
+                    "Difficulty must be in the range {0, ..., 10}");
         }
         this.difficulty = difficulty;
 
         if (baseAppeal < 0 || baseAppeal > 1) {
             throw new IllegalArgumentException(
-                "Base appeal must be in the range [0, 1]"
-            );
+                    "Base appeal must be in the range [0, 1]");
         }
         this.baseAppeal = baseAppeal;
     }
@@ -55,7 +53,7 @@ public class Slope extends Edge {
 
     @Override
     public double appeal(Skier skier) {
-        double weightedSkillMatch = skier.getDifficultyWeight() * difficultyAppeal( skier.getProficiency());
+        double weightedSkillMatch = skier.getDifficultyWeight() * difficultyAppeal(skier.getProficiency());
         double weightedSurfaceCondition = skier.getSurfaceWeight() * surfaceAppeal();
         return weightedSkillMatch + weightedSurfaceCondition;
     }

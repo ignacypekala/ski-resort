@@ -33,10 +33,16 @@ public class Vertex {
         return identifier;
     }
 
+    public int getLiftCount() {
+        return liftCount;
+    }
     public Lift[] getLifts() {
         return lifts;
     }
 
+    public int getSlopeCount() {
+        return slopeCount;
+    }
     public Slope[] getSlopes() {
         return slopes;
     }
