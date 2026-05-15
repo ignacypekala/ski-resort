@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import java.util.Random;
+
 public class Skier {
     private Vertex startPoint;
     private Vertex location;
@@ -9,6 +11,8 @@ public class Skier {
     private double surfaceWeight;
     private int identifier;
     private int startTime;
+
+    private Random generator = new Random();
 
     public Skier(
         Vertex startPoint,
@@ -83,16 +87,21 @@ public class Skier {
     }
 
     public Edge decide() {
-        double maxAppeal = -1;
-        Edge mostAppealing = null;
-        for (Edge edge : location.getEdges()) {
-            double appeal = edge.appeal(this);
-            if (appeal > maxAppeal) {
-                maxAppeal = appeal;
-                mostAppealing = edge;
+        Edge[] edges = location.getEdges();
+        if (generator.nextDouble() < spontaneity) {
+            return edges[generator.nextInt(0, location.getEdgeCount())];
+        } else {
+            double maxAppeal = -1;
+            Edge mostAppealing = null;
+            for (Edge edge : edges) {
+                double appeal = edge.appeal(this);
+                if (appeal > maxAppeal) {
+                    maxAppeal = appeal;
+                    mostAppealing = edge;
+                }
             }
+            return mostAppealing;
         }
-        return mostAppealing;
     }
 
 }
