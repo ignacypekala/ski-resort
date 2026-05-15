@@ -20,7 +20,7 @@ public class TimeTest {
     }
 
     @Test
-    void ivnalid() {
+    void invalid() {
         assertThrows(IllegalArgumentException.class, () -> new Time(-1, 0, 0));
         assertThrows(IllegalArgumentException.class, () -> new Time(0, -1, 0));
         assertThrows(IllegalArgumentException.class, () -> new Time(0, 0, -1));
