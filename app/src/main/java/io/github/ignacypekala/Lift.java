@@ -3,7 +3,6 @@ package io.github.ignacypekala;
 public class Lift extends Edge {
     private int waitTime;
     private int passengerCapacity;
-    private int rideTime;
 
     public Lift(
         Vertex start,
@@ -12,10 +11,9 @@ public class Lift extends Edge {
         int passengerCapacity,
         int rideTime
     ) {
-        super(start, end);
+        super(start, end, rideTime);
         this.waitTime = waitTime;
         this.passengerCapacity = passengerCapacity;
-        this.rideTime = rideTime;
     }
 
     public int getWaitTime() {
@@ -24,10 +22,6 @@ public class Lift extends Edge {
 
     public int getPassengerCapacity() {
         return passengerCapacity;
-    }
-
-    public int getRideTime() {
-        return rideTime;
     }
 
     @Override

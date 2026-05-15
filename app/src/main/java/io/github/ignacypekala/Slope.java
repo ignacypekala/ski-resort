@@ -2,7 +2,6 @@ package io.github.ignacypekala;
 
 public class Slope extends Edge {
     private int difficulty;
-    private int rideTime;
     private double baseAppeal;
     private double durability;
 
@@ -14,7 +13,8 @@ public class Slope extends Edge {
         int rideTime,
         double baseAppeal
     ) {
-        super(start, end);
+        super(start, end, rideTime);
+
         if (durability < 0 || durability > 1) {
             throw new IllegalArgumentException(
                 "Durability must be in the range [0, 1]"
@@ -27,17 +27,13 @@ public class Slope extends Edge {
             );
         }
         this.difficulty = difficulty;
-        this.rideTime = rideTime;
+
         if (baseAppeal < 0 || baseAppeal > 1) {
             throw new IllegalArgumentException(
                 "Base appeal must be in the range [0, 1]"
             );
         }
         this.baseAppeal = baseAppeal;
-    }
-
-    public int getRideTime() {
-        return rideTime;
     }
 
     public double difficultyAppeal(int proficiency) {
