@@ -83,22 +83,13 @@ public class Skier {
     }
 
     public Edge decide() {
-        double maxAppeal = 0;
+        double maxAppeal = -1;
         Edge mostAppealing = null;
-        for (Slope slope : location.getSlopes()) {
-            double appeal = slope.appeal(this);
-            if (appeal >= maxAppeal) {
+        for (Edge edge : location.getEdges()) {
+            double appeal = edge.appeal(this);
+            if (appeal > maxAppeal) {
                 maxAppeal = appeal;
-                mostAppealing = slope;
-            }
-        }
-        for (Lift lift : location.getLifts()) {
-            for (Slope slope : lift.getEnd().getSlopes()) {
-                double appeal = slope.appeal(this);
-                if (appeal >= maxAppeal) {
-                    maxAppeal = appeal;
-                    mostAppealing = lift;
-                }
+                mostAppealing = edge;
             }
         }
         return mostAppealing;

@@ -12,12 +12,14 @@ public class SlopeTest {
         static Vertex b = new Vertex(0, pos, 1);
 
         public TestSlope(double durability, int difficulty, double baseAppeal) {
-            super(a, b, durability, difficulty, 0, baseAppeal);
+            super(a, b, durability, difficulty, 420, baseAppeal);
         }
     }
+
     private class TestSkier extends Skier {
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, pos, 0);
+
         public TestSkier(
             int proficiency,
             double difficultyWeight,
@@ -25,6 +27,24 @@ public class SlopeTest {
         ) {
             super(a, proficiency, 0, difficultyWeight, surfaceWeight, 0, 0);
         }
+    }
+
+    @Test
+    void rideTime() {
+        Slope slope = new TestSlope(0, 0, 0);
+        assertEquals(420, slope.getRideTime(), 0.000001);
+    }
+
+    @Test
+    void badInput() {
+        Class<IllegalArgumentException> badArg = IllegalArgumentException.class;
+        assertThrows(badArg, () -> new TestSlope(-1, 0, 0));
+        assertThrows(badArg, () -> new TestSlope(2, 0, 0));
+        assertThrows(badArg, () -> new TestSlope(0, -1, 0));
+        assertThrows(badArg, () -> new TestSlope(0, 11, 0));
+        assertThrows(badArg, () -> new TestSlope(0, 0, -1));
+        assertThrows(badArg, () -> new TestSlope(0, 0, 2));
+
     }
 
     @Test

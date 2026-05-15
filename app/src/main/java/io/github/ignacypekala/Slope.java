@@ -23,12 +23,21 @@ public class Slope extends Edge {
         this.durability = durability;
         if (difficulty < 0 || difficulty > 10) {
             throw new IllegalArgumentException(
-                "Difficulty must be in the range [0, 10]"
+                "Difficulty must be in the range {0, ..., 10}"
             );
         }
         this.difficulty = difficulty;
         this.rideTime = rideTime;
+        if (baseAppeal < 0 || baseAppeal > 1) {
+            throw new IllegalArgumentException(
+                "Base appeal must be in the range [0, 1]"
+            );
+        }
         this.baseAppeal = baseAppeal;
+    }
+
+    public int getRideTime() {
+        return rideTime;
     }
 
     public double difficultyAppeal(int proficiency) {
