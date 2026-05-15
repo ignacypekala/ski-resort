@@ -1,7 +1,6 @@
 package io.github.ignacypekala.EventQueue;
 
 public class EventQueueList implements EventQueue {
-
     EventListNode head;
 
     public EventQueueList() {
@@ -40,4 +39,8 @@ public class EventQueueList implements EventQueue {
         return event;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
 }

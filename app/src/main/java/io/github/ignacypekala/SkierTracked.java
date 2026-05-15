@@ -1,5 +1,8 @@
 package io.github.ignacypekala;
 
+import io.github.ignacypekala.EventQueue.*;
+import io.github.ignacypekala.utils.*;
+
 public class SkierTracked extends Skier {
 
     public SkierTracked(
@@ -9,7 +12,9 @@ public class SkierTracked extends Skier {
         double difficultyWeight,
         double surfaceWeight,
         int identifier,
-        int startTime
+        Time startTime,
+        EventProducer eventProducer,
+        Clock clock
     ) {
         super(
             startPoint,
@@ -18,7 +23,9 @@ public class SkierTracked extends Skier {
             difficultyWeight,
             surfaceWeight,
             identifier,
-            startTime
+            startTime,
+            eventProducer,
+            clock
         );
     }
 }

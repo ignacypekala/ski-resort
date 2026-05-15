@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import io.github.ignacypekala.EventQueue.*;
+import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class TestClass {
@@ -20,13 +22,25 @@ public class TestClass {
     public static class TestSkier extends Skier {
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, pos, 0);
+        static EventProducer eventProducer = new EventQueueList();
+        static Clock clock = new Simulation();
 
         public TestSkier(
             int proficiency,
             double difficultyWeight,
             double surfaceWeight
         ) {
-            super(a, proficiency, 0, difficultyWeight, surfaceWeight, 0, 0);
+            super(
+                a,
+                proficiency,
+                0,
+                difficultyWeight,
+                surfaceWeight,
+                0,
+                new Time(0, 0, 0),
+                eventProducer,
+                clock
+            );
         }
     }
 }

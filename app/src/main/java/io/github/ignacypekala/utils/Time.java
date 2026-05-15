@@ -1,6 +1,6 @@
 package io.github.ignacypekala.utils;
 
-public class Time {
+public class Time implements Comparable<Time> {
     private int hours;
     private int minutes;
     private int seconds;

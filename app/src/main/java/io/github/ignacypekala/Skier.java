@@ -1,6 +1,7 @@
 package io.github.ignacypekala;
 
-import io.github.ignacypekala.utils.Time;
+import io.github.ignacypekala.EventQueue.*;
+import io.github.ignacypekala.utils.*;
 import java.util.Random;
 
 public class Skier {
@@ -15,6 +16,10 @@ public class Skier {
 
     private Random generator = new Random();
 
+    private EventProducer eventProducer;
+    private Clock clock;
+
+
     public Skier(
         Vertex startPoint,
         int proficiency,
@@ -22,7 +27,9 @@ public class Skier {
         double difficultyWeight,
         double surfaceWeight,
         int identifier,
-        Time startTime
+        Time startTime,
+        EventProducer eventProducer,
+        Clock clock
     ) {
         this.startPoint = startPoint;
         location = startPoint;
@@ -57,6 +64,9 @@ public class Skier {
 
         this.identifier = identifier;
         this.startTime = startTime;
+        
+        this.eventProducer = eventProducer;
+        this.clock = clock;
     }
 
     public Vertex getStartPoint() {
@@ -102,6 +112,21 @@ public class Skier {
                 }
             }
             return mostAppealing;
+        }
+    }
+
+    public void rideStarted(Edge edge) {}
+    public void rideFinished(Edge edge) {}
+
+    private class RideFinished extends RelativeEvent {
+        private Edge edge;
+        public RideFinished(Edge edge, Clock clock, int duration) {
+            super(clock, duration);
+            this.edge = edge;
+        }
+        public void handle() {
+            edge.ride();
+            rideFinished(edge);
         }
     }
 
