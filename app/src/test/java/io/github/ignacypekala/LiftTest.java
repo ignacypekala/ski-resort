@@ -26,8 +26,8 @@ public class LiftTest {
     @Test
     void appeal() {
         Vertex end = new Vertex(0, pos, 0);
-        Slope goodSlope = new TestClass.TestSlope(1, 10, 1);
-        Slope badSlope = new TestClass.TestSlope(0, 0, 0);
+        Slope goodSlope = new TestClass.TestSlope(1, 10, 1, 0);
+        Slope badSlope = new TestClass.TestSlope(0, 0, 0, 0);
         end.addSlope(goodSlope);
         end.addSlope(badSlope);
         Skier skier = new TestClass.TestSkier(10, 1.0, 0.0);

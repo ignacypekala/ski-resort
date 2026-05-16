@@ -5,6 +5,9 @@ import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class TestClass {
+    static EventQueueList eventQueue = new EventQueueList();
+    static Simulation simulation = new Simulation();
+
     public static class TestSlope extends Slope {
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, pos, 0);
@@ -13,17 +16,16 @@ public class TestClass {
         public TestSlope(
             double durability,
             int difficulty,
-            double baseAppeal
+            double baseAppeal,
+            int rideTime
         ) {
-            super(a, b, durability, difficulty, 420, baseAppeal);
+            super(a, b, durability, difficulty, rideTime, baseAppeal);
         }
     }
 
     public static class TestSkier extends Skier {
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, pos, 0);
-        static EventPublisher eventPublisher = new EventQueueList();
-        static Clock clock = new Simulation();
 
         public TestSkier(
             int proficiency,
@@ -38,9 +40,12 @@ public class TestClass {
                 surfaceWeight,
                 0,
                 new Time(0, 0, 0),
-                eventPublisher,
-                clock
+                eventQueue,
+                simulation
             );
         }
     }
+
+    public EventQueueList getEventQueue() { return eventQueue; }
+    public Simulation getSimulation() { return simulation; }
 }

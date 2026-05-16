@@ -7,53 +7,53 @@ public class SlopeTest {
     private Skier skier = new TestClass.TestSkier(0, 0.0, 0.0);
     @Test
     void rideTime() {
-        Slope slope = new TestClass.TestSlope(0, 0, 0);
+        Slope slope = new TestClass.TestSlope(0, 0, 0, 420);
         assertEquals(420, slope.getRideTime(), 0.000001);
     }
 
     @Test
     void badInput() {
         Class<IllegalArgumentException> badArg = IllegalArgumentException.class;
-        assertThrows(badArg, () -> new TestClass.TestSlope(-1, 0, 0));
-        assertThrows(badArg, () -> new TestClass.TestSlope(2, 0, 0));
-        assertThrows(badArg, () -> new TestClass.TestSlope(0, -1, 0));
-        assertThrows(badArg, () -> new TestClass.TestSlope(0, 11, 0));
-        assertThrows(badArg, () -> new TestClass.TestSlope(0, 0, -1));
-        assertThrows(badArg, () -> new TestClass.TestSlope(0, 0, 2));
+        assertThrows(badArg, () -> new TestClass.TestSlope(-1, 0, 0, 0));
+        assertThrows(badArg, () -> new TestClass.TestSlope(2, 0, 0, 0));
+        assertThrows(badArg, () -> new TestClass.TestSlope(0, -1, 0, 0));
+        assertThrows(badArg, () -> new TestClass.TestSlope(0, 11, 0, 0));
+        assertThrows(badArg, () -> new TestClass.TestSlope(0, 0, -1, 0));
+        assertThrows(badArg, () -> new TestClass.TestSlope(0, 0, 2, 0));
 
     }
 
     @Test
     void difficultyAppealVeryHard() {
-        Slope slope = new TestClass.TestSlope(0, 5, 0);
+        Slope slope = new TestClass.TestSlope(0, 5, 0, 0);
         assertEquals(0, slope.difficultyAppeal(0));
     }
 
     @Test
     void difficultyAppealHard() {
-        Slope slopeA = new TestClass.TestSlope(0, 3, 0);
+        Slope slopeA = new TestClass.TestSlope(0, 3, 0, 0);
         assertEquals(3.0 / 5.0, slopeA.difficultyAppeal(1), 0.000001);
-        Slope slopeB = new TestClass.TestSlope(0, 5, 0);
+        Slope slopeB = new TestClass.TestSlope(0, 5, 0, 0);
         assertEquals(1.0 / 5.0, slopeB.difficultyAppeal(1), 0.000001);
-        Slope slopeC = new TestClass.TestSlope(0, 1, 0);
+        Slope slopeC = new TestClass.TestSlope(0, 1, 0, 0);
         assertEquals(1, slopeC.difficultyAppeal(1), 0.000001);
     }
 
     @Test
     void difficultyAppealEasy() {
-        Slope slope = new TestClass.TestSlope(0, 0, 0);
+        Slope slope = new TestClass.TestSlope(0, 0, 0, 0);
         assertEquals(1.0 - 1.0 / 7.0, slope.difficultyAppeal(1), 0.000001);
     }
 
     @Test
     void difficultyAppealVeryEasy() {
-        Slope slope = new TestClass.TestSlope(0, 0, 0);
+        Slope slope = new TestClass.TestSlope(0, 0, 0, 0);
         assertEquals(0.2, slope.difficultyAppeal(6), 0.000001);
     }
 
     @Test
     void surfaceInvulnerable() {
-        Slope slope = new TestClass.TestSlope(1, 0, 0);
+        Slope slope = new TestClass.TestSlope(1, 0, 0, 0);
         assertEquals(1.0, slope.surfaceAppeal());
         slope.ride(skier);
         assertEquals(1.0, slope.surfaceAppeal());
@@ -65,7 +65,7 @@ public class SlopeTest {
 
     @Test
     void surfaceVulnerable() {
-        Slope slope = new TestClass.TestSlope(0.5, 0, 0.75);
+        Slope slope = new TestClass.TestSlope(0.5, 0, 0.75, 0);
         assertEquals(0.75 + 0.25 * 1, slope.surfaceAppeal());
         slope.incrementRideCount();
         assertEquals(0.75 + 0.25 * 0.5, slope.surfaceAppeal());
@@ -75,15 +75,15 @@ public class SlopeTest {
 
     @Test
     void accumulativeAppeal() {
-        Slope surfaceSlope = new TestClass.TestSlope(1, 10, 1);
+        Slope surfaceSlope = new TestClass.TestSlope(1, 10, 1, 0);
         Skier surfaceSkier = new TestClass.TestSkier(0, 0, 1);
         assertEquals(1.0, surfaceSlope.appeal(surfaceSkier));
 
-        Slope difficultySlope = new TestClass.TestSlope(0, 10, 0);
+        Slope difficultySlope = new TestClass.TestSlope(0, 10, 0, 0);
         Skier proficientSkier = new TestClass.TestSkier(10, 1, 0);
         assertEquals(1.0, difficultySlope.appeal(proficientSkier));
 
-        Slope allRoundSlope = new TestClass.TestSlope(0.5, 5, 0.5);
+        Slope allRoundSlope = new TestClass.TestSlope(0.5, 5, 0.5, 0);
         Skier allRoundSkier = new TestClass.TestSkier(5, 0.5, 0.5);
         assertEquals(1.0, allRoundSlope.appeal(allRoundSkier));
     }
