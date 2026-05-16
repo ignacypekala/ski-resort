@@ -46,6 +46,6 @@ public class TestClass {
         }
     }
 
-    public EventQueueList getEventQueue() { return eventQueue; }
-    public Simulation getSimulation() { return simulation; }
+    public static EventQueueList getEventQueue() { return eventQueue; }
+    public static Simulation getSimulation() { return simulation; }
 }
