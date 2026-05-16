@@ -11,7 +11,6 @@ public class Simulation implements Clock {
     public Simulation() {
         currentTime = new Time(9, 0, 0);
         eventBroker = new EventQueueList();
-
     }
 
     private void tick() {
