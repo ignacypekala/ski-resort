@@ -1,6 +1,4 @@
-package io.github.ignacypekala.EventQueue;
-
-import com.google.common.annotations.VisibleForTesting;
+package io.github.ignacypekala.event;
 
 public class EventQueueList implements EventBroker {
     EventListNode head = null;

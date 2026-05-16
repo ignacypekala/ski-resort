@@ -1,4 +1,6 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.lift;
+
+import io.github.ignacypekala.*;
 
 public class LiftQueue {
     private static final int INITIAL_SIZE = 10;

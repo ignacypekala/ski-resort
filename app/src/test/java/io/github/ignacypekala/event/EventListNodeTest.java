@@ -1,4 +1,4 @@
-package io.github.ignacypekala.EventQueue;
+package io.github.ignacypekala.event;
 
 import io.github.ignacypekala.utils.Time;
 import org.junit.jupiter.api.Test;

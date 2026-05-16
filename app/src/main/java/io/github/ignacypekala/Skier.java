@@ -1,6 +1,6 @@
 package io.github.ignacypekala;
 
-import io.github.ignacypekala.EventQueue.*;
+import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
 
 import java.util.Random;
@@ -123,8 +123,8 @@ public class Skier {
     }
 
     // Empty hooks to be overridden by subclasses
-    protected void rideStartedHook(Edge edge) {}
-    protected void rideFinishedHook(Edge edge) {}
+    public void rideStartedHook(Edge edge) {}
+    public void rideFinishedHook(Edge edge) {}
 
     private class SlopeRideFinished extends RelativeEvent {
         private Edge edge;
@@ -147,8 +147,6 @@ public class Skier {
     public double getSurfaceWeight() { return surfaceWeight; }
     public int getIdentifier() { return identifier; }
     public Time getStartTime() { return startTime; }
-    
-    @VisibleForTesting
-    Vertex getLocation() { return location; }
+    public Vertex getLocation() { return location; }
 
 }

@@ -1,4 +1,6 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.lift;
+
+import io.github.ignacypekala.*;
 
 import com.google.common.annotations.VisibleForTesting;
 

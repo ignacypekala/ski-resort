@@ -1,6 +1,7 @@
 package io.github.ignacypekala;
 
-import io.github.ignacypekala.utils.Coordinates;
+import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.utils.*;
 
 public class Vertex {
     private final int altitude;

@@ -1,12 +1,10 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.lift;
+
+import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.event.*;
+import io.github.ignacypekala.*;
 
 import org.junit.jupiter.api.*;
-
-import io.github.ignacypekala.utils.Coordinates;
-import io.github.ignacypekala.EventQueue.*;
-import io.github.ignacypekala.Lift.ChairLineArrival;
-import io.github.ignacypekala.Lift.LiftDepart;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -61,8 +59,8 @@ public class LiftTest {
 
         // Check if the lift has scheduled its first depart
         Event event = eventQueue.poll();
-        assertTrue(event instanceof LiftDepart);
-        LiftDepart departEvent = (LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftDepart);
+        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
         assertSame(lift, departEvent.getLift());
 
         assertFalse(eventQueue.hasEvents());
@@ -72,15 +70,15 @@ public class LiftTest {
         // Check if the next lift depart was scheduled
         event = eventQueue.poll();
         assertTrue(eventQueue.hasEvents());
-        assertTrue(event instanceof LiftDepart);
-        departEvent = (LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftDepart);
+        departEvent = (Lift.LiftDepart) event;
         assertSame(lift, departEvent.getLift());
 
         // Check if the departed chair line had its arrival scheduled
         event = eventQueue.poll();
         assertFalse(eventQueue.hasEvents());
-        assertTrue(event instanceof ChairLineArrival);
-        ChairLineArrival chairLineArrival = (ChairLineArrival) event;
+        assertTrue(event instanceof Lift.ChairLineArrival);
+        Lift.ChairLineArrival chairLineArrival = (Lift.ChairLineArrival) event;
         assertSame(lift, chairLineArrival.getChairLine().getLift());
 
         assertFalse(eventQueue.hasEvents());
@@ -102,14 +100,14 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventQueue.poll();
-        assertTrue(event instanceof LiftDepart);
-        LiftDepart departEvent = (LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftDepart);
+        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
         event = eventQueue.poll();
-        assertTrue(event instanceof ChairLineArrival);
-        ChairLineArrival arrival = (ChairLineArrival) event;
+        assertTrue(event instanceof Lift.ChairLineArrival);
+        Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
         assertArrayEquals(
             passengers,
@@ -127,14 +125,14 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventQueue.poll();
-        assertTrue(event instanceof LiftDepart);
-        LiftDepart departEvent = (LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftDepart);
+        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
         event = eventQueue.poll();
-        assertTrue(event instanceof ChairLineArrival);
-        ChairLineArrival arrival = (ChairLineArrival) event;
+        assertTrue(event instanceof Lift.ChairLineArrival);
+        Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
         Skier[] passengers = new Skier[liftCapacity];
         passengers[0] = skier;
         assertArrayEquals(
@@ -165,8 +163,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventQueue.poll();
-        assertTrue(event instanceof LiftDepart);
-        LiftDepart departEvent = (LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftDepart);
+        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
 
         assertFalse(startHook, "The skier has started their ride prematurely.");
         departEvent.handle();
@@ -174,8 +172,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventQueue.poll();
-        assertTrue(event instanceof ChairLineArrival);
-        ChairLineArrival arrival = (ChairLineArrival) event;
+        assertTrue(event instanceof Lift.ChairLineArrival);
+        Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
 
         assertFalse(finishHook, "The skier has finished their ride prematurely.");
         arrival.handle();

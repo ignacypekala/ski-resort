@@ -1,4 +1,4 @@
-package io.github.ignacypekala.EventQueue;
+package io.github.ignacypekala.event;
 
 public interface EventConsumer {
     public Event poll() throws IllegalStateException;

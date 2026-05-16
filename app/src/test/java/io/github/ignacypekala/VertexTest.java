@@ -3,8 +3,9 @@ package io.github.ignacypekala;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-import io.github.ignacypekala.EventQueue.EventQueueList;
-import io.github.ignacypekala.utils.Coordinates;
+import io.github.ignacypekala.event.*;
+import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.utils.*;
 
 public class VertexTest {
     private static EventQueueList eventQueue = new EventQueueList();
