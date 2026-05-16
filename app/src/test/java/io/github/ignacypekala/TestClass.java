@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import java.util.function.Consumer;
+
 import io.github.ignacypekala.EventQueue.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.utils.Coordinates;
@@ -43,6 +45,34 @@ public class TestClass {
                 eventQueue,
                 simulation
             );
+        }
+    }
+
+    public static class SnitchSkier extends TestSkier {
+        Consumer<Edge> rideStartedCallback;
+        Consumer<Edge> rideFinishedCallback;
+        public SnitchSkier(
+            int proficiency,
+            double difficultyWeight,
+            double surfaceWeight,
+            Consumer<Edge> rideStartedCallback,
+            Consumer<Edge> rideFinishedCallback
+        ) {
+            super(proficiency, difficultyWeight, surfaceWeight);
+            this.rideStartedCallback = rideStartedCallback;
+            this.rideFinishedCallback = rideFinishedCallback;
+        }
+
+        @Override
+        public void rideStartedHook(Edge edge) {
+            super.rideStartedHook(edge);
+            rideStartedCallback.accept(edge);
+        }
+
+        @Override
+        public void rideFinishedHook(Edge edge) {
+            super.rideFinishedHook(edge);
+            rideFinishedCallback.accept(edge);
         }
     }
 

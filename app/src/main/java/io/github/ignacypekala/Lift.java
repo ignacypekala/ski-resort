@@ -28,6 +28,7 @@ public class Lift extends Edge {
         queue = new LiftQueue();
         this.eventPublisher = eventPublisher;
         this.clock = clock;
+        addStartEdge();
         scheduleLiftDepart();
     }
 
@@ -91,6 +92,11 @@ public class Lift extends Edge {
         }
         @VisibleForTesting
         LiftChairLine getChairLine() { return chairLine; }
+    }
+
+    @Override
+    public void addStartEdge() {
+        getStart().addLift(this);
     }
 
     public int getWaitTime() { return waitTime; }

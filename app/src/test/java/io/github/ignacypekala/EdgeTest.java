@@ -15,10 +15,14 @@ public class EdgeTest {
         public void ride(Skier skier) {
             super.incrementRideCount();
         }
+
+        @Override
+        public void addStartEdge() {}
+
     }
 
     @Test
-    void edge() {
+    void construct() {
         Coordinates pos = new Coordinates(0, 0);
         Vertex a = new Vertex(0, pos, 0);
         Vertex b = new Vertex(0, pos, 0);
@@ -31,4 +35,5 @@ public class EdgeTest {
         edge.ride(new TestClass.TestSkier(0, 0.0, 0.0));
         assertEquals(1, edge.getRideCount());
     }
+
 }

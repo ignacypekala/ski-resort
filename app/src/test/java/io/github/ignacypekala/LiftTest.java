@@ -35,6 +35,10 @@ public class LiftTest {
         assertEquals(1, lift.getWaitTime());
         assertEquals(2, lift.getPassengerCapacity());
         assertEquals(3, lift.getRideTime());
+        assertTrue(
+            Arrays.asList(a.getLifts()).contains(lift),
+            "Lift hasn't been added to a's lift array."
+        );
     }
 
     @Test
@@ -116,8 +120,6 @@ public class LiftTest {
     @Test
     void partialLoad() {
         int liftCapacity = 3;
-        // Longer waitTime than rideTime so that the first ChairLine arrives
-        // before the 2nd depart.
         Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventQueue, simulation);
 
         Skier skier = new TestClass.TestSkier(0, 0.5, 0.5);
@@ -139,6 +141,46 @@ public class LiftTest {
             passengers,
             arrival.getChairLine().getPassengers()
         );
-        
+    }
+
+
+    private boolean startHook = false;
+    private boolean finishHook = false;
+    private void startHookConsumer(Edge edge) { startHook = true; }
+    private void finishHookConsumer(Edge edge) { finishHook = true; }
+    // Check whether the passengers get correct feedback when using lifts.
+    @Test
+    void aftermath() {
+        Skier skier = new TestClass.SnitchSkier(
+            0, 0.5, 0.5,
+            this::startHookConsumer,
+            this::finishHookConsumer
+        );
+
+        Lift lift = new Lift(skier.getLocation(), b, 2, 1, 1, eventQueue, simulation);
+        // Create a loop so that the end vertex has an outgoing edge.
+        b.addLift(lift); 
+
+        lift.ride(skier);
+
+        // Send the lift
+        Event event = eventQueue.poll();
+        assertTrue(event instanceof LiftDepart);
+        LiftDepart departEvent = (LiftDepart) event;
+
+        assertFalse(startHook, "The skier has started their ride prematurely.");
+        departEvent.handle();
+        assertTrue(startHook, "The skier hasn't started their ride.");
+
+        // Check if the correct passengers got a ride
+        event = eventQueue.poll();
+        assertTrue(event instanceof ChairLineArrival);
+        ChairLineArrival arrival = (ChairLineArrival) event;
+
+        assertFalse(finishHook, "The skier has finished their ride prematurely.");
+        arrival.handle();
+        assertTrue(finishHook, "The skier hasn't finished their ride.");
+
+        assertSame(b, skier.getLocation());
     }
 }

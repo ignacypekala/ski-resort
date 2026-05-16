@@ -69,9 +69,9 @@ public class Vertex {
         return liftCount + slopeCount;
     }
     public Edge[] getEdges() {
-        Edge[] edges = new Edge[slopeCount + liftCount ];
+        Edge[] edges = new Edge[slopeCount + liftCount];
         System.arraycopy(slopes, 0, edges, 0, slopeCount);
-        System.arraycopy(lifts, liftCount, edges, 0, liftCount);
+        System.arraycopy(lifts, 0, edges, slopeCount, liftCount);
         return edges;
     }
 }

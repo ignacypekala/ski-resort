@@ -2,7 +2,11 @@ package io.github.ignacypekala;
 
 import io.github.ignacypekala.EventQueue.*;
 import io.github.ignacypekala.utils.*;
+
+import java.util.Arrays;
 import java.util.Random;
+
+import com.google.common.annotations.VisibleForTesting;
 
 public class Skier {
     private Vertex startPoint;
@@ -79,13 +83,19 @@ public class Skier {
     public void ski() { chooseEdge().ride(this); }
 
     public Edge chooseEdge() {
+        if (location.getEdgeCount() <= 0) {
+            throw new IllegalStateException(
+                "Unfulfilled assumption that every vertex has at least one edge."
+            );
+        }
         Edge[] edges = location.getEdges();
         if (generator.nextDouble() < spontaneity) {
             return edges[generator.nextInt(0, location.getEdgeCount())];
         } else {
             double maxAppeal = -1;
             Edge mostAppealing = null;
-            for (Edge edge : edges) {
+            for (int i = 0; i < location.getEdgeCount(); i++) {
+                Edge edge = edges[i];
                 double appeal = edge.appeal(this);
                 if (appeal > maxAppeal) {
                     maxAppeal = appeal;
@@ -102,16 +112,20 @@ public class Skier {
         rideStartedHook(slope);
     }
 
+    public void rideStarted(Edge edge) {
+        location = null;
+        rideStartedHook(edge);
+    }
+
     public void rideFinished(Edge edge) {
-        rideFinished(edge);
         location = edge.getEnd();
         rideFinishedHook(edge);
         ski();
     }
 
     // Empty hooks to be overridden by subclasses
-    public void rideStartedHook(Edge edge) {}
-    private void rideFinishedHook(Edge edge) {}
+    protected void rideStartedHook(Edge edge) {}
+    protected void rideFinishedHook(Edge edge) {}
 
     private class SlopeRideFinished extends RelativeEvent {
         private Edge edge;
@@ -134,5 +148,8 @@ public class Skier {
     public double getSurfaceWeight() { return surfaceWeight; }
     public int getIdentifier() { return identifier; }
     public Time getStartTime() { return startTime; }
+    
+    @VisibleForTesting
+    Vertex getLocation() { return location; }
 
 }

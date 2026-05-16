@@ -43,7 +43,4 @@ public class EventQueueList implements EventBroker {
     public boolean hasEvents() {
         return head != null;
     }
-
-    @VisibleForTesting
-    EventListNode getHead() { return head; }
 }

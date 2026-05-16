@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import com.google.common.annotations.VisibleForTesting;
+
 public class Slope extends Edge {
     private int difficulty;
     private double baseAppeal;
@@ -65,6 +67,11 @@ public class Slope extends Edge {
     @Override
     public void ride(Skier skier) {
         skier.rideSlope(this);
+    }
+
+    @Override
+    public void addStartEdge() {
+        getStart().addSlope(this);
     }
 
 }

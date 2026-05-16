@@ -16,6 +16,9 @@ public abstract class Edge {
 
     public abstract void ride(Skier skier);
 
+    // Adds this edge to the appropriate collection in the start vertex.
+    public abstract void addStartEdge();
+
     public void incrementRideCount() { rideCount += 1; }
 
     public Vertex getStart() { return start; }
