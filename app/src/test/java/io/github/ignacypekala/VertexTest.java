@@ -66,15 +66,6 @@ public class VertexTest {
         System.arraycopy(slopes, 0, edges, 0, slopeCount);
         System.arraycopy(lifts, 0, edges, slopeCount, liftCount);
         
-        System.out.println(String.format(
-            "%s (%d)", vertex.getSlopes(), vertex.getSlopeCount()
-        ));
-        System.out.println(String.format(
-            "%s (%d)", vertex.getLifts(), vertex.getLiftCount()
-        ));
-        System.out.println(String.format(
-            "%s (%d)", vertex.getEdges(), vertex.getEdgeCount()
-        ));
         assertTwoEdgeArraysEqualWithPadding(slopes, vertex.getSlopes());
         assertTwoEdgeArraysEqualWithPadding(lifts, vertex.getLifts());
         assertTwoEdgeArraysEqualWithPadding(edges, vertex.getEdges());
