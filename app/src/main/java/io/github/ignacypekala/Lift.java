@@ -23,12 +23,12 @@ public class Lift extends Edge {
         Clock clock
     ) {
         super(start, end, rideTime);
+        addStartEdge();
         this.waitTime = waitTime;
         this.passengerCapacity = passengerCapacity;
         queue = new LiftQueue();
         this.eventPublisher = eventPublisher;
         this.clock = clock;
-        addStartEdge();
         scheduleLiftDepart();
     }
 
