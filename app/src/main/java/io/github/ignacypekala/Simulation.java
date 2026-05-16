@@ -1,6 +1,9 @@
 package io.github.ignacypekala;
 
 import io.github.ignacypekala.utils.*;
+
+import com.google.common.annotations.VisibleForTesting;
+
 import io.github.ignacypekala.event.*;
 
 public class Simulation implements Clock {
@@ -27,9 +30,8 @@ public class Simulation implements Clock {
 
     public static void main(String[] args) {}
 
-    @Override
-    public Time getCurrentTime() { return currentTime; }
+    @Override public Time getCurrentTime() { return currentTime; }
+    @Override public Time getEndTime() { return endTime; }
 
-    @Override
-    public Time getEndTime() { return endTime; }
+    @VisibleForTesting EventBroker getEventBroker() { return eventBroker; }
 }
