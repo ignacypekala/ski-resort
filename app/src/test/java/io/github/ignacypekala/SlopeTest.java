@@ -1,10 +1,24 @@
 package io.github.ignacypekala;
 
 import org.junit.jupiter.api.Test;
+
+import io.github.ignacypekala.utils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SlopeTest {
     private Skier skier = new TestClass.TestSkier(0, 0.0, 0.0);
+
+    @Test
+    void construct() {
+        Vertex a = new Vertex(0, new Coordinates(1, 1), 'a');
+        Vertex b = new Vertex(0, new Coordinates(-1, -1), 'b');
+        assertEquals(0, a.getSlopeCount());
+        Slope slope = new Slope(a, b, 1, 5, 10, 1);
+        assertEquals(1, a.getSlopeCount());
+
+        assertEquals(slope, a.getSlopes()[0]);
+    }
+
     @Test
     void rideTime() {
         Slope slope = new TestClass.TestSlope(0, 0, 0, 420);
