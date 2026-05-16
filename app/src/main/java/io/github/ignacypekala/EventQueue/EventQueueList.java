@@ -1,11 +1,11 @@
 package io.github.ignacypekala.EventQueue;
 
-public class EventQueueList implements EventBroker {
-    EventListNode head;
+import com.google.common.annotations.VisibleForTesting;
 
-    public EventQueueList() {
-        head = null;
-    }
+public class EventQueueList implements EventBroker {
+    EventListNode head = null;
+
+    public EventQueueList() {}
 
     @Override
     public void send(Event event) {
@@ -41,6 +41,9 @@ public class EventQueueList implements EventBroker {
 
     @Override
     public boolean hasEvents() {
-        return head == null;
+        return head != null;
     }
+
+    @VisibleForTesting
+    EventListNode getHead() { return head; }
 }

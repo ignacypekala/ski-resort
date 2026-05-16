@@ -81,4 +81,13 @@ public class EventQueueListTest {
             assertSame(events[i], eq.poll());
         }
     }
+
+    @Test
+    void hasEvents() {
+        EventQueueList eq = new EventQueueList();
+        assertFalse(eq.hasEvents());
+        Event event = new TestEvent(new Time(15, 0, 0));
+        eq.send(event);
+        assertTrue(eq.hasEvents());
+    }
 }

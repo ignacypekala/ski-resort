@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import com.google.common.annotations.VisibleForTesting;
+
 public class LiftChairLine {
     private Skier[] passengers;
     private int passengerCount;
@@ -23,4 +25,9 @@ public class LiftChairLine {
             passenger.rideFinished(lift);
         }
     }
+
+    @VisibleForTesting
+    Lift getLift() { return lift; }
+    @VisibleForTesting
+    Skier[] getPassengers() { return passengers; }
 }

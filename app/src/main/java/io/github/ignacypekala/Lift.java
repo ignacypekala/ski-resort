@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import io.github.ignacypekala.EventQueue.*;
 import io.github.ignacypekala.utils.*;
 
@@ -53,7 +55,8 @@ public class Lift extends Edge {
         queue.enqueue(skier);
     }
 
-    private class LiftDepart extends RelativeEvent {
+    @VisibleForTesting
+    class LiftDepart extends RelativeEvent {
         private Lift lift;
         public LiftDepart(Lift lift) {
             super(clock, waitTime);
@@ -72,9 +75,12 @@ public class Lift extends Edge {
             chairLine.depart();
             scheduleLiftDepart();
         }
+        @VisibleForTesting
+        Lift getLift() { return lift; }
     }
 
-    private class ChairLineArrival extends RelativeEvent {
+    @VisibleForTesting
+    class ChairLineArrival extends RelativeEvent {
         LiftChairLine chairLine;
         public ChairLineArrival(LiftChairLine chairLine) {
             super(clock, getRideTime());
@@ -83,6 +89,8 @@ public class Lift extends Edge {
         public void handle() {
            chairLine.arrival(); 
         }
+        @VisibleForTesting
+        LiftChairLine getChairLine() { return chairLine; }
     }
 
     public int getWaitTime() { return waitTime; }
