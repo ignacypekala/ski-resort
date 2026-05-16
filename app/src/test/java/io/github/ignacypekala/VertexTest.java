@@ -8,8 +8,8 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 
 public class VertexTest {
-    private static EventQueueList eventQueue = new EventQueueList();
-    private static Simulation simulation = new Simulation();
+    private static EventBroker eventBroker = new EventQueueList();
+    private static Clock clock = new Simulation();
     private static Coordinates coordinates = new Coordinates(11, 0);
     private static int altitude = 2001;
     private static int identifier = 9;
@@ -58,8 +58,8 @@ public class VertexTest {
             Lift lift = new Lift(
                 vertex, vertex,
                 20, 20, 20,
-                eventQueue,
-                simulation
+                eventBroker,
+                clock
             );
             lifts[i] = lift;
         }

@@ -13,21 +13,21 @@ public class LiftTest {
     private static Coordinates pos;
     private static Vertex a;
     private static Vertex b;
-    private static EventQueueList eventQueue;
-    private static Simulation simulation;
+    private static EventBroker eventBroker;
+    private static Clock clock;
 
     @BeforeEach
     void initiateEnvironment() {
         pos = new Coordinates(0, 0);
         a = new Vertex(0, pos, 0);
         b = new Vertex(0, pos, 0);
-        eventQueue = new EventQueueList();
-        simulation = new Simulation();
+        eventBroker = new EventQueueList();
+        clock = new Simulation();
     }
 
     @Test
     void construct() {
-        Lift lift = new Lift(a, b, 1, 2, 3, eventQueue, simulation);
+        Lift lift = new Lift(a, b, 1, 2, 3, eventBroker, clock);
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
         assertEquals(1, lift.getWaitTime());
@@ -47,41 +47,41 @@ public class LiftTest {
         end.addSlope(goodSlope);
         end.addSlope(badSlope);
         Skier skier = new TestClass.TestSkier(10, 1.0, 0.0);
-        Lift lift = new Lift(a, end, 0, 0, 0, eventQueue, simulation);
+        Lift lift = new Lift(a, end, 0, 0, 0, eventBroker, clock);
         assertEquals(goodSlope.appeal(skier), lift.appeal(skier));
     }
 
     @Test
     void dryRun() {
-        assertFalse(eventQueue.hasEvents());
-        Lift lift = new Lift(a, b, 2, 3, 10, eventQueue, simulation);
-        assertTrue(eventQueue.hasEvents());
+        assertFalse(eventBroker.hasEvents());
+        Lift lift = new Lift(a, b, 2, 3, 10, eventBroker, clock);
+        assertTrue(eventBroker.hasEvents());
 
         // Check if the lift has scheduled its first depart
-        Event event = eventQueue.poll();
+        Event event = eventBroker.poll();
         assertTrue(event instanceof Lift.LiftDepart);
         Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
         assertSame(lift, departEvent.getLift());
 
-        assertFalse(eventQueue.hasEvents());
+        assertFalse(eventBroker.hasEvents());
         departEvent.handle();
-        assertTrue(eventQueue.hasEvents());
+        assertTrue(eventBroker.hasEvents());
 
         // Check if the next lift depart was scheduled
-        event = eventQueue.poll();
-        assertTrue(eventQueue.hasEvents());
+        event = eventBroker.poll();
+        assertTrue(eventBroker.hasEvents());
         assertTrue(event instanceof Lift.LiftDepart);
         departEvent = (Lift.LiftDepart) event;
         assertSame(lift, departEvent.getLift());
 
         // Check if the departed chair line had its arrival scheduled
-        event = eventQueue.poll();
-        assertFalse(eventQueue.hasEvents());
+        event = eventBroker.poll();
+        assertFalse(eventBroker.hasEvents());
         assertTrue(event instanceof Lift.ChairLineArrival);
         Lift.ChairLineArrival chairLineArrival = (Lift.ChairLineArrival) event;
         assertSame(lift, chairLineArrival.getChairLine().getLift());
 
-        assertFalse(eventQueue.hasEvents());
+        assertFalse(eventBroker.hasEvents());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class LiftTest {
         int liftCapacity = 3;
         // Longer waitTime than rideTime so that the first ChairLine arrives
         // before the 2nd depart.
-        Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventQueue, simulation);
+        Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventBroker, clock);
 
         Skier[] skiers = new Skier[5];
         for (int i = 0; i < 5; i++) {
@@ -99,13 +99,13 @@ public class LiftTest {
         }
 
         // Send the lift
-        Event event = eventQueue.poll();
+        Event event = eventBroker.poll();
         assertTrue(event instanceof Lift.LiftDepart);
         Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
-        event = eventQueue.poll();
+        event = eventBroker.poll();
         assertTrue(event instanceof Lift.ChairLineArrival);
         Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
@@ -118,19 +118,19 @@ public class LiftTest {
     @Test
     void partialLoad() {
         int liftCapacity = 3;
-        Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventQueue, simulation);
+        Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventBroker, clock);
 
         Skier skier = new TestClass.TestSkier(0, 0.5, 0.5);
         lift.ride(skier);
 
         // Send the lift
-        Event event = eventQueue.poll();
+        Event event = eventBroker.poll();
         assertTrue(event instanceof Lift.LiftDepart);
         Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
-        event = eventQueue.poll();
+        event = eventBroker.poll();
         assertTrue(event instanceof Lift.ChairLineArrival);
         Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
         Skier[] passengers = new Skier[liftCapacity];
@@ -155,14 +155,14 @@ public class LiftTest {
             this::finishHookConsumer
         );
 
-        Lift lift = new Lift(skier.getLocation(), b, 2, 1, 1, eventQueue, simulation);
+        Lift lift = new Lift(skier.getLocation(), b, 2, 1, 1, eventBroker, clock);
         // Create a loop so that the end vertex has an outgoing edge.
         b.addLift(lift); 
 
         lift.ride(skier);
 
         // Send the lift
-        Event event = eventQueue.poll();
+        Event event = eventBroker.poll();
         assertTrue(event instanceof Lift.LiftDepart);
         Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
 
@@ -171,7 +171,7 @@ public class LiftTest {
         assertTrue(startHook, "The skier hasn't started their ride.");
 
         // Check if the correct passengers got a ride
-        event = eventQueue.poll();
+        event = eventBroker.poll();
         assertTrue(event instanceof Lift.ChairLineArrival);
         Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
 

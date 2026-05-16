@@ -7,8 +7,8 @@ import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class TestClass {
-    static EventQueueList eventQueue = new EventQueueList();
-    static Simulation simulation = new Simulation();
+    static EventBroker eventBroker = new EventQueueList();
+    static Clock clock = new Simulation();
 
     public static class TestSlope extends Slope {
         static Coordinates pos = new Coordinates(0, 0);
@@ -42,8 +42,8 @@ public class TestClass {
                 surfaceWeight,
                 0,
                 new Time(0, 0, 0),
-                eventQueue,
-                simulation
+                eventBroker,
+                clock
             );
         }
     }
@@ -76,6 +76,6 @@ public class TestClass {
         }
     }
 
-    public static EventQueueList getEventQueue() { return eventQueue; }
-    public static Simulation getSimulation() { return simulation; }
+    public static EventBroker getEventBroker() { return eventBroker; }
+    public static Clock getClock() { return clock; }
 }
