@@ -3,7 +3,6 @@ package io.github.ignacypekala;
 import io.github.ignacypekala.EventQueue.*;
 import io.github.ignacypekala.utils.*;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import com.google.common.annotations.VisibleForTesting;
