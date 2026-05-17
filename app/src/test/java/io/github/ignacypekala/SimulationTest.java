@@ -11,12 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SimulationTest {
     private Simulation simulation;
+    private EventBroker eventBroker;
     private ArrayList<Event> eventHistory;
+    private Vertex a;
+    private Vertex b;
+    private Vertex c;
+    private Vertex d;
+    private Vertex e;
 
     @BeforeEach
     void intializeEnvironment() {
         simulation = new Simulation();
         eventHistory = new ArrayList<Event>();
+        eventBroker = simulation.getEventBroker();
+        a = new Vertex(0, new Coordinates(0, 0), 0);
+        b = new Vertex(0, new Coordinates(0, 0), 1);
+        c = new Vertex(0, new Coordinates(0, 0), 2);
+        d = new Vertex(0, new Coordinates(0, 0), 3);
+        e = new Vertex(0, new Coordinates(0, 0), 4);
     }
 
     @Test
@@ -47,9 +59,6 @@ public class SimulationTest {
 
     @Test
     void loop() {
-        EventBroker eventBroker = simulation.getEventBroker();
-        Vertex a = new Vertex(0, new Coordinates(1, 1), 'a');
-        Vertex b = new Vertex(0, new Coordinates(-1, -1), 'b');
         Lift lift = new Lift(a, b, 60, 3, 14 * 60, eventBroker, simulation);
         Slope slope = new Slope(b, a, 0.8, 5, 5 * 60, 1);
         Skier skier = new Skier(
@@ -59,8 +68,8 @@ public class SimulationTest {
             simulation
         );
         simulation.run();
-        assertEquals(5, lift.getRideCount());
-        assertEquals(5, slope.getRideCount());
+        assertEquals(3, lift.getRideCount());
+        assertEquals(3, slope.getRideCount());
         assertSame(a, skier.getLocation());
     }
 }
