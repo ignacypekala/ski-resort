@@ -74,4 +74,8 @@ public class Slope extends Edge {
         getStart().addSlope(this);
     }
 
+    @Override
+    public String toString() {
+        return String.format("Slope (%s)", getPathString());
+    }
 }
