@@ -10,21 +10,22 @@ public class Lift extends Edge {
     private LiftQueue queue;
     private int waitTime;
     private int passengerCapacity;
-
     private EventPublisher eventPublisher;
     private Clock clock;
 
     public Lift(
+        int identifier,
         Vertex start,
         Vertex end,
+        int rideTime,
         int waitTime,
         int passengerCapacity,
-        int rideTime,
         EventPublisher eventPublisher,
         Clock clock
     ) {
-        super(start, end, rideTime);
+        super(identifier, start, end, rideTime);
         addStartEdge();
+
         this.waitTime = waitTime;
         this.passengerCapacity = passengerCapacity;
         queue = new LiftQueue();
@@ -72,6 +73,7 @@ public class Lift extends Edge {
     @Override 
     public void ride(Skier skier) {
         queue.enqueue(skier);
+        skier.liftQueueJoinedHook(this);
     }
 
     @VisibleForTesting
@@ -120,7 +122,16 @@ public class Lift extends Edge {
     public int getPassengerCapacity() { return passengerCapacity; }
 
     public String toString() {
-        return String.format("Lift (%s)", getPathString());
+        return String.format("lift %s", getIdentifier());
+    }
+
+    @Override
+    public String getRideStartMessage(Skier skier) {
+        return skier + "has boarded " + this;
+    }
+    @Override
+    public String getRideFinishMessage(Skier skier) {
+        return skier + "has gotten off " + this;
     }
 
 }

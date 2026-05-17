@@ -2,6 +2,7 @@ package io.github.ignacypekala;
 
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.lift.*;
 
 import java.util.Random;
 
@@ -126,6 +127,7 @@ public class Skier {
     // Empty hooks to be overridden by subclasses
     public void rideStartedHook(Edge edge) {}
     public void rideFinishedHook(Edge edge) {}
+    public void liftQueueJoinedHook(Lift lift) {}
 
     private class SlopeRideFinished extends RelativeEvent {
         private Edge edge;
@@ -137,8 +139,9 @@ public class Skier {
 
         public String toString() {
             return String.format(
-                "Skier %d finished a ride on %s",
-                getIdentifier(), edge
+                "%s finished a ride on %s",
+                Skier.this,
+                edge
             );
         }
     }
@@ -149,10 +152,15 @@ public class Skier {
 
         public String toString() {
             return String.format(
-                "Skier has arrived at %s", getIdentifier(), startPoint
+                "%s has arrived at %s",
+                Skier.this,
+                startPoint
             );
         }
     }
+
+    @Override
+    public String toString() { return String.format("skier %d", identifier); }
 
     public Vertex getStartPoint() { return startPoint; }
     public int getProficiency() { return proficiency; }
@@ -162,5 +170,7 @@ public class Skier {
     public int getIdentifier() { return identifier; }
     public Time getStartTime() { return startTime; }
     public Vertex getLocation() { return location; }
+
+    protected Clock getClock() {return clock;}
 
 }

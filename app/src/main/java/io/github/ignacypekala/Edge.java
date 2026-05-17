@@ -1,23 +1,31 @@
 package io.github.ignacypekala;
 
-public abstract class Edge {
+public abstract class Edge extends GraphElement {
     private Vertex start;
     private Vertex end;
     private int rideTime;
     private int rideCount = 0;
 
-    public Edge(Vertex start, Vertex end, int rideTime) {
+    public Edge(
+        int identifier,
+        Vertex start,
+        Vertex end,
+        int rideTime
+    ) {
+        super(identifier);
         this.start = start;
         this.end = end;
         this.rideTime = rideTime;
     }
 
     public abstract double appeal(Skier skier);
-
     public abstract void ride(Skier skier);
 
     // Adds this edge to the appropriate collection in the start vertex.
     public abstract void addStartEdge();
+
+    public abstract String getRideStartMessage(Skier skier);
+    public abstract String getRideFinishMessage(Skier skier);
 
     public void rideFinished() { rideCount += 1; }
 

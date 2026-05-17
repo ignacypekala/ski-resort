@@ -8,14 +8,15 @@ public class Slope extends Edge {
     private double durability;
 
     public Slope(
+        int identifier,
         Vertex start,
         Vertex end,
+        int rideTime,
         double durability,
         int difficulty,
-        int rideTime,
         double baseAppeal
     ) {
-        super(start, end, rideTime);
+        super(identifier, start, end, rideTime);
         addStartEdge();
         if (durability < 0 || durability > 1) {
             throw new IllegalArgumentException(
@@ -72,6 +73,15 @@ public class Slope extends Edge {
     @Override
     public void addStartEdge() {
         getStart().addSlope(this);
+    }
+
+    @Override
+    public String getRideStartMessage(Skier skier) {
+        return skier + " has started their run down " + this;
+    }
+    @Override
+    public String getRideFinishMessage(Skier skier) {
+        return skier + " has finished their run down " + this;
     }
 
     @Override

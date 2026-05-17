@@ -1,12 +1,11 @@
 package io.github.ignacypekala;
 
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.event.*;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import io.github.ignacypekala.event.*;
-
-public class Simulation implements Clock {
+public class Simulation implements Clock, Reporter {
     private final Time START_TIME = new Time(9, 0, 0);
     private final Time END_TIME = new Time(15, 0, 0);
     private Time currentTime;
@@ -35,6 +34,11 @@ public class Simulation implements Clock {
     @Override public Time getCurrentTime() { return currentTime; }
     @Override public Time getStartTime() { return START_TIME; }
     @Override public Time getEndTime() { return END_TIME; }
+
+    @Override
+    public void report(String message) {
+        System.out.println(String.format("%s: %s", currentTime, message));
+    }
 
     @VisibleForTesting EventBroker getEventBroker() { return eventBroker; }
 }

@@ -11,9 +11,10 @@ public class TestClass {
     static Clock clock = new Simulation();
 
     public static class TestSlope extends Slope {
+        static int identifier = 0;
         static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, pos, 0);
-        static Vertex b = new Vertex(0, pos, 1);
+        static Vertex a = new Vertex(0, 0, pos);
+        static Vertex b = new Vertex(1, 0, pos);
 
         public TestSlope(
             double durability,
@@ -21,13 +22,13 @@ public class TestClass {
             double baseAppeal,
             int rideTime
         ) {
-            super(a, b, durability, difficulty, rideTime, baseAppeal);
+            super(identifier++, a, b, rideTime, durability, difficulty, baseAppeal);
         }
     }
 
     public static class TestSkier extends Skier {
         static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, pos, 0);
+        static Vertex a = new Vertex(0, 0, pos);
 
         public TestSkier(
             int proficiency,

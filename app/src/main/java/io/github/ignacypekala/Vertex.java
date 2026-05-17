@@ -3,50 +3,34 @@ package io.github.ignacypekala;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 
-public class Vertex {
+public class Vertex extends GraphElement {
     private final int altitude;
     private final Coordinates position;
-    private final int identifier;
+
     private final int INITIAL_LIFT_CAPACITY = 10;
-    private final int INITIAL_SLOPE_CAPACITY = 10;
     private int liftCount;
     private Lift[] lifts;
+
+    private final int INITIAL_SLOPE_CAPACITY = 10;
     private int slopeCount;
     private Slope[] slopes;
 
-    public Vertex(int altitude, Coordinates position, int identifier) {
+    public Vertex(int identifier, int altitude, Coordinates position) {
+        super(identifier);
         this.altitude = altitude;
         this.position = position;
-        this.identifier = identifier;
         lifts = new Lift[INITIAL_LIFT_CAPACITY];
         slopes = new Slope[INITIAL_SLOPE_CAPACITY];
     }
 
-    public int getAltitude() {
-        return altitude;
-    }
+    public int getAltitude() { return altitude; }
+    public Coordinates getPosition() { return position; }
 
-    public Coordinates getPosition() {
-        return position;
-    }
+    public int getLiftCount() { return liftCount; }
+    public Lift[] getLifts() { return lifts; }
 
-    public int getIdentifier() {
-        return identifier;
-    }
-
-    public int getLiftCount() {
-        return liftCount;
-    }
-    public Lift[] getLifts() {
-        return lifts;
-    }
-
-    public int getSlopeCount() {
-        return slopeCount;
-    }
-    public Slope[] getSlopes() {
-        return slopes;
-    }
+    public int getSlopeCount() { return slopeCount; }
+    public Slope[] getSlopes() { return slopes; }
 
     public void addLift(Lift lift) {
         if (liftCount == lifts.length) {
@@ -69,6 +53,7 @@ public class Vertex {
     public int getEdgeCount() {
         return liftCount + slopeCount;
     }
+
     public Edge[] getEdges() {
         Edge[] edges = new Edge[slopeCount + liftCount];
         System.arraycopy(slopes, 0, edges, 0, slopeCount);
@@ -77,6 +62,6 @@ public class Vertex {
     }
 
     public String toString() {
-        return String.format("Vertex%d", identifier);
+        return String.format("vertex %d", getIdentifier());
     }
 }

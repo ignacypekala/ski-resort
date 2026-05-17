@@ -19,15 +19,15 @@ public class LiftTest {
     @BeforeEach
     void initiateEnvironment() {
         pos = new Coordinates(0, 0);
-        a = new Vertex(0, pos, 0);
-        b = new Vertex(0, pos, 0);
+        a = new Vertex(0, 0, pos);
+        b = new Vertex(0, 0, pos);
         eventBroker = new EventQueueList();
         clock = new Simulation();
     }
 
     @Test
     void construct() {
-        Lift lift = new Lift(a, b, 1, 2, 3, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 3, 1, 2, eventBroker, clock);
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
         assertEquals(1, lift.getWaitTime());
@@ -41,20 +41,20 @@ public class LiftTest {
 
     @Test
     void appeal() {
-        Vertex end = new Vertex(0, pos, 0);
+        Vertex end = new Vertex(0, 0, pos);
         Slope goodSlope = new TestClass.TestSlope(1, 10, 1, 0);
         Slope badSlope = new TestClass.TestSlope(0, 0, 0, 0);
         end.addSlope(goodSlope);
         end.addSlope(badSlope);
         Skier skier = new TestClass.TestSkier(10, 1.0, 0.0);
-        Lift lift = new Lift(a, end, 0, 0, 0, eventBroker, clock);
+        Lift lift = new Lift(0, a, end, 0, 0, 0, eventBroker, clock);
         assertEquals(goodSlope.appeal(skier), lift.appeal(skier));
     }
 
     @Test
     void dryRun() {
         assertFalse(eventBroker.hasEvents());
-        Lift lift = new Lift(a, b, 2 * 60, 3, 1 * 60, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 1 * 60, 2 * 60, 3, eventBroker, clock);
         assertTrue(eventBroker.hasEvents());
 
         // Check if the lift has scheduled its first depart
@@ -85,7 +85,7 @@ public class LiftTest {
         int liftCapacity = 3;
         // Longer waitTime than rideTime so that the first ChairLine arrives
         // before the 2nd depart.
-        Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, eventBroker, clock);
 
         Skier[] skiers = new Skier[5];
         for (int i = 0; i < 5; i++) {
@@ -114,7 +114,7 @@ public class LiftTest {
     @Test
     void partialLoad() {
         int liftCapacity = 3;
-        Lift lift = new Lift(a, b, 2, liftCapacity, 1, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, eventBroker, clock);
 
         Skier skier = new TestClass.TestSkier(0, 0.5, 0.5);
         lift.ride(skier);
@@ -151,7 +151,7 @@ public class LiftTest {
             this::finishHookConsumer
         );
 
-        Lift lift = new Lift(skier.getLocation(), b, 2, 1, 1, eventBroker, clock);
+        Lift lift = new Lift(0, skier.getLocation(), b, 1, 2, 1, eventBroker, clock);
         // Create a loop so that the end vertex has an outgoing edge.
         b.addLift(lift); 
 
