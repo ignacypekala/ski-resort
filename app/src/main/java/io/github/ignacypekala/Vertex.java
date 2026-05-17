@@ -4,6 +4,8 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 
 public class Vertex extends SimulationObject {
+    private static int nextIdentifier = 0;
+
     private final int altitude;
     private final Coordinates position;
 
@@ -15,8 +17,8 @@ public class Vertex extends SimulationObject {
     private int slopeCount;
     private Slope[] slopes;
 
-    public Vertex(int identifier, int altitude, Coordinates position) {
-        super(identifier);
+    public Vertex(int altitude, Coordinates position) {
+        super(nextIdentifier++);
         this.altitude = altitude;
         this.position = position;
         lifts = new Lift[INITIAL_LIFT_CAPACITY];

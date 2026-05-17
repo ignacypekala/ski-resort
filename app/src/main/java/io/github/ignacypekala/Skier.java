@@ -7,6 +7,8 @@ import io.github.ignacypekala.lift.*;
 import java.util.Random;
 
 public class Skier extends SimulationObject {
+    private static int nextIdentifier = 0;
+
     private Vertex startPoint;
     private Vertex location;
     private int proficiency;
@@ -21,7 +23,6 @@ public class Skier extends SimulationObject {
     private Clock clock;
 
     public Skier(
-            int identifier,
             Vertex startPoint,
             int proficiency,
             double spontaneity,
@@ -30,7 +31,7 @@ public class Skier extends SimulationObject {
             Time startTime,
             EventPublisher eventPublisher,
             Clock clock) {
-        super(identifier);
+        super(nextIdentifier++);
         this.startPoint = startPoint;
         location = startPoint;
 

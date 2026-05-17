@@ -7,6 +7,7 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
 
 public class Lift extends Edge {
+    private static int nextIdentifier = 0;
     private LiftQueue queue;
     private int waitTime;
     private int passengerCapacity;
@@ -14,7 +15,6 @@ public class Lift extends Edge {
     private Clock clock;
 
     public Lift(
-            int identifier,
             Vertex start,
             Vertex end,
             int rideTime,
@@ -22,7 +22,7 @@ public class Lift extends Edge {
             int passengerCapacity,
             EventPublisher eventPublisher,
             Clock clock) {
-        super(identifier, start, end, rideTime);
+        super(nextIdentifier++, start, end, rideTime);
         addStartEdge();
 
         this.waitTime = waitTime;
