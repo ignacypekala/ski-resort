@@ -21,6 +21,7 @@ public class Simulation implements Clock {
         Event event = eventBroker.poll();
         currentTime = event.getTime();
         event.handle();
+        System.out.println(event + " at " + currentTime);
     }
 
     public void run() {

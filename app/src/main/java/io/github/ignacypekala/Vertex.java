@@ -75,4 +75,8 @@ public class Vertex {
         System.arraycopy(lifts, 0, edges, slopeCount, liftCount);
         return edges;
     }
+
+    public String toString() {
+        return String.format("Vertex%d", identifier);
+    }
 }

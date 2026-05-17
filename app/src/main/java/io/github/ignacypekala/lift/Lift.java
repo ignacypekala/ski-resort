@@ -78,12 +78,20 @@ public class Lift extends Edge {
     class LiftDepart extends RelativeEvent {
         public LiftDepart() { super(clock, waitTime); }
         public void handle() { depart(); }
+
+        public String toString() {
+            return String.format("%s has departed", Lift.this);
+        }
     }
 
     @VisibleForTesting
     class LiftStart extends Event {
         public LiftStart() { super(clock.getStartTime()); }
         public void handle() { depart(); }
+
+        public String toString() {
+            return String.format("%s has started", Lift.this);
+        }
     }
 
     @VisibleForTesting
@@ -97,6 +105,10 @@ public class Lift extends Edge {
 
         @VisibleForTesting
         LiftChairLine getChairLine() { return chairLine; }
+
+        public String toString() {
+            return String.format("%s has arrived", chairLine);
+        }
     }
 
     @Override
@@ -106,5 +118,9 @@ public class Lift extends Edge {
 
     public int getWaitTime() { return waitTime; }
     public int getPassengerCapacity() { return passengerCapacity; }
+
+    public String toString() {
+        return String.format("Lift (%s)", getPathString());
+    }
 
 }

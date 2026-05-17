@@ -5,8 +5,6 @@ import io.github.ignacypekala.utils.*;
 
 import java.util.Random;
 
-import com.google.common.annotations.VisibleForTesting;
-
 public class Skier {
     private Vertex startPoint;
     private Vertex location;
@@ -136,11 +134,24 @@ public class Skier {
             this.edge = edge;
         }
         public void handle() { rideFinished(edge); }
+
+        public String toString() {
+            return String.format(
+                "Skier %d finished a ride on %s",
+                getIdentifier(), edge
+            );
+        }
     }
 
     private class Arrival extends Event {
         public Arrival() { super(startTime); }
         public void handle() { ski(); }
+
+        public String toString() {
+            return String.format(
+                "Skier has arrived at %s", getIdentifier(), startPoint
+            );
+        }
     }
 
     public Vertex getStartPoint() { return startPoint; }

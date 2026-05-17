@@ -26,4 +26,11 @@ public abstract class Edge {
     public int getRideTime() { return rideTime; }
     public int getRideCount() { return rideCount; }
 
+    public String getPathString() {
+        return String.format("%s -> %s", start, end);
+    }
+    public String toString() {
+        return String.format("Edge [%s]", getPathString());
+    }
+
 }

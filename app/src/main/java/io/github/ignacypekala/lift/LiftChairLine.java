@@ -32,4 +32,13 @@ public class LiftChairLine {
     Lift getLift() { return lift; }
     @VisibleForTesting
     Skier[] getPassengers() { return passengers; }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "ChairLine (%s) with %d passengers",
+            lift,
+            passengerCount
+        );
+    }
 }
