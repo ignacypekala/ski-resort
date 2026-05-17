@@ -8,7 +8,7 @@ public class LiftChairLine {
     private Skier[] passengers;
     private int passengerCount;
     private Lift lift;
-    
+
     public LiftChairLine(Skier[] passengers, int passengerCount, Lift lift) {
         this.passengers = passengers;
         this.passengerCount = passengerCount;
@@ -21,6 +21,7 @@ public class LiftChairLine {
             passenger.rideStartedHook(lift);
         }
     }
+
     public void arrival() {
         for (int i = 0; i < passengerCount; i++) {
             Skier passenger = passengers[i];
@@ -29,16 +30,20 @@ public class LiftChairLine {
     }
 
     @VisibleForTesting
-    Lift getLift() { return lift; }
+    Lift getLift() {
+        return lift;
+    }
+
     @VisibleForTesting
-    Skier[] getPassengers() { return passengers; }
+    Skier[] getPassengers() {
+        return passengers;
+    }
 
     @Override
     public String toString() {
         return String.format(
-            "ChairLine (%s) with %d passengers",
-            lift,
-            passengerCount
-        );
+                "ChairLine (%s) with %d passengers",
+                lift,
+                passengerCount);
     }
 }

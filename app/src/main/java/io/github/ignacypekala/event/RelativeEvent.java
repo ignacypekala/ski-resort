@@ -7,4 +7,3 @@ public abstract class RelativeEvent extends Event {
         super(Time.secondsLater(clock.getCurrentTime(), delay));
     }
 }
-

@@ -56,11 +56,10 @@ public class SimulationTest {
         Lift lift = new Lift(0, a, b, 14 * 60, 60, 3, eventBroker, simulation);
         Slope slope = new Slope(0, b, a, 5 * 60, 0.8, 5, 1.0);
         Skier skier = new Skier(
-            0, a, 5, 0, 0.5, 0.5,
-            new Time(14, 0, 0),
-            eventBroker,
-            simulation
-        );
+                0, a, 5, 0, 0.5, 0.5,
+                new Time(14, 0, 0),
+                eventBroker,
+                simulation);
         simulation.run();
         assertEquals(3, lift.getRideCount());
         assertEquals(3, slope.getRideCount());

@@ -34,9 +34,8 @@ public class LiftTest {
         assertEquals(2, lift.getPassengerCapacity());
         assertEquals(3, lift.getRideTime());
         assertTrue(
-            Arrays.asList(a.getLifts()).contains(lift),
-            "Lift hasn't been added to a's lift array."
-        );
+                Arrays.asList(a.getLifts()).contains(lift),
+                "Lift hasn't been added to a's lift array.");
     }
 
     @Test
@@ -106,9 +105,8 @@ public class LiftTest {
         Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
         assertArrayEquals(
-            passengers,
-            arrival.getChairLine().getPassengers()
-        );
+                passengers,
+                arrival.getChairLine().getPassengers());
     }
 
     @Test
@@ -132,28 +130,32 @@ public class LiftTest {
         Skier[] passengers = new Skier[liftCapacity];
         passengers[0] = skier;
         assertArrayEquals(
-            passengers,
-            arrival.getChairLine().getPassengers()
-        );
+                passengers,
+                arrival.getChairLine().getPassengers());
     }
-
 
     private boolean startHook = false;
     private boolean finishHook = false;
-    private void startHookConsumer(Edge edge) { startHook = true; }
-    private void finishHookConsumer(Edge edge) { finishHook = true; }
+
+    private void startHookConsumer(Edge edge) {
+        startHook = true;
+    }
+
+    private void finishHookConsumer(Edge edge) {
+        finishHook = true;
+    }
+
     // Check whether the passengers get correct feedback when using lifts.
     @Test
     void aftermath() {
         Skier skier = new TestClass.SnitchSkier(
-            0, 0.5, 0.5,
-            this::startHookConsumer,
-            this::finishHookConsumer
-        );
+                0, 0.5, 0.5,
+                this::startHookConsumer,
+                this::finishHookConsumer);
 
         Lift lift = new Lift(0, skier.getLocation(), b, 1, 2, 1, eventBroker, clock);
         // Create a loop so that the end vertex has an outgoing edge.
-        b.addLift(lift); 
+        b.addLift(lift);
 
         lift.ride(skier);
 

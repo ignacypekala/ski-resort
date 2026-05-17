@@ -52,13 +52,13 @@ public class Time implements Comparable<Time> {
     private static String paddedInt(int number) {
         return String.format("%02d", number);
     }
+
     public String toString() {
         return String.format(
-            "%s:%s:%s",
-            paddedInt(hours),
-            paddedInt(minutes),
-            paddedInt(seconds)
-        );
+                "%s:%s:%s",
+                paddedInt(hours),
+                paddedInt(minutes),
+                paddedInt(seconds));
     }
 
     @Override

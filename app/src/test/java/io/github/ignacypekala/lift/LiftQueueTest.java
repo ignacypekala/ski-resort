@@ -12,6 +12,7 @@ public class LiftQueueTest {
         LiftQueue queue = new LiftQueue();
         assertThrows(IllegalStateException.class, () -> queue.dequeue());
     }
+
     @Test
     void arbitrary() {
         LiftQueue queue = new LiftQueue();
@@ -30,7 +31,7 @@ public class LiftQueueTest {
                 j++;
             }
         }
-        while(j < 42) {
+        while (j < 42) {
             assertFalse(queue.empty());
             assertDoesNotThrow(() -> queue.dequeue());
             j++;

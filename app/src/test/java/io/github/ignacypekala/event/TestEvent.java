@@ -7,7 +7,8 @@ public class TestEvent extends Event {
         super(time);
     }
 
-    public void handle() {}
+    public void handle() {
+    }
 
     public String toString() {
         return super.getTime().toString();

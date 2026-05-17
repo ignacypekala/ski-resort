@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TimeTest {
-    @Test 
+    @Test
     void normalized() {
         assertEquals("19:00:01", new Time(19, 0, 1).toString());
         assertEquals("00:00:00", new Time(0, 0, 0).toString());
@@ -33,9 +33,8 @@ public class TimeTest {
         assertEquals("14:21:00", Time.secondsLater(time, 10).toString());
         assertEquals("14:22:00", Time.secondsLater(time, 70).toString());
         assertEquals("00:00:00", Time.secondsLater(
-            time,
-            10 + 39 * 60 + 9 * 3600
-        ).toString());
+                time,
+                10 + 39 * 60 + 9 * 3600).toString());
     }
 
     @Test

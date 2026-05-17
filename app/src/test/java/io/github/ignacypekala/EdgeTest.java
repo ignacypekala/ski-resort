@@ -7,26 +7,32 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EdgeTest {
     private class ConcreteEdge extends Edge {
         static int identifier = 0;
+
         public ConcreteEdge(Vertex start, Vertex end, int rideTime) {
             super(identifier++, start, end, rideTime);
         }
+
         public double appeal(Skier skier) {
             return 4.20;
         }
+
         public void ride(Skier skier) {
             super.rideFinished();
         }
+
         @Override
         public String getRideFinishMessage(Skier skier) {
             return "";
         }
+
         @Override
         public String getRideStartMessage(Skier skier) {
             return "";
         }
 
         @Override
-        public void addStartEdge() {}
+        public void addStartEdge() {
+        }
 
     }
 

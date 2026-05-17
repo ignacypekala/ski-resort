@@ -18,23 +18,23 @@ public class LiftQueue {
     private int getStartOffset() {
         return queue.length - start;
     }
+
     private int getLastIndex() {
         return (start + length - 1) % queue.length;
     }
+
     private void realloc(int newLength) {
         Skier[] newQueue = new Skier[newLength];
 
         if (start + length > queue.length) {
             System.arraycopy(
-                queue, start,
-                newQueue, 0,
-                getStartOffset()
-            );
+                    queue, start,
+                    newQueue, 0,
+                    getStartOffset());
             System.arraycopy(
-                queue, 0,
-                newQueue, getStartOffset(), 
-                getLastIndex() + 1
-            );
+                    queue, 0,
+                    newQueue, getStartOffset(),
+                    getLastIndex() + 1);
         } else {
             System.arraycopy(queue, start, newQueue, 0, length);
         }

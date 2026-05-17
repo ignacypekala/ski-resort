@@ -3,16 +3,15 @@ package io.github.ignacypekala.event;
 public class EventQueueList implements EventBroker {
     EventListNode head = null;
 
-    public EventQueueList() {}
+    public EventQueueList() {
+    }
 
     @Override
     public void send(Event event) {
         EventListNode previous = null;
         EventListNode current = head;
-        while (
-            current != null && 
-            event.getTime().compareTo(current.getEvent().getTime()) > 0
-        ) {
+        while (current != null &&
+                event.getTime().compareTo(current.getEvent().getTime()) > 0) {
             previous = current;
             current = current.getNext();
         }
@@ -29,8 +28,7 @@ public class EventQueueList implements EventBroker {
     public Event poll() {
         if (head == null) {
             throw new IllegalStateException(
-                "Cannot dequeue an event from an empty queue."
-            );
+                    "Cannot dequeue an event from an empty queue.");
         }
         Event event = head.getEvent();
         head = head.getNext();

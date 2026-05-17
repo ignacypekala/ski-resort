@@ -29,11 +29,23 @@ public class Simulation implements Clock, Reporter {
         }
     }
 
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+    }
 
-    @Override public Time getCurrentTime() { return currentTime; }
-    @Override public Time getStartTime() { return START_TIME; }
-    @Override public Time getEndTime() { return END_TIME; }
+    @Override
+    public Time getCurrentTime() {
+        return currentTime;
+    }
+
+    @Override
+    public Time getStartTime() {
+        return START_TIME;
+    }
+
+    @Override
+    public Time getEndTime() {
+        return END_TIME;
+    }
 
     @Override
     public void report(String message) {
@@ -41,5 +53,8 @@ public class Simulation implements Clock, Reporter {
         System.out.println(String.format("%s: %s", currentTime, message));
     }
 
-    @VisibleForTesting EventBroker getEventBroker() { return eventBroker; }
+    @VisibleForTesting
+    EventBroker getEventBroker() {
+        return eventBroker;
+    }
 }

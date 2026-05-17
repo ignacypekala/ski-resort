@@ -23,14 +23,29 @@ public class Vertex extends SimulationObject {
         slopes = new Slope[INITIAL_SLOPE_CAPACITY];
     }
 
-    public int getAltitude() { return altitude; }
-    public Coordinates getPosition() { return position; }
+    public int getAltitude() {
+        return altitude;
+    }
 
-    public int getLiftCount() { return liftCount; }
-    public Lift[] getLifts() { return lifts; }
+    public Coordinates getPosition() {
+        return position;
+    }
 
-    public int getSlopeCount() { return slopeCount; }
-    public Slope[] getSlopes() { return slopes; }
+    public int getLiftCount() {
+        return liftCount;
+    }
+
+    public Lift[] getLifts() {
+        return lifts;
+    }
+
+    public int getSlopeCount() {
+        return slopeCount;
+    }
+
+    public Slope[] getSlopes() {
+        return slopes;
+    }
 
     public void addLift(Lift lift) {
         if (liftCount == lifts.length) {

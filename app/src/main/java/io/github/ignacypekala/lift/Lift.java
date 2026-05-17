@@ -14,15 +14,14 @@ public class Lift extends Edge {
     private Clock clock;
 
     public Lift(
-        int identifier,
-        Vertex start,
-        Vertex end,
-        int rideTime,
-        int waitTime,
-        int passengerCapacity,
-        EventPublisher eventPublisher,
-        Clock clock
-    ) {
+            int identifier,
+            Vertex start,
+            Vertex end,
+            int rideTime,
+            int waitTime,
+            int passengerCapacity,
+            EventPublisher eventPublisher,
+            Clock clock) {
         super(identifier, start, end, rideTime);
         addStartEdge();
 
@@ -46,7 +45,7 @@ public class Lift extends Edge {
         ChairLineArrival event = new ChairLineArrival(chairLine);
         eventPublisher.send(event);
         chairLine.depart();
-        if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0 ) {
+        if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
             scheduleLiftDepart();
         }
     }
@@ -70,7 +69,7 @@ public class Lift extends Edge {
         return maxAppeal;
     }
 
-    @Override 
+    @Override
     public void ride(Skier skier) {
         queue.enqueue(skier);
         skier.liftQueueJoinedHook(this);
@@ -78,8 +77,13 @@ public class Lift extends Edge {
 
     @VisibleForTesting
     class LiftDepart extends RelativeEvent {
-        public LiftDepart() { super(clock, waitTime); }
-        public void handle() { depart(); }
+        public LiftDepart() {
+            super(clock, waitTime);
+        }
+
+        public void handle() {
+            depart();
+        }
 
         public String toString() {
             return String.format("%s has departed", Lift.this);
@@ -88,8 +92,13 @@ public class Lift extends Edge {
 
     @VisibleForTesting
     class LiftStart extends Event {
-        public LiftStart() { super(clock.getStartTime()); }
-        public void handle() { depart(); }
+        public LiftStart() {
+            super(clock.getStartTime());
+        }
+
+        public void handle() {
+            depart();
+        }
 
         public String toString() {
             return String.format("%s has started", Lift.this);
@@ -99,14 +108,20 @@ public class Lift extends Edge {
     @VisibleForTesting
     class ChairLineArrival extends RelativeEvent {
         LiftChairLine chairLine;
+
         public ChairLineArrival(LiftChairLine chairLine) {
             super(clock, getRideTime());
             this.chairLine = chairLine;
         }
-        public void handle() { chairLine.arrival(); }
+
+        public void handle() {
+            chairLine.arrival();
+        }
 
         @VisibleForTesting
-        LiftChairLine getChairLine() { return chairLine; }
+        LiftChairLine getChairLine() {
+            return chairLine;
+        }
 
         public String toString() {
             return String.format("%s has arrived", chairLine);
@@ -118,8 +133,13 @@ public class Lift extends Edge {
         getStart().addLift(this);
     }
 
-    public int getWaitTime() { return waitTime; }
-    public int getPassengerCapacity() { return passengerCapacity; }
+    public int getWaitTime() {
+        return waitTime;
+    }
+
+    public int getPassengerCapacity() {
+        return passengerCapacity;
+    }
 
     public String toString() {
         return String.format("lift %s", getIdentifier());
@@ -129,6 +149,7 @@ public class Lift extends Edge {
     public String getRideStartMessage(Skier skier) {
         return skier + " has boarded " + this + ".";
     }
+
     @Override
     public String getRideFinishMessage(Skier skier) {
         return skier + " has gotten off " + this + ".";

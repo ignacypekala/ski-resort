@@ -6,14 +6,13 @@ public class Slope extends Edge {
     private double durability;
 
     public Slope(
-        int identifier,
-        Vertex start,
-        Vertex end,
-        int rideTime,
-        double durability,
-        int difficulty,
-        double baseAppeal
-    ) {
+            int identifier,
+            Vertex start,
+            Vertex end,
+            int rideTime,
+            double durability,
+            int difficulty,
+            double baseAppeal) {
         super(identifier, start, end, rideTime);
         addStartEdge();
         if (durability < 0 || durability > 1) {
@@ -47,9 +46,8 @@ public class Slope extends Edge {
 
     public double surfaceAppeal() {
         return baseAppeal + (1.0 - baseAppeal) * Math.pow(
-            durability,
-            getRideCount()
-        );
+                durability,
+                getRideCount());
     }
 
     @Override
@@ -77,6 +75,7 @@ public class Slope extends Edge {
     public String getRideStartMessage(Skier skier) {
         return skier + " has started their run on " + this + ".";
     }
+
     @Override
     public String getRideFinishMessage(Skier skier) {
         return skier + " has finished their run on " + this + ".";
