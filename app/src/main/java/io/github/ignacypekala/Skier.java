@@ -119,7 +119,9 @@ public class Skier {
     public void rideFinished(Edge edge) {
         location = edge.getEnd();
         rideFinishedHook(edge);
-        ski();
+        if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
+            ski();
+        }
     }
 
     // Empty hooks to be overridden by subclasses

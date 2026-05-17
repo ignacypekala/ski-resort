@@ -41,7 +41,7 @@ public class TestClass {
                 difficultyWeight,
                 surfaceWeight,
                 0,
-                new Time(0, 0, 0),
+                clock.getStartTime(),
                 eventBroker,
                 clock
             );

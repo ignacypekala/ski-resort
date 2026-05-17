@@ -45,11 +45,13 @@ public class Lift extends Edge {
         ChairLineArrival event = new ChairLineArrival(chairLine);
         eventPublisher.send(event);
         chairLine.depart();
-        scheduleLiftDepart();
+        if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0 ) {
+            scheduleLiftDepart();
+        }
     }
 
     public void scheduleLiftDepart() {
-        LiftDepart event = new LiftDepart(this);
+        LiftDepart event = new LiftDepart();
         eventPublisher.send(event);
     }
 
