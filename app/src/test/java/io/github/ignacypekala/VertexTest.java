@@ -23,7 +23,6 @@ public class VertexTest {
     void construct() {
         assertEquals(altitude, vertex.getAltitude());
         assertEquals(coordinates, vertex.getPosition());
-        assertEquals(identifier, vertex.getIdentifier());
         assertEquals(0, vertex.getSlopeCount());
         assertEquals(0, vertex.getLiftCount());
         assertEquals(0, vertex.getEdgeCount());

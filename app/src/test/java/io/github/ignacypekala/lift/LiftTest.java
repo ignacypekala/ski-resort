@@ -68,13 +68,13 @@ public class LiftTest {
         // Check if the first departed carrier has arrived
         event = eventBroker.poll();
         assertTrue(eventBroker.hasEvents());
-        assertTrue(event instanceof Lift.CarrierArrival);
-        Lift.CarrierArrival carrierArrival = (Lift.CarrierArrival) event;
+        assertTrue(event instanceof Lift.Arrival);
+        Lift.Arrival carrierArrival = (Lift.Arrival) event;
         assertSame(lift, carrierArrival.getCarrier().getLift());
 
         // Check if the next lift depart was scheduled
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.LiftDepart);
+        assertTrue(event instanceof Lift.Depart);
 
         assertFalse(eventBroker.hasEvents());
     }
@@ -101,8 +101,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.CarrierArrival);
-        Lift.CarrierArrival arrival = (Lift.CarrierArrival) event;
+        assertTrue(event instanceof Lift.Arrival);
+        Lift.Arrival arrival = (Lift.Arrival) event;
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
         assertArrayEquals(
                 passengers,
@@ -125,8 +125,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.CarrierArrival);
-        Lift.CarrierArrival arrival = (Lift.CarrierArrival) event;
+        assertTrue(event instanceof Lift.Arrival);
+        Lift.Arrival arrival = (Lift.Arrival) event;
         Skier[] passengers = new Skier[liftCapacity];
         passengers[0] = skier;
         assertArrayEquals(
@@ -170,8 +170,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.CarrierArrival);
-        Lift.CarrierArrival arrival = (Lift.CarrierArrival) event;
+        assertTrue(event instanceof Lift.Arrival);
+        Lift.Arrival arrival = (Lift.Arrival) event;
 
         assertFalse(finishHook, "The skier has finished their ride prematurely.");
         arrival.handle();

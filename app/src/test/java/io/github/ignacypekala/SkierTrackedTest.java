@@ -23,7 +23,6 @@ public class SkierTrackedTest {
         Lift lift = new Lift(vertexA, vertexB, 3 * 60, 4 * 60, 3, eventBroker, simulation);
         new Slope(vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
         Skier skier = new SkierTracked(
-                0,
                 vertexA,
                 1,
                 0.0,
