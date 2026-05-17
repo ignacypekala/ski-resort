@@ -1,6 +1,6 @@
 package io.github.ignacypekala;
 
-public abstract class Edge extends GraphElement {
+public abstract class Edge extends SimulationObject {
     private Vertex start;
     private Vertex end;
     private int rideTime;

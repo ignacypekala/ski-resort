@@ -3,7 +3,7 @@ package io.github.ignacypekala;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 
-public class Vertex extends GraphElement {
+public class Vertex extends SimulationObject {
     private final int altitude;
     private final Coordinates position;
 
