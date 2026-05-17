@@ -30,7 +30,7 @@ public abstract class Edge {
         return String.format("%s -> %s", start, end);
     }
     public String toString() {
-        return String.format("Edge [%s]", getPathString());
+        return String.format("Edge (%s)", getPathString());
     }
 
 }
