@@ -42,7 +42,7 @@ public class Lift extends Edge {
             queue.dequeue();
         }
         Carrier carrier = new Carrier(passengers, i, this);
-        CarrierArrival event = new CarrierArrival(carrier);
+        Arrival event = new Arrival(carrier);
         eventPublisher.send(event);
         carrier.depart();
         if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
@@ -51,7 +51,7 @@ public class Lift extends Edge {
     }
 
     public void scheduleLiftDepart() {
-        LiftDepart event = new LiftDepart();
+        Depart event = new Depart();
         eventPublisher.send(event);
     }
 
@@ -76,8 +76,8 @@ public class Lift extends Edge {
     }
 
     @VisibleForTesting
-    class LiftDepart extends RelativeEvent {
-        public LiftDepart() {
+    class Depart extends RelativeEvent {
+        public Depart() {
             super(clock, waitTime);
         }
 
@@ -106,10 +106,10 @@ public class Lift extends Edge {
     }
 
     @VisibleForTesting
-    class CarrierArrival extends RelativeEvent {
+    class Arrival extends RelativeEvent {
         Carrier carrier;
 
-        public CarrierArrival(Carrier carrier) {
+        public Arrival(Carrier carrier) {
             super(clock, getRideTime());
             this.carrier = carrier;
         }
