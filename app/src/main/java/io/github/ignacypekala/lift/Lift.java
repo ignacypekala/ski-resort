@@ -30,6 +30,20 @@ public class Lift extends Edge {
         queue = new LiftQueue();
         this.eventPublisher = eventPublisher;
         this.clock = clock;
+        depart();
+    }
+
+    public void depart() {
+        int i = 0;
+        Skier[] passengers = new Skier[passengerCapacity];
+        while (i < passengerCapacity && !queue.empty()) {
+            passengers[i++] = queue.peek();
+            queue.dequeue();
+        }
+        LiftChairLine chairLine = new LiftChairLine(passengers, i, this);
+        ChairLineArrival event = new ChairLineArrival(chairLine);
+        eventPublisher.send(event);
+        chairLine.depart();
         scheduleLiftDepart();
     }
 
@@ -65,17 +79,7 @@ public class Lift extends Edge {
             this.lift = lift;
         }
         public void handle() {
-            int i = 0;
-            Skier[] passengers = new Skier[passengerCapacity];
-            while (i < passengerCapacity && !queue.empty()) {
-                passengers[i++] = queue.peek();
-                queue.dequeue();
-            }
-            LiftChairLine chairLine = new LiftChairLine(passengers, i, lift);
-            ChairLineArrival event = new ChairLineArrival(chairLine);
-            eventPublisher.send(event);
-            chairLine.depart();
-            scheduleLiftDepart();
+            depart();
         }
         @VisibleForTesting
         Lift getLift() { return lift; }
