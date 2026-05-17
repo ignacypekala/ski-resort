@@ -45,7 +45,6 @@ public class SimulationTest {
         }
     }
 
-
     @Test
     void loop() {
         EventBroker eventBroker = simulation.getEventBroker();
