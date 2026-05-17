@@ -47,7 +47,7 @@ public class SkierTrackedTest {
         // Lift depart
         simulation.tick();
 
-        // Charline arrival
+        // Carrier arrival
         simulation.tick();
 
         assertEquals("skier 0 has gotten off lift 0.", reports.remove());

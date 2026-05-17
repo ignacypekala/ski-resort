@@ -41,10 +41,10 @@ public class Lift extends Edge {
             passengers[i++] = queue.peek();
             queue.dequeue();
         }
-        LiftChairLine chairLine = new LiftChairLine(passengers, i, this);
-        ChairLineArrival event = new ChairLineArrival(chairLine);
+        Carrier carrier = new Carrier(passengers, i, this);
+        CarrierArrival event = new CarrierArrival(carrier);
         eventPublisher.send(event);
-        chairLine.depart();
+        carrier.depart();
         if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
             scheduleLiftDepart();
         }
@@ -106,25 +106,25 @@ public class Lift extends Edge {
     }
 
     @VisibleForTesting
-    class ChairLineArrival extends RelativeEvent {
-        LiftChairLine chairLine;
+    class CarrierArrival extends RelativeEvent {
+        Carrier carrier;
 
-        public ChairLineArrival(LiftChairLine chairLine) {
+        public CarrierArrival(Carrier carrier) {
             super(clock, getRideTime());
-            this.chairLine = chairLine;
+            this.carrier = carrier;
         }
 
         public void handle() {
-            chairLine.arrival();
+            carrier.arrival();
         }
 
         @VisibleForTesting
-        LiftChairLine getChairLine() {
-            return chairLine;
+        Carrier getCarrier() {
+            return carrier;
         }
 
         public String toString() {
-            return String.format("%s has arrived", chairLine);
+            return String.format("%s has arrived", carrier);
         }
     }
 

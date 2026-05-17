@@ -65,12 +65,12 @@ public class LiftTest {
         liftStart.handle();
         assertTrue(eventBroker.hasEvents());
 
-        // Check if the first departed chair line has arrived
+        // Check if the first departed carrier has arrived
         event = eventBroker.poll();
         assertTrue(eventBroker.hasEvents());
-        assertTrue(event instanceof Lift.ChairLineArrival);
-        Lift.ChairLineArrival chairLineArrival = (Lift.ChairLineArrival) event;
-        assertSame(lift, chairLineArrival.getChairLine().getLift());
+        assertTrue(event instanceof Lift.CarrierArrival);
+        Lift.CarrierArrival carrierArrival = (Lift.CarrierArrival) event;
+        assertSame(lift, carrierArrival.getCarrier().getLift());
 
         // Check if the next lift depart was scheduled
         event = eventBroker.poll();
@@ -82,7 +82,7 @@ public class LiftTest {
     @Test
     void fullLoad() {
         int liftCapacity = 3;
-        // Longer waitTime than rideTime so that the first ChairLine arrives
+        // Longer waitTime than rideTime so that the first carrier arrives
         // before the 2nd depart.
         Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, eventBroker, clock);
 
@@ -101,12 +101,12 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.ChairLineArrival);
-        Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
+        assertTrue(event instanceof Lift.CarrierArrival);
+        Lift.CarrierArrival arrival = (Lift.CarrierArrival) event;
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
         assertArrayEquals(
                 passengers,
-                arrival.getChairLine().getPassengers());
+                arrival.getCarrier().getPassengers());
     }
 
     @Test
@@ -125,13 +125,13 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.ChairLineArrival);
-        Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
+        assertTrue(event instanceof Lift.CarrierArrival);
+        Lift.CarrierArrival arrival = (Lift.CarrierArrival) event;
         Skier[] passengers = new Skier[liftCapacity];
         passengers[0] = skier;
         assertArrayEquals(
                 passengers,
-                arrival.getChairLine().getPassengers());
+                arrival.getCarrier().getPassengers());
     }
 
     private boolean startHook = false;
@@ -170,8 +170,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.ChairLineArrival);
-        Lift.ChairLineArrival arrival = (Lift.ChairLineArrival) event;
+        assertTrue(event instanceof Lift.CarrierArrival);
+        Lift.CarrierArrival arrival = (Lift.CarrierArrival) event;
 
         assertFalse(finishHook, "The skier has finished their ride prematurely.");
         arrival.handle();

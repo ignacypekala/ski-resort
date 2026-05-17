@@ -4,12 +4,12 @@ import io.github.ignacypekala.*;
 
 import com.google.common.annotations.VisibleForTesting;
 
-public class LiftChairLine {
+public class Carrier {
     private Skier[] passengers;
     private int passengerCount;
     private Lift lift;
 
-    public LiftChairLine(Skier[] passengers, int passengerCount, Lift lift) {
+    public Carrier(Skier[] passengers, int passengerCount, Lift lift) {
         this.passengers = passengers;
         this.passengerCount = passengerCount;
         this.lift = lift;
@@ -42,7 +42,7 @@ public class LiftChairLine {
     @Override
     public String toString() {
         return String.format(
-                "ChairLine (%s) with %d passengers",
+                "carrier (%s) with %d passengers",
                 lift,
                 passengerCount);
     }
