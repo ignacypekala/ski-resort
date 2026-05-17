@@ -6,14 +6,13 @@ import io.github.ignacypekala.lift.*;
 
 import java.util.Random;
 
-public class Skier {
+public class Skier extends GraphElement {
     private Vertex startPoint;
     private Vertex location;
     private int proficiency;
     private double spontaneity;
     private double difficultyWeight;
     private double surfaceWeight;
-    private int identifier;
     private Time startTime;
 
     private Random generator = new Random();
@@ -23,16 +22,17 @@ public class Skier {
 
 
     public Skier(
+        int identifier,
         Vertex startPoint,
         int proficiency,
         double spontaneity,
         double difficultyWeight,
         double surfaceWeight,
-        int identifier,
         Time startTime,
         EventPublisher eventPublisher,
         Clock clock
     ) {
+        super(identifier);
         this.startPoint = startPoint;
         location = startPoint;
 
@@ -64,7 +64,6 @@ public class Skier {
         }
         this.surfaceWeight = surfaceWeight;
 
-        this.identifier = identifier;
         this.startTime = startTime;
         
         this.eventPublisher = eventPublisher;
@@ -160,14 +159,13 @@ public class Skier {
     }
 
     @Override
-    public String toString() { return String.format("skier %d", identifier); }
+    public String toString() { return String.format("skier %d", getIdentifier()); }
 
     public Vertex getStartPoint() { return startPoint; }
     public int getProficiency() { return proficiency; }
     public double getSpontaneity() { return spontaneity; }
     public double getDifficultyWeight() { return difficultyWeight; }
     public double getSurfaceWeight() { return surfaceWeight; }
-    public int getIdentifier() { return identifier; }
     public Time getStartTime() { return startTime; }
     public Vertex getLocation() { return location; }
 

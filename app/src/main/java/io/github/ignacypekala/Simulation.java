@@ -16,11 +16,11 @@ public class Simulation implements Clock, Reporter {
         eventBroker = new EventQueueList();
     }
 
-    private void tick() {
+    @VisibleForTesting
+    void tick() {
         Event event = eventBroker.poll();
         currentTime = event.getTime();
         event.handle();
-        System.out.println(event + " at " + currentTime);
     }
 
     public void run() {
@@ -37,6 +37,7 @@ public class Simulation implements Clock, Reporter {
 
     @Override
     public void report(String message) {
+        message = Character.toUpperCase(message.charAt(0)) + message.substring(1);
         System.out.println(String.format("%s: %s", currentTime, message));
     }
 

@@ -127,11 +127,11 @@ public class Lift extends Edge {
 
     @Override
     public String getRideStartMessage(Skier skier) {
-        return skier + "has boarded " + this;
+        return skier + " has boarded " + this + ".";
     }
     @Override
     public String getRideFinishMessage(Skier skier) {
-        return skier + "has gotten off " + this;
+        return skier + " has gotten off " + this + ".";
     }
 
 }

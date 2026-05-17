@@ -27,6 +27,7 @@ public class TestClass {
     }
 
     public static class TestSkier extends Skier {
+        static int identifier = 0;
         static Coordinates pos = new Coordinates(0, 0);
         static Vertex a = new Vertex(0, 0, pos);
 
@@ -36,12 +37,12 @@ public class TestClass {
             double surfaceWeight
         ) {
             super(
+                identifier++,
                 a,
                 proficiency,
                 0,
                 difficultyWeight,
                 surfaceWeight,
-                0,
                 clock.getStartTime(),
                 eventBroker,
                 clock
