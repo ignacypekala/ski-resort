@@ -1,8 +1,10 @@
-package io.github.ignacypekala;
+package io.github.ignacypekalai
 
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 
+import java.util.Scanner;
+import java.util.Locale;
 import com.google.common.annotations.VisibleForTesting;
 
 public class Simulation implements Clock, Reporter {
@@ -30,7 +32,15 @@ public class Simulation implements Clock, Reporter {
     }
 
     public static void main(String[] args) {
+        Scanner stdin = new Scanner(System.in);
+        stdin.useLocale(Locale.ENGLISH);
+        Simulation simulation = new Simulation();
+        SimulationLoader loader = new SimulationLoader(simulation);
+        loader.load(stdin);
+        simulation.run();
+        stdin.close();
     }
+
 
     @Override
     public Time getCurrentTime() {

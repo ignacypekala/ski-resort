@@ -3,6 +3,8 @@ package io.github.ignacypekala;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 
+import java.util.Scanner;
+
 public class Vertex extends SimulationObject {
     private static int nextIdentifier = 0;
 
@@ -23,30 +25,6 @@ public class Vertex extends SimulationObject {
         this.position = position;
         lifts = new Lift[INITIAL_LIFT_CAPACITY];
         slopes = new Slope[INITIAL_SLOPE_CAPACITY];
-    }
-
-    public int getAltitude() {
-        return altitude;
-    }
-
-    public Coordinates getPosition() {
-        return position;
-    }
-
-    public int getLiftCount() {
-        return liftCount;
-    }
-
-    public Lift[] getLifts() {
-        return lifts;
-    }
-
-    public int getSlopeCount() {
-        return slopeCount;
-    }
-
-    public Slope[] getSlopes() {
-        return slopes;
     }
 
     public void addLift(Lift lift) {
@@ -76,6 +54,30 @@ public class Vertex extends SimulationObject {
         System.arraycopy(slopes, 0, edges, 0, slopeCount);
         System.arraycopy(lifts, 0, edges, slopeCount, liftCount);
         return edges;
+    }
+
+    public int getAltitude() {
+        return altitude;
+    }
+
+    public Coordinates getPosition() {
+        return position;
+    }
+
+    public int getLiftCount() {
+        return liftCount;
+    }
+
+    public Lift[] getLifts() {
+        return lifts;
+    }
+
+    public int getSlopeCount() {
+        return slopeCount;
+    }
+
+    public Slope[] getSlopes() {
+        return slopes;
     }
 
     public String toString() {
