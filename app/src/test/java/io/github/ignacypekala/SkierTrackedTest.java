@@ -21,7 +21,7 @@ public class SkierTrackedTest {
         Vertex vertexA = new Vertex(0, pos);
         Vertex vertexB = new Vertex(0, pos);
         Lift lift = new Lift(vertexA, vertexB, 3 * 60, 4 * 60, 3, eventBroker, simulation);
-        new Slope(vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
+        Slope slope = new Slope(vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
         Skier skier = new SkierTracked(
                 vertexA,
                 1,
@@ -35,13 +35,25 @@ public class SkierTrackedTest {
 
         simulation.tick();
         assertEquals(
-                "skier 0 has joined the queue for lift 0.",
-                reports.remove());
+            String.format(
+                "skier %d has joined the queue for lift %d.",
+                skier.getIdentifier(),
+                lift.getIdentifier()
+            ),
+            reports.remove()
+        );
         assertTrue(eventBroker.hasEvents());
 
         // Lift start
         simulation.tick();
-        assertEquals("skier 0 has boarded lift 0.", reports.remove());
+        assertEquals(
+            String.format(
+                "skier %d has boarded lift %d.",
+                skier.getIdentifier(),
+                lift.getIdentifier()
+            ),
+            reports.remove()
+        );
 
         // Lift depart
         simulation.tick();
@@ -49,12 +61,33 @@ public class SkierTrackedTest {
         // Carrier arrival
         simulation.tick();
 
-        assertEquals("skier 0 has gotten off lift 0.", reports.remove());
-        assertEquals("skier 0 has started their run on slope 0.", reports.remove());
+        assertEquals(
+            String.format(
+                "skier %d has gotten off lift %d.",
+                skier.getIdentifier(),
+                lift.getIdentifier()
+            ),
+            reports.remove()
+        );
+        assertEquals(
+            String.format(
+                "skier %d has started their run on slope %d.",
+                skier.getIdentifier(),
+                slope.getIdentifier()
+            ),
+            reports.remove()
+        );
 
         simulation.tick();
         simulation.tick();
-        assertEquals("skier 0 has finished their run on slope 0.", reports.remove());
+        assertEquals(
+            String.format(
+                "skier %d has finished their run on slope %d.",
+                skier.getIdentifier(),
+                slope.getIdentifier()
+            ),
+            reports.remove()
+        );
 
     }
 
