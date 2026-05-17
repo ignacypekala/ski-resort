@@ -30,7 +30,8 @@ public class Lift extends Edge {
         queue = new LiftQueue();
         this.eventPublisher = eventPublisher;
         this.clock = clock;
-        depart();
+
+        eventPublisher.send(new LiftStart());
     }
 
     public void depart() {
@@ -73,16 +74,14 @@ public class Lift extends Edge {
 
     @VisibleForTesting
     class LiftDepart extends RelativeEvent {
-        private Lift lift;
-        public LiftDepart(Lift lift) {
-            super(clock, waitTime);
-            this.lift = lift;
-        }
-        public void handle() {
-            depart();
-        }
-        @VisibleForTesting
-        Lift getLift() { return lift; }
+        public LiftDepart() { super(clock, waitTime); }
+        public void handle() { depart(); }
+    }
+
+    @VisibleForTesting
+    class LiftStart extends Event {
+        public LiftStart() { super(clock.getStartTime()); }
+        public void handle() { depart(); }
     }
 
     @VisibleForTesting
@@ -92,9 +91,8 @@ public class Lift extends Edge {
             super(clock, getRideTime());
             this.chairLine = chairLine;
         }
-        public void handle() {
-           chairLine.arrival(); 
-        }
+        public void handle() { chairLine.arrival(); }
+
         @VisibleForTesting
         LiftChairLine getChairLine() { return chairLine; }
     }

@@ -54,32 +54,28 @@ public class LiftTest {
     @Test
     void dryRun() {
         assertFalse(eventBroker.hasEvents());
-        Lift lift = new Lift(a, b, 2, 3, 10, eventBroker, clock);
+        Lift lift = new Lift(a, b, 2 * 60, 3, 1 * 60, eventBroker, clock);
         assertTrue(eventBroker.hasEvents());
 
         // Check if the lift has scheduled its first depart
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.LiftDepart);
-        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
-        assertSame(lift, departEvent.getLift());
+        assertTrue(event instanceof Lift.LiftStart);
+        Lift.LiftStart liftStart = (Lift.LiftStart) event;
 
         assertFalse(eventBroker.hasEvents());
-        departEvent.handle();
+        liftStart.handle();
         assertTrue(eventBroker.hasEvents());
 
-        // Check if the next lift depart was scheduled
+        // Check if the first departed chair line has arrived
         event = eventBroker.poll();
         assertTrue(eventBroker.hasEvents());
-        assertTrue(event instanceof Lift.LiftDepart);
-        departEvent = (Lift.LiftDepart) event;
-        assertSame(lift, departEvent.getLift());
-
-        // Check if the departed chair line had its arrival scheduled
-        event = eventBroker.poll();
-        assertFalse(eventBroker.hasEvents());
         assertTrue(event instanceof Lift.ChairLineArrival);
         Lift.ChairLineArrival chairLineArrival = (Lift.ChairLineArrival) event;
         assertSame(lift, chairLineArrival.getChairLine().getLift());
+
+        // Check if the next lift depart was scheduled
+        event = eventBroker.poll();
+        assertTrue(event instanceof Lift.LiftDepart);
 
         assertFalse(eventBroker.hasEvents());
     }
@@ -100,8 +96,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.LiftDepart);
-        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftStart);
+        Lift.LiftStart departEvent = (Lift.LiftStart) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
@@ -125,9 +121,9 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.LiftDepart);
-        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
-        departEvent.handle();
+        assertTrue(event instanceof Lift.LiftStart);
+        Lift.LiftStart liftStart = (Lift.LiftStart) event;
+        liftStart.handle();
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
@@ -163,8 +159,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.LiftDepart);
-        Lift.LiftDepart departEvent = (Lift.LiftDepart) event;
+        assertTrue(event instanceof Lift.LiftStart);
+        Lift.LiftStart departEvent = (Lift.LiftStart) event;
 
         assertFalse(startHook, "The skier has started their ride prematurely.");
         departEvent.handle();
