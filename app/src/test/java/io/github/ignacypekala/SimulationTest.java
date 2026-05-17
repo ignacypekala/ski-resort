@@ -55,10 +55,13 @@ public class SimulationTest {
         Slope slope = new Slope(b, a, 0.8, 5, 5 * 60, 1);
         Skier skier = new Skier(
             a, 5, 0, 0.5, 0.5, 0,
-            new Time(16, 0, 0),
+            new Time(14, 0, 0),
             eventBroker,
             simulation
         );
         simulation.run();
+        assertEquals(5, lift.getRideCount());
+        assertEquals(5, slope.getRideCount());
+        assertSame(a, skier.getLocation());
     }
 }
