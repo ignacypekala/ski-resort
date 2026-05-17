@@ -8,7 +8,6 @@ public class SkierTracked extends Skier {
     private Reporter reporter;
 
     public SkierTracked(
-            int identifier,
             Vertex startPoint,
             int proficiency,
             double spontaneity,
@@ -19,7 +18,6 @@ public class SkierTracked extends Skier {
             Clock clock,
             Reporter reporter) {
         super(
-                identifier,
                 startPoint,
                 proficiency,
                 spontaneity,
