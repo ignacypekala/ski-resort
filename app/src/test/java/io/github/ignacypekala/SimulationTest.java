@@ -15,9 +15,6 @@ public class SimulationTest {
     private ArrayList<Event> eventHistory;
     private Vertex a;
     private Vertex b;
-    private Vertex c;
-    private Vertex d;
-    private Vertex e;
 
     @BeforeEach
     void intializeEnvironment() {
@@ -26,9 +23,6 @@ public class SimulationTest {
         eventBroker = simulation.getEventBroker();
         a = new Vertex(0, new Coordinates(0, 0), 0);
         b = new Vertex(0, new Coordinates(0, 0), 1);
-        c = new Vertex(0, new Coordinates(0, 0), 2);
-        d = new Vertex(0, new Coordinates(0, 0), 3);
-        e = new Vertex(0, new Coordinates(0, 0), 4);
     }
 
     @Test
@@ -72,4 +66,5 @@ public class SimulationTest {
         assertEquals(3, slope.getRideCount());
         assertSame(a, skier.getLocation());
     }
+
 }
