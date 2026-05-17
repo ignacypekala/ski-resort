@@ -19,7 +19,7 @@ public abstract class Edge {
     // Adds this edge to the appropriate collection in the start vertex.
     public abstract void addStartEdge();
 
-    public void incrementRideCount() { rideCount += 1; }
+    public void rideFinished() { rideCount += 1; }
 
     public Vertex getStart() { return start; }
     public Vertex getEnd() { return end; }

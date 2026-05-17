@@ -13,7 +13,7 @@ public class EdgeTest {
             return 4.20;
         }
         public void ride(Skier skier) {
-            super.incrementRideCount();
+            super.rideFinished();
         }
 
         @Override

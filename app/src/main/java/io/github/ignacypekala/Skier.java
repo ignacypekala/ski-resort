@@ -119,6 +119,7 @@ public class Skier {
     public void rideFinished(Edge edge) {
         location = edge.getEnd();
         rideFinishedHook(edge);
+        edge.rideFinished();
         if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
             ski();
         }
