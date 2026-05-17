@@ -10,10 +10,10 @@ public class SlopeTest {
 
     @Test
     void construct() {
-        Vertex a = new Vertex(0, 0, new Coordinates(1, 1));
-        Vertex b = new Vertex('b', 0, new Coordinates(-1, -1));
+        Vertex a = new Vertex(0, new Coordinates(1, 1));
+        Vertex b = new Vertex(0, new Coordinates(-1, -1));
         assertEquals(0, a.getSlopeCount());
-        Slope slope = new Slope(0, a, b, 10, 1.0, 5, 1.0);
+        Slope slope = new Slope(a, b, 10, 1.0, 5, 1.0);
         assertEquals(1, a.getSlopeCount());
 
         assertEquals(slope, a.getSlopes()[0]);

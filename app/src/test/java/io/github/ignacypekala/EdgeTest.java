@@ -39,8 +39,8 @@ public class EdgeTest {
     @Test
     void construct() {
         Coordinates pos = new Coordinates(0, 0);
-        Vertex a = new Vertex(0, 0, pos);
-        Vertex b = new Vertex(0, 0, pos);
+        Vertex a = new Vertex(0, pos);
+        Vertex b = new Vertex(0, pos);
         Edge edge = new ConcreteEdge(a, b, 1);
         assertEquals(1, edge.getRideTime());
         assertSame(a, edge.getStart());

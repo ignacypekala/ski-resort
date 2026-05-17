@@ -18,10 +18,10 @@ public class SkierTrackedTest {
         Simulation simulation = new HijackedSimulation();
         EventBroker eventBroker = simulation.getEventBroker();
         Coordinates pos = new Coordinates(0, 0);
-        Vertex vertexA = new Vertex(0, 0, pos);
-        Vertex vertexB = new Vertex(1, 0, pos);
-        Lift lift = new Lift(0, vertexA, vertexB, 3 * 60, 4 * 60, 3, eventBroker, simulation);
-        new Slope(0, vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
+        Vertex vertexA = new Vertex(0, pos);
+        Vertex vertexB = new Vertex(0, pos);
+        Lift lift = new Lift(vertexA, vertexB, 3 * 60, 4 * 60, 3, eventBroker, simulation);
+        new Slope(vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
         Skier skier = new SkierTracked(
                 0,
                 vertexA,

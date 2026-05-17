@@ -12,12 +12,11 @@ public class VertexTest {
     private static Clock clock = new Simulation();
     private static Coordinates coordinates = new Coordinates(11, 0);
     private static int altitude = 2001;
-    private static int identifier = 9;
     private Vertex vertex;
 
     @BeforeEach
     void intialiseEnvironment() {
-        vertex = new Vertex(identifier, altitude, coordinates);
+        vertex = new Vertex(altitude, coordinates);
     }
 
     @Test
@@ -55,7 +54,6 @@ public class VertexTest {
         Lift[] lifts = new Lift[slopeCount];
         for (int i = 0; i < liftCount; i++) {
             Lift lift = new Lift(
-                    0,
                     vertex, vertex,
                     20, 20, 20,
                     eventBroker,

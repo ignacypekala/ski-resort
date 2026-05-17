@@ -11,31 +11,28 @@ public class TestClass {
     static Clock clock = new Simulation();
 
     public static class TestSlope extends Slope {
-        static int identifier = 0;
         static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, 0, pos);
-        static Vertex b = new Vertex(1, 0, pos);
+        static Vertex a = new Vertex(0, pos);
+        static Vertex b = new Vertex(0, pos);
 
         public TestSlope(
                 double durability,
                 int difficulty,
                 double baseAppeal,
                 int rideTime) {
-            super(identifier++, a, b, rideTime, durability, difficulty, baseAppeal);
+            super(a, b, rideTime, durability, difficulty, baseAppeal);
         }
     }
 
     public static class TestSkier extends Skier {
-        static int identifier = 0;
         static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, 0, pos);
+        static Vertex a = new Vertex(0, pos);
 
         public TestSkier(
                 int proficiency,
                 double difficultyWeight,
                 double surfaceWeight) {
             super(
-                    identifier++,
                     a,
                     proficiency,
                     0,
