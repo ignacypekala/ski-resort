@@ -86,7 +86,7 @@ public class SimulationTest {
                 simulation.getClock());
 
         simulation.run();
-        simulation.printStatistics();
+        simulation.printSummary();
 
         assertEquals(3, lift.getRideCount());
         assertEquals(3, slope.getRideCount());

@@ -34,7 +34,7 @@ public class Simulation implements Reporter {
         }
     }
 
-    void printStatistics() {
+    void printSummary() {
         for (Edge lift : lifts.getEdges()) {
             System.out.println(String.format(
                     "%s: %d rides",
@@ -58,7 +58,7 @@ public class Simulation implements Reporter {
         loader.load(stdin);
 
         simulation.run();
-        simulation.printStatistics();
+        simulation.printSummary();
 
         stdin.close();
     }
