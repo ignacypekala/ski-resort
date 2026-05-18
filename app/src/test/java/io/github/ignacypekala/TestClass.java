@@ -75,12 +75,4 @@ public class TestClass {
             rideFinishedCallback.accept(edge);
         }
     }
-
-    public static EventBroker getEventBroker() {
-        return eventBroker;
-    }
-
-    public static Clock getClock() {
-        return clock;
-    }
 }

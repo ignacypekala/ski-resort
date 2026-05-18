@@ -9,12 +9,6 @@ public class VertexRegistry {
         vertices = new Vertex[size];
     }
 
-    public void resize(int size) {
-        Vertex[] newVertices = new Vertex[size];
-        System.arraycopy(vertices, 0, newVertices, 0, vertices.length);
-        vertices = newVertices;
-    }
-
     public void register(Vertex vertex) {
         int identifier = vertex.getIdentifier();
         if (vertices == null) {
@@ -52,9 +46,4 @@ public class VertexRegistry {
         }
         return vertex;
     }
-
-    public Vertex[] getVertices() {
-        return vertices;
-    }
 }
-

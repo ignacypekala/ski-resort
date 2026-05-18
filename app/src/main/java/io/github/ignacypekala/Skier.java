@@ -198,8 +198,4 @@ public class Skier extends SimulationObject {
         return location;
     }
 
-    protected Clock getClock() {
-        return clock;
-    }
-
 }
