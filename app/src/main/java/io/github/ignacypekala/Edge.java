@@ -48,8 +48,5 @@ public abstract class Edge extends SimulationObject {
         return rideCount;
     }
 
-    public String toString() {
-        return "edge " + getIdentifier();
-    }
-
+    public abstract String toString();
 }
