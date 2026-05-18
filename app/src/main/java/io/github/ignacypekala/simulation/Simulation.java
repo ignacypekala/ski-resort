@@ -56,7 +56,7 @@ public class Simulation implements Clock, Reporter {
         stdin.useLocale(Locale.ENGLISH);
 
         Simulation simulation = new Simulation();
-        SimulationLoader loader = new SimulationLoader(simulation);
+        Loader loader = new Loader(simulation);
         loader.load(stdin);
 
         simulation.run();

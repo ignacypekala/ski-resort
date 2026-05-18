@@ -8,7 +8,7 @@ import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 
-public class SimulationLoader {
+public class Loader {
     private VertexRegistry vertices;
     private EdgeRegistry lifts;
     private EdgeRegistry slopes;
@@ -17,7 +17,7 @@ public class SimulationLoader {
     private Reporter reporter;
     private int nextSkierIdentifier;
 
-    public SimulationLoader(Simulation simulation) {
+    public Loader(Simulation simulation) {
         vertices = simulation.getVertexRegistry();
         lifts = simulation.getLiftRegistry();
         slopes = simulation.getSlopeRegistry();

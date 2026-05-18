@@ -13,14 +13,14 @@ import io.github.ignacypekala.lift.Lift;
 import io.github.ignacypekala.utils.Coordinates;
 import io.github.ignacypekala.utils.Time;
 
-public class SimulationLoaderTest {
+public class LoaderTest {
     Simulation simulation;
-    SimulationLoader loader;
+    Loader loader;
 
     @BeforeEach
     void initializeEnvironment() {
         simulation = new Simulation();
-        loader = new SimulationLoader(simulation);
+        loader = new Loader(simulation);
     }
 
     @Test

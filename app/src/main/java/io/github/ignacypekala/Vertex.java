@@ -1,10 +1,10 @@
 package io.github.ignacypekala;
 
 import io.github.ignacypekala.lift.*;
-import io.github.ignacypekala.simulation.SimulationObject;
+import io.github.ignacypekala.simulation.Object;
 import io.github.ignacypekala.utils.*;
 
-public class Vertex extends SimulationObject {
+public class Vertex extends Object {
     private final int altitude;
     private final Coordinates position;
 
