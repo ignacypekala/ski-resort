@@ -6,7 +6,7 @@ Use the following command to run:
 
 ### the project
 ```
-./gradlew run
+./gradlew run < example_input.txt
 ```
 
 ###  the test suite
