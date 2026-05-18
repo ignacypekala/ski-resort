@@ -18,7 +18,7 @@ public class Carrier {
     public void depart() {
         for (int i = 0; i < passengerCount; i++) {
             Skier passenger = passengers[i];
-            passenger.rideStartedHook(lift);
+            passenger.rideStarted(lift);
         }
     }
 

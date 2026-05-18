@@ -101,7 +101,7 @@ public class Skier extends SimulationObject {
     public void rideSlope(Slope slope) {
         SlopeRideFinished event = new SlopeRideFinished(slope, clock);
         eventPublisher.send(event);
-        rideStartedHook(slope);
+        rideStarted(slope);
     }
 
     public void rideStarted(Edge edge) {
