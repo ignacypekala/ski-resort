@@ -80,7 +80,7 @@ public class Loader {
 
         Vertex start = vertices.fetch(lineScanner.nextInt());
         Vertex end = vertices.fetch(lineScanner.nextInt());
-        int waitTime = lineScanner.nextInt();
+        int departureInterval = lineScanner.nextInt();
         int passengerCapacity = lineScanner.nextInt();
         int rideTime = lineScanner.nextInt();
 
@@ -90,7 +90,7 @@ public class Loader {
                 start,
                 end,
                 rideTime,
-                waitTime,
+                departureInterval,
                 passengerCapacity,
                 publisher,
                 clock);

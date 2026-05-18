@@ -6,7 +6,7 @@ import io.github.ignacypekala.simulation.Clock;
 
 public class Lift extends Edge {
     private LiftQueue queue;
-    private int waitTime;
+    private int departureInterval;
     private int passengerCapacity;
     private Publisher eventPublisher;
     private Clock clock;
@@ -16,13 +16,13 @@ public class Lift extends Edge {
             Vertex start,
             Vertex end,
             int rideTime,
-            int waitTime,
+            int departureInterval,
             int passengerCapacity,
             Publisher eventPublisher,
             Clock clock) {
         super(identifier, start, end, rideTime);
 
-        this.waitTime = waitTime;
+        this.departureInterval = departureInterval;
         this.passengerCapacity = passengerCapacity;
         queue = new LiftQueue();
         this.eventPublisher = eventPublisher;
@@ -76,7 +76,7 @@ public class Lift extends Edge {
 
     class Depart extends RelativeEvent {
         public Depart() {
-            super(clock, waitTime);
+            super(clock, departureInterval);
         }
 
         public void handle() {
@@ -143,8 +143,8 @@ public class Lift extends Edge {
         getStart().addLift(this);
     }
 
-    public int getWaitTime() {
-        return waitTime;
+    public int getDepartureInterval() {
+        return departureInterval;
     }
 
     public int getPassengerCapacity() {

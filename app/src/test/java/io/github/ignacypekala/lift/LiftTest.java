@@ -35,7 +35,7 @@ public class LiftTest {
         lift.addStartEdge();
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
-        assertEquals(1, lift.getWaitTime());
+        assertEquals(1, lift.getDepartureInterval());
         assertEquals(2, lift.getPassengerCapacity());
         assertEquals(3, lift.getRideTime());
         assertTrue(
@@ -87,7 +87,7 @@ public class LiftTest {
     @Test
     void fullLoad() {
         int liftCapacity = 3;
-        // Longer waitTime than rideTime so that the first carrier arrives
+        // Longer departureInterval than rideTime so that the first carrier arrives
         // before the 2nd depart.
         Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, eventBroker, clock);
 

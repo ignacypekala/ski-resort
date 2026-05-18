@@ -56,7 +56,7 @@ public class LoaderTest {
         assertEquals(42, lift.getIdentifier());
         assertSame(start, lift.getStart());
         assertSame(end, lift.getEnd());
-        assertEquals(300, lift.getWaitTime());
+        assertEquals(300, lift.getDepartureInterval());
         assertEquals(3, lift.getPassengerCapacity());
         assertEquals(600, lift.getRideTime());
     }
