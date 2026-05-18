@@ -83,9 +83,9 @@ public class LoaderTest {
                 0.0,
                 1.0,
                 0.0,
-                simulation.getStartTime(),
+                simulation.getClock().getStartTime(),
                 simulation.getEventBroker(),
-                simulation);
+                simulation.getClock());
         assertEquals(0.4, slope.appeal(skier), 1e-9);
     }
 

@@ -25,7 +25,8 @@ public class LiftTest {
         a = new Vertex(0, 0, pos);
         b = new Vertex(1, 0, pos);
         eventBroker = new EventQueue();
-        clock = new Simulation();
+        Simulation simulation = new Simulation();
+        clock = simulation.getClock();
     }
 
     @Test

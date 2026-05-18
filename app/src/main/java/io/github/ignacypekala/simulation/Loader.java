@@ -21,7 +21,7 @@ public class Loader {
         vertices = simulation.getVertexRegistry();
         lifts = simulation.getLiftRegistry();
         slopes = simulation.getSlopeRegistry();
-        clock = simulation;
+        clock = simulation.getClock();
         publisher = simulation.getEventBroker();
         reporter = simulation;
     }

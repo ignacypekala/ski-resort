@@ -7,17 +7,15 @@ import io.github.ignacypekala.event.*;
 import java.util.Scanner;
 import java.util.Locale;
 
-public class Simulation implements Clock, Reporter {
-    private final Time START_TIME = new Time(9, 0, 0);
-    private final Time END_TIME = new Time(15, 0, 0);
-    private Time currentTime;
+public class Simulation implements Reporter {
+    private SimulationClock clock;
     private Broker eventBroker;
     private VertexRegistry vertices;
     private EdgeRegistry lifts;
     private EdgeRegistry slopes;
 
     public Simulation() {
-        currentTime = new Time(9, 0, 0);
+        clock = new SimulationClock();
         eventBroker = new EventQueue();
         vertices = new VertexRegistry();
         lifts = new EdgeRegistry();
@@ -26,7 +24,7 @@ public class Simulation implements Clock, Reporter {
 
     void tick() {
         Event event = eventBroker.poll();
-        currentTime = event.getTime();
+        clock.setTime(event.getTime());
         event.handle();
     }
 
@@ -65,24 +63,8 @@ public class Simulation implements Clock, Reporter {
         stdin.close();
     }
 
-    @Override
-    public Time getCurrentTime() {
-        return currentTime;
-    }
-
-    @Override
-    public Time getStartTime() {
-        return START_TIME;
-    }
-
-    @Override
-    public Time getEndTime() {
-        return END_TIME;
-    }
-
-    @Override
-    public boolean isTimeUp() {
-        return END_TIME.compareTo(currentTime) <= 0;
+    public Clock getClock() {
+        return clock;
     }
 
     protected VertexRegistry getVertexRegistry() {
@@ -100,7 +82,7 @@ public class Simulation implements Clock, Reporter {
     @Override
     public void report(String message) {
         message = Character.toUpperCase(message.charAt(0)) + message.substring(1);
-        System.out.println(String.format("%s: %s", currentTime, message));
+        System.out.println(String.format("%s: %s", clock.getTime(), message));
     }
 
     Broker getEventBroker() {

@@ -5,6 +5,6 @@ import io.github.ignacypekala.utils.Time;
 
 public abstract class RelativeEvent extends Event {
     public RelativeEvent(Clock clock, int delay) {
-        super(Time.secondsLater(clock.getCurrentTime(), delay));
+        super(Time.secondsLater(clock.getTime(), delay));
     }
 }

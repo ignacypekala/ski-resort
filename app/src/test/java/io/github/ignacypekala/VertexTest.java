@@ -12,7 +12,8 @@ import io.github.ignacypekala.utils.Coordinates;
 
 public class VertexTest {
     private static Broker eventBroker = new EventQueue();
-    private static Clock clock = new Simulation();
+    private static Simulation simulation = new Simulation();
+    private static Clock clock = simulation.getClock();
     private static Coordinates coordinates = new Coordinates(11, 0);
     private static int altitude = 2001;
     private Vertex vertex;

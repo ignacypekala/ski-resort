@@ -48,7 +48,7 @@ public class SimulationTest {
 
     private class ArtificialEvent extends RelativeEvent {
         public ArtificialEvent(int delay) {
-            super(simulation, delay);
+            super(simulation.getClock(), delay);
         }
 
         public void handle() {
@@ -60,7 +60,15 @@ public class SimulationTest {
     void loop() {
         EdgeRegistry lifts = simulation.getLiftRegistry();
         lifts.initialize(1);
-        Lift lift = new Lift(0, a, b, 15 * 60, 60, 3, eventBroker, simulation);
+        Lift lift = new Lift(
+                0,
+                a,
+                b,
+                15 * 60,
+                60,
+                3,
+                eventBroker,
+                simulation.getClock());
         lift.addStartEdge();
         lifts.register(lift);
 
@@ -75,7 +83,7 @@ public class SimulationTest {
                 a, 5, 0, 0.5, 0.5,
                 new Time(14, 0, 0),
                 eventBroker,
-                simulation);
+                simulation.getClock());
 
         simulation.run();
         simulation.printRecap();

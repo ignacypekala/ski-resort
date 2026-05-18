@@ -9,7 +9,8 @@ import io.github.ignacypekala.utils.Coordinates;
 
 public class TestClass {
     static Broker eventBroker = new EventQueue();
-    static Clock clock = new Simulation();
+    static Simulation simulation = new Simulation();
+    static Clock clock = simulation.getClock();
 
     public static class TestSlope extends Slope {
         static Coordinates pos = new Coordinates(0, 0);
