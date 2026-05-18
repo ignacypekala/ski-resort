@@ -52,4 +52,9 @@ public class VertexRegistry {
         }
         return vertex;
     }
+
+    public Vertex[] getVertices() {
+        return vertices;
+    }
 }
+

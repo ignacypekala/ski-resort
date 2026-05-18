@@ -43,5 +43,9 @@ public class EdgeRegistry {
         }
         return edge;
     }
+
+    public Edge[] getEdges() {
+        return edges;
+    }
 }
 

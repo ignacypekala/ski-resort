@@ -13,13 +13,15 @@ public class Simulation implements Clock, Reporter {
     private Time currentTime;
     private EventBroker eventBroker;
     private VertexRegistry vertices;
-    private EdgeRegistry edges;
+    private EdgeRegistry lifts;
+    private EdgeRegistry slopes;
 
     public Simulation() {
         currentTime = new Time(9, 0, 0);
         eventBroker = new EventQueueList();
         vertices = new VertexRegistry();
-        edges = new EdgeRegistry();
+        lifts = new EdgeRegistry();
+        slopes = new EdgeRegistry();
     }
 
     @VisibleForTesting
@@ -35,13 +37,35 @@ public class Simulation implements Clock, Reporter {
         }
     }
 
+    @VisibleForTesting
+    void printRecap() {
+        for (Edge lift : lifts.getEdges()) {
+            System.out.println(String.format(
+                "%s: %d rides",
+                lift,
+                lift.getRideCount()
+            ));
+        }
+        for (Edge slope : slopes.getEdges()) {
+            System.out.println(String.format(
+                "%s: %d rides",
+                slope,
+                slope.getRideCount()
+            ));
+        }
+    }
+
     public static void main(String[] args) {
         Scanner stdin = new Scanner(System.in);
         stdin.useLocale(Locale.ENGLISH);
+
         Simulation simulation = new Simulation();
         SimulationLoader loader = new SimulationLoader(simulation);
         loader.load(stdin);
+
         simulation.run();
+        simulation.printRecap();
+
         stdin.close();
     }
 
@@ -64,9 +88,14 @@ public class Simulation implements Clock, Reporter {
         return vertices;
     }
 
-    protected EdgeRegistry getEdgeRegistry() {
-        return edges;
+    protected EdgeRegistry getLiftRegistry() {
+        return lifts;
     }
+
+    protected EdgeRegistry getSlopeRegistry() {
+        return slopes;
+    }
+
 
     @Override
     public void report(String message) {

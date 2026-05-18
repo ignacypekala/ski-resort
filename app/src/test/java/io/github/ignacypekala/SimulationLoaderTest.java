@@ -19,8 +19,6 @@ public class SimulationLoaderTest {
     @BeforeEach
     void initializeEnvironment() {
         simulation = new Simulation();
-        simulation.getVertexRegistry().initialize(10);
-        simulation.getEdgeRegistry().initialize(10);
         loader = new SimulationLoader(simulation);
     }
 
@@ -49,9 +47,11 @@ public class SimulationLoaderTest {
         VertexRegistry vertices = simulation.getVertexRegistry();
         Vertex start = new Vertex(0, 100, new Coordinates(0, 0));
         Vertex end = new Vertex(1, 200, new Coordinates(1, 1));
+        vertices.initialize(2);
         vertices.register(start);
         vertices.register(end);
         Lift lift = loader.loadLift(new Scanner("0 1 300 3 600"), 42);
+
         assertEquals(42, lift.getIdentifier());
         assertSame(start, lift.getStart());
         assertSame(end, lift.getEnd());
@@ -65,6 +65,7 @@ public class SimulationLoaderTest {
         VertexRegistry vertices = simulation.getVertexRegistry();
         Vertex v0 = new Vertex(0, 0, new Coordinates(0, 0));
         Vertex v1 = new Vertex(1, 0, new Coordinates(1, 0));
+        vertices.initialize(2);
         vertices.register(v0);
         vertices.register(v1);
         Slope slope = loader.loadSlope(new Scanner("0 1 8 60 0.5 0.75"), 7);
@@ -160,6 +161,7 @@ public class SimulationLoaderTest {
 
     private void registerVerticesThrough(int maxIdentifier) {
         VertexRegistry vertices = simulation.getVertexRegistry();
+        vertices.initialize(maxIdentifier + 1);
         for (int i = 0; i <= maxIdentifier; i++) {
             vertices.register(new Vertex(i, i, new Coordinates(i, 0)));
         }

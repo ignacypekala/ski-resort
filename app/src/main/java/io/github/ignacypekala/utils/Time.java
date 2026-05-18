@@ -65,4 +65,5 @@ public class Time implements Comparable<Time> {
     public int compareTo(Time other) {
         return Integer.compare(this.toSeconds(), other.toSeconds());
     }
+
 }

@@ -21,8 +21,12 @@ public class SimulationTest {
         simulation = new Simulation();
         eventHistory = new ArrayList<Event>();
         eventBroker = simulation.getEventBroker();
+        VertexRegistry vertices = simulation.getVertexRegistry();
+        vertices.initialize(2);
         a = new Vertex(0, 0, new Coordinates(0, 0));
+        vertices.register(a);
         b = new Vertex(1, 0, new Coordinates(0, 0));
+        vertices.register(b);
     }
 
     @Test
@@ -53,15 +57,26 @@ public class SimulationTest {
 
     @Test
     void loop() {
+        EdgeRegistry lifts = simulation.getLiftRegistry();
+        lifts.initialize(1);
         Lift lift = new Lift(0, a, b, 14 * 60, 60, 3, eventBroker, simulation);
+        lifts.register(lift);
+
+        EdgeRegistry slopes = simulation.getSlopeRegistry();
+        slopes.initialize(1);
         Slope slope = new Slope(0, b, a, 5 * 60, 0.8, 5, 1.0);
+        slopes.register(slope);
+
         Skier skier = new Skier(
                 0,
                 a, 5, 0, 0.5, 0.5,
                 new Time(14, 0, 0),
                 eventBroker,
                 simulation);
+
         simulation.run();
+        simulation.printRecap();
+
         assertEquals(3, lift.getRideCount());
         assertEquals(3, slope.getRideCount());
         assertSame(a, skier.getLocation());
