@@ -36,6 +36,9 @@ public class SkierTrackedTest {
                 simulation,
                 simulation);
 
+        // Lift start
+        simulation.tick();
+
         simulation.tick();
         assertEquals(
             String.format(
@@ -47,7 +50,9 @@ public class SkierTrackedTest {
         );
         assertTrue(eventBroker.hasEvents());
 
-        // Lift start
+        // Empty carriage arrival
+        simulation.tick();
+
         simulation.tick();
         assertEquals(
             String.format(

@@ -11,7 +11,7 @@ public class EventQueueList implements EventBroker {
         EventListNode previous = null;
         EventListNode current = head;
         while (current != null &&
-                event.getTime().compareTo(current.getEvent().getTime()) > 0) {
+                event.getTime().compareTo(current.getEvent().getTime()) >= 0) {
             previous = current;
             current = current.getNext();
         }

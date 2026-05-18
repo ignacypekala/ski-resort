@@ -28,6 +28,7 @@ public class Simulation implements Clock, Reporter {
     void tick() {
         Event event = eventBroker.poll();
         currentTime = event.getTime();
+        // System.out.println(currentTime + ": " + event);
         event.handle();
     }
 

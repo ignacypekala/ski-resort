@@ -59,7 +59,7 @@ public class SimulationTest {
     void loop() {
         EdgeRegistry lifts = simulation.getLiftRegistry();
         lifts.initialize(1);
-        Lift lift = new Lift(0, a, b, 14 * 60, 60, 3, eventBroker, simulation);
+        Lift lift = new Lift(0, a, b, 15 * 60, 60, 3, eventBroker, simulation);
         lift.addStartEdge();
         lifts.register(lift);
 
