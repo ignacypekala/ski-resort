@@ -29,28 +29,25 @@ public class SimulationLoader {
 
     public void load(Scanner scanner) {
         nextSkierIdentifier = 0;
-        int vertexCount = Integer.parseInt(scanner.nextLine().trim());
+        int vertexCount = Integer.parseInt(getLine(scanner));
         vertices.initialize(vertexCount);
         for (int i = 0; i < vertexCount; i++) {
-            vertices.register(loadVertex(scanner.nextLine(), i));
+            vertices.register(loadVertex(getLine(scanner), i));
         }
 
-        scanner.nextLine(); // Consume empty line
-        int liftCount = Integer.parseInt(scanner.nextLine().trim());
+        int liftCount = Integer.parseInt(getLine(scanner));
         lifts.initialize(liftCount);
         for (int i = 0; i < liftCount; i++) {
-            lifts.register(loadLift(scanner.nextLine(), i));
+            lifts.register(loadLift(getLine(scanner), i));
         }
 
-        scanner.nextLine(); // Consume empty line
-        int slopeCount = Integer.parseInt(scanner.nextLine().trim());
+        int slopeCount = Integer.parseInt(getLine(scanner));
         slopes.initialize(slopeCount);
         for (int i = 0; i < slopeCount; i++) {
             slopes.register(loadSlope(scanner.nextLine(), i));
         }
 
-        scanner.nextLine(); // Consume empty line
-        int skierGroupCount = Integer.parseInt(scanner.nextLine().trim());
+        int skierGroupCount = Integer.parseInt(getLine(scanner));
         for (int i = 0; i < skierGroupCount; i++) {
             loadSkierGroup(scanner);
         }
@@ -203,5 +200,13 @@ public class SimulationLoader {
         }
         line.close();
         return skiers;
+    }
+
+    private String getLine(Scanner scanner) {
+        String line = scanner.nextLine().trim();
+        if (line == "") {
+            line = scanner.nextLine().trim();
+        }
+        return line;
     }
 }
