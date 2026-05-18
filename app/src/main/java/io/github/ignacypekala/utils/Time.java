@@ -17,15 +17,18 @@ public class Time implements Comparable<Time> {
         if (hours < 0) {
             throw new IllegalArgumentException("Hours shouldn't be negative.");
         }
-        this.seconds = seconds;
+        this.hours = hours;
+
         if (minutes < 0) {
             throw new IllegalArgumentException("Minutes shouldn't be negative.");
         }
         this.minutes = minutes;
+
         if (seconds < 0) {
             throw new IllegalArgumentException("Seconds shouldn't be negative.");
         }
-        this.hours = hours;
+        this.seconds = seconds;
+
         normalize();
     }
 
