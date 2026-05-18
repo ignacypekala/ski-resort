@@ -110,8 +110,7 @@ public class SimulationLoaderTest {
                 "\n",
                 "1 4 0.25",
                 "0.6 0.4",
-                "2",
-                "10:15:30"));
+                "2 10:15:30"));
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(1, skiers.length);
@@ -134,8 +133,7 @@ public class SimulationLoaderTest {
                 "\n",
                 "1 7 1.0 s",
                 "0.0 1.0",
-                "0",
-                "09:00:00"));
+                "0 09:00:00"));
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(1, skiers.length);
@@ -150,15 +148,14 @@ public class SimulationLoaderTest {
                 "\n",
                 "2 3 0.0",
                 "1.0 0.0",
-                "1 90",
-                "12:00:00"));
+                "1 12:00:00 90"));
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(2, skiers.length);
         assertEquals(0, skiers[0].getIdentifier());
         assertEquals(1, skiers[1].getIdentifier());
-        assertEquals(0, skiers[0].getStartTime().compareTo(new Time(12, 1, 30)));
-        assertEquals(0, skiers[1].getStartTime().compareTo(new Time(12, 3, 0)));
+        assertEquals(0, skiers[0].getStartTime().compareTo(new Time(12, 0, 0)));
+        assertEquals(0, skiers[1].getStartTime().compareTo(new Time(12, 1, 30)));
     }
 
     private void registerVerticesThrough(int maxIdentifier) {

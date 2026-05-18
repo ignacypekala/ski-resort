@@ -112,7 +112,9 @@ public class SimulationLoader {
     @VisibleForTesting
     Time loadTime(Scanner scanner) {
         Scanner timeScanner = new Scanner(scanner.next());
+        timeScanner.useLocale(Locale.ENGLISH);
         timeScanner.useDelimiter(":");
+
         int hours = timeScanner.nextInt();
         int minutes = timeScanner.nextInt();
         int seconds = timeScanner.nextInt();
@@ -123,6 +125,7 @@ public class SimulationLoader {
     @VisibleForTesting
     Skier[] loadSkierGroup(Scanner scanner) {
         Scanner line = new Scanner(scanner.nextLine());
+        line.useLocale(Locale.ENGLISH);
 
         int skierCount = line.nextInt();
         int proficiency = line.nextInt();
@@ -131,14 +134,18 @@ public class SimulationLoader {
 
         line.close();
         line = new Scanner(scanner.nextLine());
+        line.useLocale(Locale.ENGLISH);
+
         double difficultyWeight = line.nextDouble();
         double surfaceWeight = line.nextDouble();
 
         line.close();
         line = new Scanner(scanner.nextLine());
+        line.useLocale(Locale.ENGLISH);
+
         Vertex startPoint = vertexRegistry.fetch(line.nextInt());
 
-        Time firstStartTime = loadTime(scanner);
+        Time firstStartTime = loadTime(line);
 
         int interval = 0;
         if (skierCount > 1) {
@@ -147,9 +154,8 @@ public class SimulationLoader {
 
         Skier[] skiers = new Skier[skierCount];
 
-        Time previousStartTime = firstStartTime;
+        Time startTime = firstStartTime;
         for (int i = 0; i < skierCount; i++) {
-            Time currentStartTime = Time.secondsLater(previousStartTime, interval);
             int skierIdentifier = nextSkierIdentifier++;
             if (tracked) {
                 skiers[i] = new SkierTracked(
@@ -159,7 +165,7 @@ public class SimulationLoader {
                         spontaneity,
                         difficultyWeight,
                         surfaceWeight,
-                        currentStartTime,
+                        startTime,
                         publisher,
                         clock,
                         reporter);
@@ -172,11 +178,11 @@ public class SimulationLoader {
                         spontaneity,
                         difficultyWeight,
                         surfaceWeight,
-                        currentStartTime,
+                        startTime,
                         publisher,
                         clock);
             }
-            previousStartTime = currentStartTime;
+            startTime = Time.secondsLater(startTime, interval);
         }
         line.close();
         return skiers;
