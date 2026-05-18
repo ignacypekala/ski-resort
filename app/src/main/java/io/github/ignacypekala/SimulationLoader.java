@@ -138,7 +138,7 @@ public class SimulationLoader {
 
     @VisibleForTesting
     Skier[] loadSkierGroup(Scanner scanner) {
-        Scanner line = new Scanner(scanner.nextLine());
+        Scanner line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
 
         int skierCount = line.nextInt();
@@ -147,18 +147,17 @@ public class SimulationLoader {
         boolean tracked = line.hasNext() && line.next().charAt(0) == 's';
 
         line.close();
-        line = new Scanner(scanner.nextLine());
+        line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
 
         double difficultyWeight = line.nextDouble();
         double surfaceWeight = line.nextDouble();
 
         line.close();
-        line = new Scanner(scanner.nextLine());
+        line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
 
         Vertex startPoint = vertices.fetch(line.nextInt());
-
         Time firstStartTime = loadTime(line.next());
 
         int interval = 0;
