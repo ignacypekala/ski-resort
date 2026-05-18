@@ -67,7 +67,7 @@ public class EventQueueListTest {
         int eventCount = 25;
         Event[] events = new Event[eventCount];
         for (int i = 0; i < eventCount; i++) {
-            events[i] = new TestEvent(new Time(15, 0, i));
+            events[i] = new TestEvent(new Time(9, 0, i));
         }
 
         for (int i : new int[] {
@@ -80,6 +80,17 @@ public class EventQueueListTest {
         for (int i = 0; i < eventCount; i++) {
             assertSame(events[i], eq.poll());
         }
+    }
+
+    @Test
+    void simultenous() {
+        EventQueueList eq = new EventQueueList();
+        Event a = new TestEvent(new Time(9, 0, 0));
+        Event b = new TestEvent(new Time(9, 0, 0));
+        eq.send(a);
+        eq.send(b);
+        assertSame(a, eq.poll());
+        assertSame(b, eq.poll());
     }
 
     @Test
