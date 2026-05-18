@@ -1,9 +1,10 @@
 package io.github.ignacypekala.event;
 
 public class EventQueueList implements EventBroker {
-    private EventListNode head = null;
+    private EventListNode head;
 
     public EventQueueList() {
+        head = null;
     }
 
     @Override
