@@ -3,7 +3,7 @@ package io.github.ignacypekala.lift;
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
-import io.github.ignacypekala.event.Queue;
+import io.github.ignacypekala.event.EventQueue;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
 
@@ -24,7 +24,7 @@ public class LiftTest {
         pos = new Coordinates(0, 0);
         a = new Vertex(0, 0, pos);
         b = new Vertex(1, 0, pos);
-        eventBroker = new Queue();
+        eventBroker = new EventQueue();
         clock = new Simulation();
     }
 

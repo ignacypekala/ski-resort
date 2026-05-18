@@ -2,14 +2,14 @@ package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
 
-public class Queue {
+public class LiftQueue {
     private static final int INITIAL_SIZE = 10;
     private static final int REALLOC_MULTIPLIER = 2;
     private Skier[] queue;
     private int start;
     private int length;
 
-    public Queue() {
+    public LiftQueue() {
         queue = new Skier[INITIAL_SIZE];
         start = 0;
         length = 0;

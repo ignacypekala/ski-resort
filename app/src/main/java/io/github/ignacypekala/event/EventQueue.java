@@ -1,9 +1,9 @@
 package io.github.ignacypekala.event;
 
-public class Queue implements Broker {
+public class EventQueue implements Broker {
     private ListNode head;
 
-    public Queue() {
+    public EventQueue() {
         head = null;
     }
 

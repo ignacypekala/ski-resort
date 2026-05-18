@@ -8,7 +8,7 @@ import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class TestClass {
-    static Broker eventBroker = new Queue();
+    static Broker eventBroker = new EventQueue();
     static Clock clock = new Simulation();
 
     public static class TestSlope extends Slope {

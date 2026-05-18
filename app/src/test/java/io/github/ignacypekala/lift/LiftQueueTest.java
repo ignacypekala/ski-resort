@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LiftQueueTest {
     @Test
     void popEmpty() {
-        Queue queue = new Queue();
+        LiftQueue queue = new LiftQueue();
         assertThrows(IllegalStateException.class, () -> queue.dequeue());
     }
 
     @Test
     void arbitrary() {
-        Queue queue = new Queue();
+        LiftQueue queue = new LiftQueue();
         assertNotNull(queue, "Queue shouldn't be null.");
         assertTrue(queue.empty(), "Queue should be empty.");
 

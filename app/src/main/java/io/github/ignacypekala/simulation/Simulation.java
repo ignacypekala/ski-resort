@@ -18,7 +18,7 @@ public class Simulation implements Clock, Reporter {
 
     public Simulation() {
         currentTime = new Time(9, 0, 0);
-        eventBroker = new Queue();
+        eventBroker = new EventQueue();
         vertices = new VertexRegistry();
         lifts = new EdgeRegistry();
         slopes = new EdgeRegistry();
