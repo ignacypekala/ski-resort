@@ -54,6 +54,8 @@ public class Lift extends Edge {
         eventPublisher.send(event);
     }
 
+    // Appeal for lifts is defined as the maximum appeal of the slopes outgoing from
+    // the end vertex.
     @Override
     public double appeal(Skier skier) {
         double maxAppeal = 0;
