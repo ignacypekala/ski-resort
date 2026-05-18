@@ -20,7 +20,11 @@ java {
 }
 
 application {
-    mainClass = 'io.github.ignacypekala.SkiResort'
+    mainClass = 'io.github.ignacypekala.Simulation'
+}
+
+run { 
+    standardInput = System.in
 }
 
 tasks.named('test') {
