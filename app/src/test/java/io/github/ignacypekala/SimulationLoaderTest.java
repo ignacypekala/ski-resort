@@ -194,7 +194,7 @@ public class SimulationLoaderTest {
                 "1 5 1 s",
                 "0.8 0.2",
                 "2 09:15:00");
-        loader.load(new Scanner(testCase));
+        assertDoesNotThrow(() -> loader.load(new Scanner(testCase)));
     }
 
     private void registerVerticesThrough(int maxIdentifier) {
