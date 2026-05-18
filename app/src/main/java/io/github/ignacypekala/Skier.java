@@ -65,11 +65,11 @@ public class Skier extends SimulationObject {
         this.eventPublisher = eventPublisher;
         this.clock = clock;
 
-        scheduleArrival();
+        scheduleDayStart();
     }
 
-    private void scheduleArrival() {
-        Arrival event = new Arrival();
+    private void scheduleDayStart() {
+        DayStart event = new DayStart();
         eventPublisher.publish(event);
     }
 
@@ -150,8 +150,8 @@ public class Skier extends SimulationObject {
         }
     }
 
-    private class Arrival extends Event {
-        public Arrival() {
+    private class DayStart extends Event {
+        public DayStart() {
             super(startTime);
         }
 
