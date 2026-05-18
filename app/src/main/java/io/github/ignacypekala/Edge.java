@@ -19,7 +19,7 @@ public abstract class Edge extends SimulationObject {
         this.rideTime = rideTime;
     }
 
-    public abstract double appeal(Skier skier);
+    public abstract double calculateAppeal(Skier skier);
 
     public abstract void ride(Skier skier);
 

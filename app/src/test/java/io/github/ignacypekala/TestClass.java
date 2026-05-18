@@ -19,11 +19,11 @@ public class TestClass {
 
         public TestSlope(
                 int identifier,
-                double durability,
+                double wearResistance,
                 int difficulty,
                 double baseAppeal,
                 int rideTime) {
-            super(identifier, a, b, rideTime, durability, difficulty, baseAppeal);
+            super(identifier, a, b, rideTime, wearResistance, difficulty, baseAppeal);
         }
     }
 

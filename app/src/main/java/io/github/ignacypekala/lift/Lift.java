@@ -28,7 +28,7 @@ public class Lift extends Edge {
         this.eventPublisher = eventPublisher;
         this.clock = clock;
 
-        eventPublisher.send(new LiftStart());
+        eventPublisher.send(new Start());
     }
 
     private void depart() {
@@ -48,19 +48,19 @@ public class Lift extends Edge {
     }
 
     private void scheduleLiftDepart() {
-        Depart event = new Depart();
+        Departure event = new Departure();
         eventPublisher.send(event);
     }
 
     // Appeal for lifts is defined as the maximum appeal of the slopes outgoing from
     // the end vertex.
     @Override
-    public double appeal(Skier skier) {
+    public double calculateAppeal(Skier skier) {
         double maxAppeal = 0;
         Slope[] slopes = getEnd().getSlopes();
         for (int i = 0; i < getEnd().getSlopeCount(); i++) {
             Slope slope = slopes[i];
-            double appeal = slope.appeal(skier);
+            double appeal = slope.calculateAppeal(skier);
             if (appeal > maxAppeal) {
                 maxAppeal = appeal;
             }
@@ -74,8 +74,8 @@ public class Lift extends Edge {
         skier.liftQueueJoinedHook(this);
     }
 
-    class Depart extends RelativeEvent {
-        public Depart() {
+    class Departure extends RelativeEvent {
+        public Departure() {
             super(clock, departureInterval);
         }
 
@@ -88,8 +88,8 @@ public class Lift extends Edge {
         }
     }
 
-    class LiftStart extends Event {
-        public LiftStart() {
+    class Start extends Event {
+        public Start() {
             super(clock.getStartTime());
         }
 

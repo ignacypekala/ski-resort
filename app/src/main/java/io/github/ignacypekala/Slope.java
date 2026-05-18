@@ -3,22 +3,22 @@ package io.github.ignacypekala;
 public class Slope extends Edge {
     private int difficulty;
     private double baseAppeal;
-    private double durability;
+    private double wearResistance;
 
     public Slope(
             int identifier,
             Vertex start,
             Vertex end,
             int rideTime,
-            double durability,
+            double wearResistance,
             int difficulty,
             double baseAppeal) {
         super(identifier, start, end, rideTime);
-        if (durability < 0 || durability > 1) {
+        if (wearResistance < 0 || wearResistance > 1) {
             throw new IllegalArgumentException(
-                    "Durability must be in the range [0, 1]");
+                    "Wear resistance must be in the range [0, 1]");
         }
-        this.durability = durability;
+        this.wearResistance = wearResistance;
 
         if (difficulty < 0 || difficulty > 10) {
             throw new IllegalArgumentException(
@@ -45,12 +45,12 @@ public class Slope extends Edge {
 
     public double surfaceAppeal() {
         return baseAppeal + (1.0 - baseAppeal) * Math.pow(
-                durability,
+                wearResistance,
                 getRideCount());
     }
 
     @Override
-    public double appeal(Skier skier) {
+    public double calculateAppeal(Skier skier) {
         double diffWeight = skier.getDifficultyWeight();
         double surfWeight = skier.getSurfaceWeight();
 

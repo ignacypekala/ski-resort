@@ -92,14 +92,14 @@ public class SlopeTest {
     void accumulativeAppeal() {
         Slope surfaceSlope = new TestClass.TestSlope(0, 1, 10, 1, 0);
         Skier surfaceSkier = new TestClass.TestSkier(0, 0, 0, 1);
-        assertEquals(1.0, surfaceSlope.appeal(surfaceSkier));
+        assertEquals(1.0, surfaceSlope.calculateAppeal(surfaceSkier));
 
         Slope difficultySlope = new TestClass.TestSlope(0, 0, 10, 0, 0);
         Skier proficientSkier = new TestClass.TestSkier(1, 10, 1, 0);
-        assertEquals(1.0, difficultySlope.appeal(proficientSkier));
+        assertEquals(1.0, difficultySlope.calculateAppeal(proficientSkier));
 
         Slope allRoundSlope = new TestClass.TestSlope(0, 0.5, 5, 0.5, 0);
         Skier allRoundSkier = new TestClass.TestSkier(2, 5, 0.5, 0.5);
-        assertEquals(1.0, allRoundSlope.appeal(allRoundSkier));
+        assertEquals(1.0, allRoundSlope.calculateAppeal(allRoundSkier));
     }
 }

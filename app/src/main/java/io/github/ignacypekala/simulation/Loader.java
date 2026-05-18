@@ -107,7 +107,7 @@ public class Loader {
         int difficulty = lineScanner.nextInt();
         int rideTime = lineScanner.nextInt();
         double baseAppeal = lineScanner.nextDouble();
-        double durability = lineScanner.nextDouble();
+        double wearResistance = lineScanner.nextDouble();
 
         lineScanner.close();
         Slope slope = new Slope(
@@ -115,7 +115,7 @@ public class Loader {
                 start,
                 end,
                 rideTime,
-                durability,
+                wearResistance,
                 difficulty,
                 baseAppeal);
         slope.addStartEdge();

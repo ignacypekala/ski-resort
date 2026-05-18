@@ -11,7 +11,7 @@ public class EdgeTest {
             super(identifier, start, end, rideTime);
         }
 
-        public double appeal(Skier skier) {
+        public double calculateAppeal(Skier skier) {
             return 4.20;
         }
 

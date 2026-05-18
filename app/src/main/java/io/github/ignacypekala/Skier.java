@@ -90,7 +90,7 @@ public class Skier extends SimulationObject {
             Edge mostAppealing = null;
             for (int i = 0; i < location.getEdgeCount(); i++) {
                 Edge edge = edges[i];
-                double appeal = edge.appeal(this);
+                double appeal = edge.calculateAppeal(this);
                 if (appeal > maxAppeal) {
                     maxAppeal = appeal;
                     mostAppealing = edge;
