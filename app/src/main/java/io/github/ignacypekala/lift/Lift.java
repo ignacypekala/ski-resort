@@ -130,23 +130,6 @@ public class Lift extends Edge {
     }
 
     @Override
-    public void addStartEdge() {
-        getStart().addLift(this);
-    }
-
-    public int getWaitTime() {
-        return waitTime;
-    }
-
-    public int getPassengerCapacity() {
-        return passengerCapacity;
-    }
-
-    public String toString() {
-        return String.format("lift %s", getIdentifier());
-    }
-
-    @Override
     public String getRideStartMessage(Skier skier) {
         return skier + " has boarded " + this + ".";
     }
@@ -156,4 +139,23 @@ public class Lift extends Edge {
         return skier + " has gotten off " + this + ".";
     }
 
+    @Override
+    public String toString() {
+        return String.format("lift %s", getIdentifier());
+    }
+
+    @Override
+    public void addStartEdge() {
+        getStart().addLift(this);
+    }
+
+    @VisibleForTesting
+    public int getWaitTime() {
+        return waitTime;
+    }
+
+    @VisibleForTesting
+    public int getPassengerCapacity() {
+        return passengerCapacity;
+    }
 }

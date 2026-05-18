@@ -6,6 +6,8 @@ import io.github.ignacypekala.lift.*;
 
 import java.util.Random;
 
+import com.google.common.annotations.VisibleForTesting;
+
 public class Skier extends SimulationObject {
     private Vertex startPoint;
     private Vertex location;
@@ -170,16 +172,8 @@ public class Skier extends SimulationObject {
         return String.format("skier %d", getIdentifier());
     }
 
-    public Vertex getStartPoint() {
-        return startPoint;
-    }
-
     public int getProficiency() {
         return proficiency;
-    }
-
-    public double getSpontaneity() {
-        return spontaneity;
     }
 
     public double getDifficultyWeight() {
@@ -190,10 +184,22 @@ public class Skier extends SimulationObject {
         return surfaceWeight;
     }
 
+    @VisibleForTesting
+    double getSpontaneity() {
+        return spontaneity;
+    }
+
+    @VisibleForTesting
+    Vertex getStartPoint() {
+        return startPoint;
+    }
+
+    @VisibleForTesting
     public Time getStartTime() {
         return startTime;
     }
 
+    @VisibleForTesting
     public Vertex getLocation() {
         return location;
     }
