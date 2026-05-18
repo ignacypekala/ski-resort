@@ -2,7 +2,14 @@
 Ski resort simulation in java
 
 ## Gradle
-Use the following command to run the test suite:
+Use the following command to run:
+
+### the project
+```
+./gradlew run
+```
+
+###  the test suite
 ```
 ./gradlew test
 ```
