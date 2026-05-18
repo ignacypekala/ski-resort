@@ -2,13 +2,13 @@ package io.github.ignacypekala;
 
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
-import io.github.ignacypekala.simulation.Object;
+import io.github.ignacypekala.simulation.SimulationObject;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.lift.*;
 
 import java.util.Random;
 
-public class Skier extends Object {
+public class Skier extends SimulationObject {
     private Vertex startPoint;
     private Vertex location;
     private int proficiency;

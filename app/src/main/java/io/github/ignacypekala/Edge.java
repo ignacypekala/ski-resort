@@ -1,8 +1,8 @@
 package io.github.ignacypekala;
 
-import io.github.ignacypekala.simulation.Object;
+import io.github.ignacypekala.simulation.SimulationObject;
 
-public abstract class Edge extends Object {
+public abstract class Edge extends SimulationObject {
     private Vertex start;
     private Vertex end;
     private int rideTime;

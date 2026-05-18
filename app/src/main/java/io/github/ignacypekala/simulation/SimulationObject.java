@@ -1,9 +1,9 @@
 package io.github.ignacypekala.simulation;
 
-public abstract class Object {
+public abstract class SimulationObject {
     private int identifier;
 
-    protected Object(int identifier) {
+    protected SimulationObject(int identifier) {
         this.identifier = identifier;
     }
 
