@@ -23,7 +23,7 @@ public class Time implements Comparable<Time> {
         }
         this.minutes = minutes;
         if (seconds < 0) {
-            throw new IllegalArgumentException("Minutes shouldn't be negative.");
+            throw new IllegalArgumentException("Seconds shouldn't be negative.");
         }
         this.hours = hours;
         normalize();
