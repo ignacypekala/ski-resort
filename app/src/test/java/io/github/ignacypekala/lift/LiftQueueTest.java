@@ -1,6 +1,5 @@
 package io.github.ignacypekala.lift;
 
-import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.*;
 
 import org.junit.jupiter.api.Test;
@@ -9,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LiftQueueTest {
     @Test
     void popEmpty() {
-        LiftQueue queue = new LiftQueue();
+        Queue queue = new Queue();
         assertThrows(IllegalStateException.class, () -> queue.dequeue());
     }
 
     @Test
     void arbitrary() {
-        LiftQueue queue = new LiftQueue();
+        Queue queue = new Queue();
         assertNotNull(queue, "Queue shouldn't be null.");
         assertTrue(queue.empty(), "Queue should be empty.");
 

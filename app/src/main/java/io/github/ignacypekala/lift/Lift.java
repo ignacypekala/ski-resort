@@ -5,7 +5,7 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
 
 public class Lift extends Edge {
-    private LiftQueue queue;
+    private Queue queue;
     private int waitTime;
     private int passengerCapacity;
     private EventPublisher eventPublisher;
@@ -24,7 +24,7 @@ public class Lift extends Edge {
 
         this.waitTime = waitTime;
         this.passengerCapacity = passengerCapacity;
-        queue = new LiftQueue();
+        queue = new Queue();
         this.eventPublisher = eventPublisher;
         this.clock = clock;
 
