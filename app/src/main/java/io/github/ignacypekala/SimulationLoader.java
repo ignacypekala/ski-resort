@@ -2,55 +2,63 @@ package io.github.ignacypekala;
 
 import java.util.Locale;
 import java.util.Scanner;
+
+import com.google.common.annotations.VisibleForTesting;
+
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 
 public class SimulationLoader {
+    private VertexRegistry vertexRegistry;
+    private EdgeRegistry edgeRegistry;
     private Clock clock;
     private EventPublisher publisher;
     private Reporter reporter;
-    private Vertex[] vertices;
-    
-    public SimulationLoader(
-            Clock clock,
-            EventPublisher publisher,
-            Reporter reporter
-    ) {
-        this.clock = clock;
-        this.publisher = publisher;
-        this.reporter = reporter;
+
+    public SimulationLoader(Simulation simulation) {
+        vertexRegistry = simulation.getVertexRegistry();
+        edgeRegistry = simulation.getEdgeRegistry();
+        clock = simulation;
+        publisher = simulation.getEventBroker();
+        reporter = simulation;
     }
 
     public void load(Scanner scanner) {
         int vertexCount = scanner.nextInt();
-        vertices = new Vertex[vertexCount];
+        vertexRegistry.initialize(vertexCount);
         for (int i = 0; i < vertexCount; i++) {
-            vertices[i] = loadVertex(scanner);
+            vertexRegistry.register(loadVertex(scanner));
         }
 
-        for (int i = 0; i < scanner.nextInt(); i++) {
-            loadLift(scanner);
+        int liftCount = scanner.nextInt();
+        edgeRegistry.initialize(liftCount);
+        for (int i = 0; i < liftCount; i++) {
+            edgeRegistry.register(loadLift(scanner));
         }
 
-        for (int i = 0; i < scanner.nextInt(); i++) {
+        int slopeCount = scanner.nextInt();
+        edgeRegistry.resize(slopeCount);
+        for (int i = 0; i < slopeCount; i++) {
             loadSlope(scanner);
         }
 
-
+        for (int i = 0; i < scanner.nextInt(); i++) {
+            loadSkierGroup(scanner);
+        }
     }
 
-    private Vertex loadVertex(String line) {
-        Scanner scanner = new Scanner(line);
-        scanner.useLocale(Locale.ENGLISH);
+    @VisibleForTesting
+    Vertex loadVertex(Scanner scanner) {
+        Scanner line = new Scanner(scanner.nextLine());
+        line.useLocale(Locale.ENGLISH);
 
-        int altitude = scanner.nextInt();
+        int altitude = line.nextInt();
         Coordinates position = new Coordinates(
-            scanner.nextInt(),
-            scanner.nextInt()
-        );
+                line.nextInt(),
+                line.nextInt());
 
-        boolean accessible = scanner.hasNext() && scanner.next().charAt(0) == 's';
+        boolean accessible = line.hasNext() && line.next().charAt(0) == 's';
 
         Vertex vertex;
         if (accessible) {
@@ -59,45 +67,57 @@ public class SimulationLoader {
             vertex = new Vertex(altitude, position);
         }
 
-        scanner.close();
+        line.close();
         return vertex;
     }
 
-    private void loadLift(Scanner scanner) {
-        Vertex start = vertices[scanner.nextInt()];
-        Vertex end = vertices[scanner.nextInt()];
-        int waitTime = scanner.nextInt(); 
-        int passengerCapacity = scanner.nextInt(); 
+    @VisibleForTesting
+    Lift loadLift(Scanner scanner) {
+        Vertex start = vertexRegistry.fetch(scanner.nextInt());
+        Vertex end = vertexRegistry.fetch(scanner.nextInt());
+        int waitTime = scanner.nextInt();
+        int passengerCapacity = scanner.nextInt();
         int rideTime = scanner.nextInt();
-        new Lift(
-            start,
-            end,
-            rideTime,
-            waitTime,
-            passengerCapacity,
-            publisher,
-            clock
-        );
+        return new Lift(
+                start,
+                end,
+                rideTime,
+                waitTime,
+                passengerCapacity,
+                publisher,
+                clock);
     }
 
-    private void loadSlope(Scanner scanner) {
-        Vertex start = vertices[scanner.nextInt()];
-        Vertex end = vertices[scanner.nextInt()];
+    @VisibleForTesting
+    Slope loadSlope(Scanner scanner) {
+        Vertex start = vertexRegistry.fetch(scanner.nextInt());
+        Vertex end = vertexRegistry.fetch(scanner.nextInt());
         int difficulty = scanner.nextInt();
         int rideTime = scanner.nextInt();
         double baseAppeal = scanner.nextDouble();
         double durability = scanner.nextDouble();
-        new Slope(
-            start,
-            end,
-            rideTime,
-            durability,
-            difficulty,
-            baseAppeal
-        );
+        return new Slope(
+                start,
+                end,
+                rideTime,
+                durability,
+                difficulty,
+                baseAppeal);
     }
 
-    private void loadSkierGroup(Scanner scanner) {
+    @VisibleForTesting
+    Time loadTime(Scanner scanner) {
+        Scanner timeScanner = new Scanner(scanner.next());
+        timeScanner.useDelimiter(":");
+        int hours = timeScanner.nextInt();
+        int minutes = timeScanner.nextInt();
+        int seconds = timeScanner.nextInt();
+        timeScanner.close();
+        return new Time(hours, minutes, seconds);
+    }
+
+    @VisibleForTesting
+    Skier[] loadSkierGroup(Scanner scanner) {
         Scanner line = new Scanner(scanner.nextLine());
 
         int skierCount = line.nextInt();
@@ -112,18 +132,46 @@ public class SimulationLoader {
 
         line.close();
         line = new Scanner(scanner.nextLine());
-        Vertex start = vertices[line.nextInt()];
-        
-        // TODO Add time parsing and delay inclusion
+        Vertex startPoint = vertexRegistry.fetch(line.nextInt());
+
+        Time firstStartTime = loadTime(scanner);
 
         int interval = 0;
         if (skierCount > 1) {
             interval = line.nextInt();
         }
 
-        for (int i = 0; i < skierCount; i++) {
-            new Skier(start, proficiency, spontaneity, difficultyWeight, surfaceWeight );
-        }
+        Skier[] skiers = new Skier[skierCount];
 
+        Time previousStartTime = firstStartTime;
+        for (int i = 0; i < skierCount; i++) {
+            Time currentStartTime = Time.secondsLater(previousStartTime, interval);
+            if (tracked) {
+                skiers[i] = new SkierTracked(
+                        startPoint,
+                        proficiency,
+                        spontaneity,
+                        difficultyWeight,
+                        surfaceWeight,
+                        currentStartTime,
+                        publisher,
+                        clock,
+                        reporter);
+
+            } else {
+                skiers[i] = new Skier(
+                        startPoint,
+                        proficiency,
+                        spontaneity,
+                        difficultyWeight,
+                        surfaceWeight,
+                        currentStartTime,
+                        publisher,
+                        clock);
+            }
+            previousStartTime = currentStartTime;
+        }
+        line.close();
+        return skiers;
     }
 }

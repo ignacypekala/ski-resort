@@ -1,4 +1,4 @@
-package io.github.ignacypekalai
+package io.github.ignacypekala;
 
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
@@ -12,10 +12,14 @@ public class Simulation implements Clock, Reporter {
     private final Time END_TIME = new Time(15, 0, 0);
     private Time currentTime;
     private EventBroker eventBroker;
+    private VertexRegistry vertices;
+    private EdgeRegistry edges;
 
     public Simulation() {
         currentTime = new Time(9, 0, 0);
         eventBroker = new EventQueueList();
+        vertices = new VertexRegistry();
+        edges = new EdgeRegistry();
     }
 
     @VisibleForTesting
@@ -41,7 +45,6 @@ public class Simulation implements Clock, Reporter {
         stdin.close();
     }
 
-
     @Override
     public Time getCurrentTime() {
         return currentTime;
@@ -55,6 +58,14 @@ public class Simulation implements Clock, Reporter {
     @Override
     public Time getEndTime() {
         return END_TIME;
+    }
+
+    protected VertexRegistry getVertexRegistry() {
+        return vertices;
+    }
+
+    protected EdgeRegistry getEdgeRegistry() {
+        return edges;
     }
 
     @Override
