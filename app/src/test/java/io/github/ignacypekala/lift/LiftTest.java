@@ -1,8 +1,9 @@
 package io.github.ignacypekala.lift;
 
+import io.github.ignacypekala.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
-import io.github.ignacypekala.*;
+import io.github.ignacypekala.event.Queue;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
 
@@ -15,7 +16,7 @@ public class LiftTest {
     private static Coordinates pos;
     private static Vertex a;
     private static Vertex b;
-    private static EventBroker eventBroker;
+    private static Broker eventBroker;
     private static Clock clock;
 
     @BeforeEach
@@ -23,7 +24,7 @@ public class LiftTest {
         pos = new Coordinates(0, 0);
         a = new Vertex(0, 0, pos);
         b = new Vertex(1, 0, pos);
-        eventBroker = new EventQueueList();
+        eventBroker = new Queue();
         clock = new Simulation();
     }
 

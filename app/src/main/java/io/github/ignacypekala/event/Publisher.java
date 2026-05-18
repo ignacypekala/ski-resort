@@ -1,5 +1,5 @@
 package io.github.ignacypekala.event;
 
-public interface EventPublisher {
+public interface Publisher {
     public void send(Event event);
 }

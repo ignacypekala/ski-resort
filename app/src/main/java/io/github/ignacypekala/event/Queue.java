@@ -1,22 +1,22 @@
 package io.github.ignacypekala.event;
 
-public class EventQueueList implements EventBroker {
-    private EventListNode head;
+public class Queue implements Broker {
+    private ListNode head;
 
-    public EventQueueList() {
+    public Queue() {
         head = null;
     }
 
     @Override
     public void send(Event event) {
-        EventListNode previous = null;
-        EventListNode current = head;
+        ListNode previous = null;
+        ListNode current = head;
         while (current != null &&
                 event.getTime().compareTo(current.getEvent().getTime()) >= 0) {
             previous = current;
             current = current.getNext();
         }
-        EventListNode newNode = new EventListNode(event);
+        ListNode newNode = new ListNode(event);
         newNode.setNext(current);
         if (previous == null) {
             head = newNode;

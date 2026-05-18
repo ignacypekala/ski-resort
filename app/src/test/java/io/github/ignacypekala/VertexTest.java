@@ -3,14 +3,15 @@ package io.github.ignacypekala;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-import io.github.ignacypekala.event.*;
-import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.event.Queue;
+import io.github.ignacypekala.event.Broker;
+import io.github.ignacypekala.lift.Lift;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
-import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.utils.Coordinates;
 
 public class VertexTest {
-    private static EventBroker eventBroker = new EventQueueList();
+    private static Broker eventBroker = new Queue();
     private static Clock clock = new Simulation();
     private static Coordinates coordinates = new Coordinates(11, 0);
     private static int altitude = 2001;

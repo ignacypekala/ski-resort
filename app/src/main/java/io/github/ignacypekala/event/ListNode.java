@@ -1,14 +1,14 @@
 package io.github.ignacypekala.event;
 
-public class EventListNode {
+public class ListNode {
     Event event;
-    EventListNode next;
+    ListNode next;
 
-    public EventListNode(Event event) {
+    public ListNode(Event event) {
         this.event = event;
     }
 
-    public EventListNode(Event event, EventListNode next) {
+    public ListNode(Event event, ListNode next) {
         this.event = event;
         this.next = next;
     }
@@ -17,11 +17,11 @@ public class EventListNode {
         return event;
     }
 
-    public EventListNode getNext() {
+    public ListNode getNext() {
         return next;
     }
 
-    public void setNext(EventListNode node) {
+    public void setNext(ListNode node) {
         next = node;
     }
 }

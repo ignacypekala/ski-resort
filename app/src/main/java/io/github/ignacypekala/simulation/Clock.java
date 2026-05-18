@@ -8,4 +8,6 @@ public interface Clock {
     public Time getStartTime();
 
     public Time getEndTime();
+
+    public boolean isTimeUp();
 }

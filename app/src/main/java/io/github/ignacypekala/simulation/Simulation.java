@@ -11,14 +11,14 @@ public class Simulation implements Clock, Reporter {
     private final Time START_TIME = new Time(9, 0, 0);
     private final Time END_TIME = new Time(15, 0, 0);
     private Time currentTime;
-    private EventBroker eventBroker;
+    private Broker eventBroker;
     private VertexRegistry vertices;
     private EdgeRegistry lifts;
     private EdgeRegistry slopes;
 
     public Simulation() {
         currentTime = new Time(9, 0, 0);
-        eventBroker = new EventQueueList();
+        eventBroker = new Queue();
         vertices = new VertexRegistry();
         lifts = new EdgeRegistry();
         slopes = new EdgeRegistry();
@@ -80,6 +80,11 @@ public class Simulation implements Clock, Reporter {
         return END_TIME;
     }
 
+    @Override
+    public boolean isTimeUp() {
+        return END_TIME.compareTo(currentTime) <= 0;
+    }
+
     protected VertexRegistry getVertexRegistry() {
         return vertices;
     }
@@ -98,7 +103,7 @@ public class Simulation implements Clock, Reporter {
         System.out.println(String.format("%s: %s", currentTime, message));
     }
 
-    EventBroker getEventBroker() {
+    Broker getEventBroker() {
         return eventBroker;
     }
 }

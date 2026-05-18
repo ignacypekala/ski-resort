@@ -13,7 +13,7 @@ public class Loader {
     private EdgeRegistry lifts;
     private EdgeRegistry slopes;
     private Clock clock;
-    private EventPublisher publisher;
+    private Publisher publisher;
     private Reporter reporter;
     private int nextSkierIdentifier;
 

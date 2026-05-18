@@ -19,7 +19,7 @@ public class Skier extends Object {
 
     private Random generator = new Random();
 
-    private EventPublisher eventPublisher;
+    private Publisher eventPublisher;
     private Clock clock;
 
     public Skier(
@@ -30,7 +30,7 @@ public class Skier extends Object {
             double difficultyWeight,
             double surfaceWeight,
             Time startTime,
-            EventPublisher eventPublisher,
+            Publisher eventPublisher,
             Clock clock) {
         super(identifier);
         this.startPoint = startPoint;
@@ -115,7 +115,7 @@ public class Skier extends Object {
         location = edge.getEnd();
         rideFinishedHook(edge);
         edge.rideFinished();
-        if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
+        if (!clock.isTimeUp()) {
             ski();
         }
     }

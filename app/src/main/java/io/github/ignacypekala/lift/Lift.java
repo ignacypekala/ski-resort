@@ -8,7 +8,7 @@ public class Lift extends Edge {
     private Queue queue;
     private int waitTime;
     private int passengerCapacity;
-    private EventPublisher eventPublisher;
+    private Publisher eventPublisher;
     private Clock clock;
 
     public Lift(
@@ -18,7 +18,7 @@ public class Lift extends Edge {
             int rideTime,
             int waitTime,
             int passengerCapacity,
-            EventPublisher eventPublisher,
+            Publisher eventPublisher,
             Clock clock) {
         super(identifier, start, end, rideTime);
 
@@ -42,7 +42,7 @@ public class Lift extends Edge {
         Arrival event = new Arrival(carrier);
         eventPublisher.send(event);
         carrier.depart();
-        if (clock.getEndTime().compareTo(clock.getCurrentTime()) > 0) {
+        if (!clock.isTimeUp()) {
             scheduleLiftDepart();
         }
     }

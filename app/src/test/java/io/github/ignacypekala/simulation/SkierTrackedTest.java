@@ -17,7 +17,7 @@ public class SkierTrackedTest {
     @Test
     void reports() {
         Simulation simulation = new HijackedSimulation();
-        EventBroker eventBroker = simulation.getEventBroker();
+        Broker eventBroker = simulation.getEventBroker();
         Coordinates pos = new Coordinates(0, 0);
         Vertex vertexA = new Vertex(0, 0, pos);
         Vertex vertexB = new Vertex(1, 0, pos);

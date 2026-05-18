@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EventQueueListTest {
     @Test
     void queueEnd() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
 
         Event a = new TestEvent(new Time(15, 0, 0));
         eq.send(a);
@@ -24,7 +24,7 @@ public class EventQueueListTest {
 
     @Test
     void queueStart() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
 
         Event a = new TestEvent(new Time(15, 0, 2));
         eq.send(a);
@@ -40,7 +40,7 @@ public class EventQueueListTest {
 
     @Test
     void queueMiddle() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
 
         Event a = new TestEvent(new Time(15, 0, 0));
         eq.send(a);
@@ -56,13 +56,13 @@ public class EventQueueListTest {
 
     @Test
     void dequeueEmpty() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
         assertThrows(IllegalStateException.class, () -> eq.poll());
     }
 
     @Test
     void queueArbitrary() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
 
         int eventCount = 25;
         Event[] events = new Event[eventCount];
@@ -84,7 +84,7 @@ public class EventQueueListTest {
 
     @Test
     void simultenous() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
         Event a = new TestEvent(new Time(9, 0, 0));
         Event b = new TestEvent(new Time(9, 0, 0));
         eq.send(a);
@@ -95,7 +95,7 @@ public class EventQueueListTest {
 
     @Test
     void hasEvents() {
-        EventQueueList eq = new EventQueueList();
+        Queue eq = new Queue();
         assertFalse(eq.hasEvents());
         Event event = new TestEvent(new Time(15, 0, 0));
         eq.send(event);

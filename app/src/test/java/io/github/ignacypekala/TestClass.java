@@ -5,11 +5,10 @@ import java.util.function.Consumer;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
-import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class TestClass {
-    static EventBroker eventBroker = new EventQueueList();
+    static Broker eventBroker = new Queue();
     static Clock clock = new Simulation();
 
     public static class TestSlope extends Slope {

@@ -16,7 +16,7 @@ public class SkierTracked extends Skier {
             double difficultyWeight,
             double surfaceWeight,
             Time startTime,
-            EventPublisher eventPublisher,
+            Publisher eventPublisher,
             Clock clock,
             Reporter reporter) {
         super(

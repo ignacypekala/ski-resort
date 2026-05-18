@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SimulationTest {
     private Simulation simulation;
-    private EventBroker eventBroker;
+    private Broker eventBroker;
     private ArrayList<Event> eventHistory;
     private Vertex a;
     private Vertex b;
@@ -32,7 +32,7 @@ public class SimulationTest {
 
     @Test
     void artificial() {
-        EventBroker eventBroker = simulation.getEventBroker();
+        Broker eventBroker = simulation.getEventBroker();
         Event a = new ArtificialEvent(0);
         eventBroker.send(a);
         Event b = new ArtificialEvent(5);
