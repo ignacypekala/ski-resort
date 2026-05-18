@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import io.github.ignacypekala.simulation.SimulationObject;
+
 public abstract class Edge extends SimulationObject {
     private Vertex start;
     private Vertex end;

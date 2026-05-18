@@ -20,7 +20,7 @@ java {
 }
 
 application {
-    mainClass = 'io.github.ignacypekala.Simulation'
+    mainClass = 'io.github.ignacypekala.simulation.Simulation'
 }
 
 run { 

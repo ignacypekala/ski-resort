@@ -5,6 +5,8 @@ import org.junit.jupiter.api.*;
 
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.simulation.Clock;
+import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.utils.*;
 
 public class VertexTest {

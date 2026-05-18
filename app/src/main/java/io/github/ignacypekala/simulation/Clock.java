@@ -1,4 +1,6 @@
-package io.github.ignacypekala.utils;
+package io.github.ignacypekala.simulation;
+
+import io.github.ignacypekala.utils.Time;
 
 public interface Clock {
     public Time getCurrentTime();

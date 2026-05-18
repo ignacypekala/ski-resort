@@ -3,6 +3,8 @@ package io.github.ignacypekala;
 import java.util.function.Consumer;
 
 import io.github.ignacypekala.event.*;
+import io.github.ignacypekala.simulation.Clock;
+import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.utils.Coordinates;
 

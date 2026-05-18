@@ -2,6 +2,7 @@ package io.github.ignacypekala;
 
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.Lift;
+import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.utils.*;
 
 public class SkierTracked extends Skier {

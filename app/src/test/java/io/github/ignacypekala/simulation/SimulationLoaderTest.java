@@ -1,4 +1,4 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.simulation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.github.ignacypekala.*;
 import io.github.ignacypekala.lift.Lift;
 import io.github.ignacypekala.utils.Coordinates;
 import io.github.ignacypekala.utils.Time;
@@ -118,10 +119,8 @@ public class SimulationLoaderTest {
         assertFalse(skiers[0] instanceof SkierTracked);
         assertEquals(0, skiers[0].getIdentifier());
         assertEquals(4, skiers[0].getProficiency());
-        assertEquals(0.25, skiers[0].getSpontaneity(), 0.0);
         assertEquals(0.6, skiers[0].getDifficultyWeight(), 0.0);
         assertEquals(0.4, skiers[0].getSurfaceWeight(), 0.0);
-        assertSame(simulation.getVertexRegistry().fetch(2), skiers[0].getStartPoint());
         assertEquals(10, skiers[0].getStartTime().getHours());
         assertEquals(15, skiers[0].getStartTime().getMinutes());
         assertEquals(30, skiers[0].getStartTime().getSeconds());

@@ -1,5 +1,6 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.simulation;
 
+import io.github.ignacypekala.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 
@@ -28,7 +29,6 @@ public class Simulation implements Clock, Reporter {
     void tick() {
         Event event = eventBroker.poll();
         currentTime = event.getTime();
-        // System.out.println(currentTime + ": " + event);
         event.handle();
     }
 

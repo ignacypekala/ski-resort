@@ -1,5 +1,6 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.simulation;
 
+import io.github.ignacypekala.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;

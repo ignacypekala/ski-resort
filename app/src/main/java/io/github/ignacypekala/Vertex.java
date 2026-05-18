@@ -1,6 +1,7 @@
 package io.github.ignacypekala;
 
 import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.simulation.SimulationObject;
 import io.github.ignacypekala.utils.*;
 
 public class Vertex extends SimulationObject {

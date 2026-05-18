@@ -1,4 +1,4 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.simulation;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import io.github.ignacypekala.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;

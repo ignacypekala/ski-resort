@@ -1,6 +1,8 @@
 package io.github.ignacypekala;
 
 import io.github.ignacypekala.event.*;
+import io.github.ignacypekala.simulation.Clock;
+import io.github.ignacypekala.simulation.SimulationObject;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.lift.*;
 

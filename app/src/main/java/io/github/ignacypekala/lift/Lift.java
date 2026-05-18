@@ -4,6 +4,7 @@ import com.google.common.annotations.VisibleForTesting;
 
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.event.*;
+import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.utils.*;
 
 public class Lift extends Edge {

@@ -24,4 +24,4 @@ Use the following command to run:
     app/src/test/java/io/github/ignacypekala/
     ```
 
-The entry point of the program is `io.github.ignacypekala.Simulation`.
+The entry point of the program is `io.github.ignacypekala.simulation.Simulation`.

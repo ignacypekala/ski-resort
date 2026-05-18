@@ -33,6 +33,11 @@ public class EdgeTest {
         public void addStartEdge() {
         }
 
+        @Override
+        public String toString() {
+            return "concrete edge";
+        }
+
     }
 
     @Test

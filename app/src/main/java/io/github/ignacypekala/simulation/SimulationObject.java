@@ -1,4 +1,4 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.simulation;
 
 public abstract class SimulationObject {
     private int identifier;
