@@ -8,7 +8,7 @@ public class EventQueue implements Broker {
     }
 
     @Override
-    public void send(Event event) {
+    public void publish(Event event) {
         ListNode previous = null;
         ListNode current = head;
         while (current != null &&

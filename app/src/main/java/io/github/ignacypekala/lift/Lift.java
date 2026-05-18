@@ -28,7 +28,7 @@ public class Lift extends Edge {
         this.eventPublisher = eventPublisher;
         this.clock = clock;
 
-        eventPublisher.send(new Start());
+        eventPublisher.publish(new Start());
     }
 
     private void depart() {
@@ -40,7 +40,7 @@ public class Lift extends Edge {
         }
         Carrier carrier = new Carrier(passengers, i, this);
         Arrival event = new Arrival(carrier);
-        eventPublisher.send(event);
+        eventPublisher.publish(event);
         carrier.depart();
         if (!clock.isTimeUp()) {
             scheduleLiftDepart();
@@ -49,7 +49,7 @@ public class Lift extends Edge {
 
     private void scheduleLiftDepart() {
         Departure event = new Departure();
-        eventPublisher.send(event);
+        eventPublisher.publish(event);
     }
 
     // Appeal for lifts is defined as the maximum appeal of the slopes outgoing from

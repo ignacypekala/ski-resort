@@ -34,11 +34,11 @@ public class SimulationTest {
     void artificial() {
         Broker eventBroker = simulation.getEventBroker();
         Event a = new ArtificialEvent(0);
-        eventBroker.send(a);
+        eventBroker.publish(a);
         Event b = new ArtificialEvent(5);
-        eventBroker.send(b);
+        eventBroker.publish(b);
         Event c = new ArtificialEvent(2);
-        eventBroker.send(c);
+        eventBroker.publish(c);
         simulation.run();
 
         assertSame(a, eventHistory.get(0));

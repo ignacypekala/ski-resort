@@ -70,10 +70,10 @@ public class Skier extends SimulationObject {
 
     private void scheduleArrival() {
         Arrival event = new Arrival();
-        eventPublisher.send(event);
+        eventPublisher.publish(event);
     }
 
-    private void ski() {
+    private void decideAndRide() {
         chooseEdge().ride(this);
     }
 
@@ -102,7 +102,7 @@ public class Skier extends SimulationObject {
 
     public void rideSlope(Slope slope) {
         SlopeRideFinished event = new SlopeRideFinished(slope, clock);
-        eventPublisher.send(event);
+        eventPublisher.publish(event);
         rideStarted(slope);
     }
 
@@ -116,7 +116,7 @@ public class Skier extends SimulationObject {
         rideFinishedHook(edge);
         edge.rideFinished();
         if (!clock.isTimeUp()) {
-            ski();
+            decideAndRide();
         }
     }
 
@@ -156,7 +156,7 @@ public class Skier extends SimulationObject {
         }
 
         public void handle() {
-            ski();
+            decideAndRide();
         }
 
         public String toString() {

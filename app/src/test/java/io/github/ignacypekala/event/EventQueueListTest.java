@@ -11,11 +11,11 @@ public class EventQueueListTest {
         EventQueue eq = new EventQueue();
 
         Event a = new TestEvent(new Time(15, 0, 0));
-        eq.send(a);
+        eq.publish(a);
         Event b = new TestEvent(new Time(15, 0, 1));
-        eq.send(b);
+        eq.publish(b);
         Event c = new TestEvent(new Time(15, 0, 2));
-        eq.send(c);
+        eq.publish(c);
 
         assertSame(a, eq.poll());
         assertSame(b, eq.poll());
@@ -27,11 +27,11 @@ public class EventQueueListTest {
         EventQueue eq = new EventQueue();
 
         Event a = new TestEvent(new Time(15, 0, 2));
-        eq.send(a);
+        eq.publish(a);
         Event b = new TestEvent(new Time(15, 0, 1));
-        eq.send(b);
+        eq.publish(b);
         Event c = new TestEvent(new Time(15, 0, 0));
-        eq.send(c);
+        eq.publish(c);
 
         assertSame(c, eq.poll());
         assertSame(b, eq.poll());
@@ -43,11 +43,11 @@ public class EventQueueListTest {
         EventQueue eq = new EventQueue();
 
         Event a = new TestEvent(new Time(15, 0, 0));
-        eq.send(a);
+        eq.publish(a);
         Event b = new TestEvent(new Time(15, 0, 2));
-        eq.send(b);
+        eq.publish(b);
         Event c = new TestEvent(new Time(15, 0, 1));
-        eq.send(c);
+        eq.publish(c);
 
         assertSame(a, eq.poll());
         assertSame(c, eq.poll());
@@ -74,7 +74,7 @@ public class EventQueueListTest {
                 1, 3, 7, 9, 11, 22, 13, 15, 17, 19, 21, 23, 0,
                 2, 4, 5, 6, 8, 12, 10, 24, 14, 16, 18, 20,
         }) {
-            eq.send(events[i]);
+            eq.publish(events[i]);
         }
 
         for (int i = 0; i < eventCount; i++) {
@@ -87,8 +87,8 @@ public class EventQueueListTest {
         EventQueue eq = new EventQueue();
         Event a = new TestEvent(new Time(9, 0, 0));
         Event b = new TestEvent(new Time(9, 0, 0));
-        eq.send(a);
-        eq.send(b);
+        eq.publish(a);
+        eq.publish(b);
         assertSame(a, eq.poll());
         assertSame(b, eq.poll());
     }
@@ -98,7 +98,7 @@ public class EventQueueListTest {
         EventQueue eq = new EventQueue();
         assertFalse(eq.hasEvents());
         Event event = new TestEvent(new Time(15, 0, 0));
-        eq.send(event);
+        eq.publish(event);
         assertTrue(eq.hasEvents());
     }
 }
