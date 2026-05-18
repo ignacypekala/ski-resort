@@ -22,7 +22,7 @@ public class LiftQueueTest {
         Skier[] sportsmen = new Skier[42];
         int j = 0;
         for (int i = 0; i < 42; i++) {
-            Skier sportsman = new TestClass.TestSkier(0, 0, 0);
+            Skier sportsman = new TestClass.TestSkier(i, 0, 0, 0);
             sportsmen[i] = sportsman;
             queue.enqueue(sportsman);
             assertSame(queue.peek(), sportsmen[j]);

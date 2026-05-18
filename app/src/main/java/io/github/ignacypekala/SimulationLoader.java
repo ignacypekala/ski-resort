@@ -15,6 +15,7 @@ public class SimulationLoader {
     private Clock clock;
     private EventPublisher publisher;
     private Reporter reporter;
+    private int nextSkierIdentifier;
 
     public SimulationLoader(Simulation simulation) {
         vertexRegistry = simulation.getVertexRegistry();
@@ -25,22 +26,23 @@ public class SimulationLoader {
     }
 
     public void load(Scanner scanner) {
+        nextSkierIdentifier = 0;
         int vertexCount = scanner.nextInt();
         vertexRegistry.initialize(vertexCount);
         for (int i = 0; i < vertexCount; i++) {
-            vertexRegistry.register(loadVertex(scanner));
+            vertexRegistry.register(loadVertex(scanner, i));
         }
 
         int liftCount = scanner.nextInt();
         edgeRegistry.initialize(liftCount);
         for (int i = 0; i < liftCount; i++) {
-            edgeRegistry.register(loadLift(scanner));
+            edgeRegistry.register(loadLift(scanner, i));
         }
 
         int slopeCount = scanner.nextInt();
         edgeRegistry.resize(slopeCount);
         for (int i = 0; i < slopeCount; i++) {
-            loadSlope(scanner);
+            loadSlope(scanner, i);
         }
 
         for (int i = 0; i < scanner.nextInt(); i++) {
@@ -49,7 +51,7 @@ public class SimulationLoader {
     }
 
     @VisibleForTesting
-    Vertex loadVertex(Scanner scanner) {
+    Vertex loadVertex(Scanner scanner, int identifier) {
         Scanner line = new Scanner(scanner.nextLine());
         line.useLocale(Locale.ENGLISH);
 
@@ -62,9 +64,9 @@ public class SimulationLoader {
 
         Vertex vertex;
         if (accessible) {
-            vertex = new VertexAccessible(altitude, position);
+            vertex = new VertexAccessible(identifier, altitude, position);
         } else {
-            vertex = new Vertex(altitude, position);
+            vertex = new Vertex(identifier, altitude, position);
         }
 
         line.close();
@@ -72,13 +74,14 @@ public class SimulationLoader {
     }
 
     @VisibleForTesting
-    Lift loadLift(Scanner scanner) {
+    Lift loadLift(Scanner scanner, int identifier) {
         Vertex start = vertexRegistry.fetch(scanner.nextInt());
         Vertex end = vertexRegistry.fetch(scanner.nextInt());
         int waitTime = scanner.nextInt();
         int passengerCapacity = scanner.nextInt();
         int rideTime = scanner.nextInt();
         return new Lift(
+                identifier,
                 start,
                 end,
                 rideTime,
@@ -89,7 +92,7 @@ public class SimulationLoader {
     }
 
     @VisibleForTesting
-    Slope loadSlope(Scanner scanner) {
+    Slope loadSlope(Scanner scanner, int identifier) {
         Vertex start = vertexRegistry.fetch(scanner.nextInt());
         Vertex end = vertexRegistry.fetch(scanner.nextInt());
         int difficulty = scanner.nextInt();
@@ -97,6 +100,7 @@ public class SimulationLoader {
         double baseAppeal = scanner.nextDouble();
         double durability = scanner.nextDouble();
         return new Slope(
+                identifier,
                 start,
                 end,
                 rideTime,
@@ -146,8 +150,10 @@ public class SimulationLoader {
         Time previousStartTime = firstStartTime;
         for (int i = 0; i < skierCount; i++) {
             Time currentStartTime = Time.secondsLater(previousStartTime, interval);
+            int skierIdentifier = nextSkierIdentifier++;
             if (tracked) {
                 skiers[i] = new SkierTracked(
+                        skierIdentifier,
                         startPoint,
                         proficiency,
                         spontaneity,
@@ -160,6 +166,7 @@ public class SimulationLoader {
 
             } else {
                 skiers[i] = new Skier(
+                        skierIdentifier,
                         startPoint,
                         proficiency,
                         spontaneity,

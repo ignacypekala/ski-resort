@@ -24,7 +24,7 @@ public class SimulationLoaderTest {
 
     @Test
     void vertex() {
-        Vertex vertex = loader.loadVertex(new Scanner("102 6 9"));
+        Vertex vertex = loader.loadVertex(new Scanner("102 6 9"), 0);
         assertEquals(102, vertex.getAltitude());
         Coordinates position = vertex.getPosition();
         assertEquals(6, position.getX());
@@ -34,7 +34,7 @@ public class SimulationLoaderTest {
 
     @Test
     void vertexAccessible() {
-        Vertex vertex = loader.loadVertex(new Scanner("2147483647 -2147483648 0 s"));
+        Vertex vertex = loader.loadVertex(new Scanner("2147483647 -2147483648 0 s"), 0);
         assertEquals(2147483647, vertex.getAltitude());
         Coordinates position = vertex.getPosition();
         assertEquals(-2147483648, position.getX());
@@ -45,9 +45,9 @@ public class SimulationLoaderTest {
     @Test
     void lift() {
         VertexRegistry vertices = simulation.getVertexRegistry();
-        vertices.register(new Vertex)
-        Lift lift = loader.loadLift(new Scanner("0 1 300 3 600"));
+        vertices.register(new Vertex(0, 0, new Coordinates(0, 0)));
+        vertices.register(new Vertex(1, 0, new Coordinates(0, 0)));
+        Lift lift = loader.loadLift(new Scanner("0 1 300 3 600"), 0);
     }
-
 
 }

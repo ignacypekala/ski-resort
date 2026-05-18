@@ -1,19 +1,19 @@
 package io.github.ignacypekala;
 
 public class Slope extends Edge {
-    private static int nextIdentifier = 0;
     private int difficulty;
     private double baseAppeal;
     private double durability;
 
     public Slope(
+            int identifier,
             Vertex start,
             Vertex end,
             int rideTime,
             double durability,
             int difficulty,
             double baseAppeal) {
-        super(nextIdentifier++, start, end, rideTime);
+        super(identifier, start, end, rideTime);
         addStartEdge();
         if (durability < 0 || durability > 1) {
             throw new IllegalArgumentException(

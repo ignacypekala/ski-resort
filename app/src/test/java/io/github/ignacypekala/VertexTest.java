@@ -16,7 +16,7 @@ public class VertexTest {
 
     @BeforeEach
     void intialiseEnvironment() {
-        vertex = new Vertex(altitude, coordinates);
+        vertex = new Vertex(0, altitude, coordinates);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class VertexTest {
         int slopeCount = 6;
         Slope[] slopes = new Slope[slopeCount];
         for (int i = 0; i < slopeCount; i++) {
-            Slope slope = new TestClass.TestSlope(1, 0, 1, 1);
+            Slope slope = new TestClass.TestSlope(i, 1, 0, 1, 1);
             vertex.addSlope(slope);
             slopes[i] = slope;
         }
@@ -53,6 +53,7 @@ public class VertexTest {
         Lift[] lifts = new Lift[slopeCount];
         for (int i = 0; i < liftCount; i++) {
             Lift lift = new Lift(
+                    i,
                     vertex, vertex,
                     20, 20, 20,
                     eventBroker,

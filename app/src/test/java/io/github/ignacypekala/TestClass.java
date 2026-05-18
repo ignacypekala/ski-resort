@@ -12,27 +12,30 @@ public class TestClass {
 
     public static class TestSlope extends Slope {
         static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, pos);
-        static Vertex b = new Vertex(0, pos);
+        static Vertex a = new Vertex(0, 0, pos);
+        static Vertex b = new Vertex(1, 0, pos);
 
         public TestSlope(
+                int identifier,
                 double durability,
                 int difficulty,
                 double baseAppeal,
                 int rideTime) {
-            super(a, b, rideTime, durability, difficulty, baseAppeal);
+            super(identifier, a, b, rideTime, durability, difficulty, baseAppeal);
         }
     }
 
     public static class TestSkier extends Skier {
         static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, pos);
+        static Vertex a = new Vertex(0, 0, pos);
 
         public TestSkier(
+                int identifier,
                 int proficiency,
                 double difficultyWeight,
                 double surfaceWeight) {
             super(
+                    identifier,
                     a,
                     proficiency,
                     0,
@@ -49,12 +52,13 @@ public class TestClass {
         Consumer<Edge> rideFinishedCallback;
 
         public SnitchSkier(
+                int identifier,
                 int proficiency,
                 double difficultyWeight,
                 double surfaceWeight,
                 Consumer<Edge> rideStartedCallback,
                 Consumer<Edge> rideFinishedCallback) {
-            super(proficiency, difficultyWeight, surfaceWeight);
+            super(identifier, proficiency, difficultyWeight, surfaceWeight);
             this.rideStartedCallback = rideStartedCallback;
             this.rideFinishedCallback = rideFinishedCallback;
         }

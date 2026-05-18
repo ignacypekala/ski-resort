@@ -21,8 +21,8 @@ public class SimulationTest {
         simulation = new Simulation();
         eventHistory = new ArrayList<Event>();
         eventBroker = simulation.getEventBroker();
-        a = new Vertex(0, new Coordinates(0, 0));
-        b = new Vertex(0, new Coordinates(0, 0));
+        a = new Vertex(0, 0, new Coordinates(0, 0));
+        b = new Vertex(1, 0, new Coordinates(0, 0));
     }
 
     @Test
@@ -49,13 +49,14 @@ public class SimulationTest {
         public void handle() {
             eventHistory.addLast(this);
         }
-}
+    }
 
     @Test
     void loop() {
-        Lift lift = new Lift(a, b, 14 * 60, 60, 3, eventBroker, simulation);
-        Slope slope = new Slope(b, a, 5 * 60, 0.8, 5, 1.0);
+        Lift lift = new Lift(0, a, b, 14 * 60, 60, 3, eventBroker, simulation);
+        Slope slope = new Slope(0, b, a, 5 * 60, 0.8, 5, 1.0);
         Skier skier = new Skier(
+                0,
                 a, 5, 0, 0.5, 0.5,
                 new Time(14, 0, 0),
                 eventBroker,
