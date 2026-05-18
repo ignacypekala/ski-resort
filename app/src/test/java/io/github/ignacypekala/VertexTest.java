@@ -58,6 +58,7 @@ public class VertexTest {
                     20, 20, 20,
                     eventBroker,
                     clock);
+            lift.addStartEdge();
             lifts[i] = lift;
         }
         Edge[] edges = new Edge[slopeCount + liftCount];

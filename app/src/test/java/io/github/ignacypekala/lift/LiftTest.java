@@ -28,6 +28,7 @@ public class LiftTest {
     @Test
     void construct() {
         Lift lift = new Lift(0, a, b, 3, 1, 2, eventBroker, clock);
+        lift.addStartEdge();
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
         assertEquals(1, lift.getWaitTime());

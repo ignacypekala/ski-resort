@@ -14,6 +14,7 @@ public class SlopeTest {
         Vertex b = new Vertex(1, 0, new Coordinates(-1, -1));
         assertEquals(0, a.getSlopeCount());
         Slope slope = new Slope(0, a, b, 10, 1.0, 5, 1.0);
+        slope.addStartEdge();
         assertEquals(1, a.getSlopeCount());
 
         assertEquals(slope, a.getSlopes()[0]);

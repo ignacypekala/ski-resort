@@ -14,7 +14,6 @@ public class Slope extends Edge {
             int difficulty,
             double baseAppeal) {
         super(identifier, start, end, rideTime);
-        addStartEdge();
         if (durability < 0 || durability > 1) {
             throw new IllegalArgumentException(
                     "Durability must be in the range [0, 1]");

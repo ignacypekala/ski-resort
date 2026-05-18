@@ -21,7 +21,9 @@ public class SkierTrackedTest {
         Vertex vertexA = new Vertex(0, 0, pos);
         Vertex vertexB = new Vertex(1, 0, pos);
         Lift lift = new Lift(0, vertexA, vertexB, 3 * 60, 4 * 60, 3, eventBroker, simulation);
+        lift.addStartEdge();
         Slope slope = new Slope(0, vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
+        slope.addStartEdge();
         Skier skier = new SkierTracked(
                 0,
                 vertexA,

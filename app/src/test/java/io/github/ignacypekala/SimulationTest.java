@@ -60,11 +60,13 @@ public class SimulationTest {
         EdgeRegistry lifts = simulation.getLiftRegistry();
         lifts.initialize(1);
         Lift lift = new Lift(0, a, b, 14 * 60, 60, 3, eventBroker, simulation);
+        lift.addStartEdge();
         lifts.register(lift);
 
         EdgeRegistry slopes = simulation.getSlopeRegistry();
         slopes.initialize(1);
         Slope slope = new Slope(0, b, a, 5 * 60, 0.8, 5, 1.0);
+        slope.addStartEdge();
         slopes.register(slope);
 
         Skier skier = new Skier(

@@ -88,7 +88,7 @@ public class SimulationLoader {
         int rideTime = lineScanner.nextInt();
 
         lineScanner.close();
-        return new Lift(
+        Lift lift = new Lift(
                 identifier,
                 start,
                 end,
@@ -97,6 +97,8 @@ public class SimulationLoader {
                 passengerCapacity,
                 publisher,
                 clock);
+        lift.addStartEdge();
+        return lift;
     }
 
     @VisibleForTesting
@@ -112,7 +114,7 @@ public class SimulationLoader {
         double durability = lineScanner.nextDouble();
 
         lineScanner.close();
-        return new Slope(
+        Slope slope = new Slope(
                 identifier,
                 start,
                 end,
@@ -120,6 +122,8 @@ public class SimulationLoader {
                 durability,
                 difficulty,
                 baseAppeal);
+        slope.addStartEdge();
+        return slope;
     }
 
     @VisibleForTesting
