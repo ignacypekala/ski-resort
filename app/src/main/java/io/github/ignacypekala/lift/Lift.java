@@ -33,7 +33,7 @@ public class Lift extends Edge {
         eventPublisher.send(new LiftStart());
     }
 
-    public void depart() {
+    private void depart() {
         int i = 0;
         Skier[] passengers = new Skier[passengerCapacity];
         while (i < passengerCapacity && !queue.empty()) {
@@ -49,7 +49,7 @@ public class Lift extends Edge {
         }
     }
 
-    public void scheduleLiftDepart() {
+    private void scheduleLiftDepart() {
         Depart event = new Depart();
         eventPublisher.send(event);
     }
