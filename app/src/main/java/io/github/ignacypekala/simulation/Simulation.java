@@ -6,7 +6,6 @@ import io.github.ignacypekala.event.*;
 
 import java.util.Scanner;
 import java.util.Locale;
-import com.google.common.annotations.VisibleForTesting;
 
 public class Simulation implements Clock, Reporter {
     private final Time START_TIME = new Time(9, 0, 0);
@@ -25,7 +24,6 @@ public class Simulation implements Clock, Reporter {
         slopes = new EdgeRegistry();
     }
 
-    @VisibleForTesting
     void tick() {
         Event event = eventBroker.poll();
         currentTime = event.getTime();
@@ -38,21 +36,18 @@ public class Simulation implements Clock, Reporter {
         }
     }
 
-    @VisibleForTesting
     void printRecap() {
         for (Edge lift : lifts.getEdges()) {
             System.out.println(String.format(
-                "%s: %d rides",
-                lift,
-                lift.getRideCount()
-            ));
+                    "%s: %d rides",
+                    lift,
+                    lift.getRideCount()));
         }
         for (Edge slope : slopes.getEdges()) {
             System.out.println(String.format(
-                "%s: %d rides",
-                slope,
-                slope.getRideCount()
-            ));
+                    "%s: %d rides",
+                    slope,
+                    slope.getRideCount()));
         }
     }
 
@@ -97,14 +92,12 @@ public class Simulation implements Clock, Reporter {
         return slopes;
     }
 
-
     @Override
     public void report(String message) {
         message = Character.toUpperCase(message.charAt(0)) + message.substring(1);
         System.out.println(String.format("%s: %s", currentTime, message));
     }
 
-    @VisibleForTesting
     EventBroker getEventBroker() {
         return eventBroker;
     }

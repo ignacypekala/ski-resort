@@ -8,8 +8,6 @@ import io.github.ignacypekala.lift.*;
 
 import java.util.Random;
 
-import com.google.common.annotations.VisibleForTesting;
-
 public class Skier extends SimulationObject {
     private Vertex startPoint;
     private Vertex location;
@@ -75,12 +73,10 @@ public class Skier extends SimulationObject {
         eventPublisher.send(event);
     }
 
-
     private void ski() {
         chooseEdge().ride(this);
     }
 
-    @VisibleForTesting
     Edge chooseEdge() {
         if (location.getEdgeCount() <= 0) {
             throw new IllegalStateException(
@@ -188,22 +184,18 @@ public class Skier extends SimulationObject {
         return surfaceWeight;
     }
 
-    @VisibleForTesting
     double getSpontaneity() {
         return spontaneity;
     }
 
-    @VisibleForTesting
     Vertex getStartPoint() {
         return startPoint;
     }
 
-    @VisibleForTesting
     public Time getStartTime() {
         return startTime;
     }
 
-    @VisibleForTesting
     public Vertex getLocation() {
         return location;
     }

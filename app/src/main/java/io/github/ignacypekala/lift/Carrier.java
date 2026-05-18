@@ -2,8 +2,6 @@ package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
 
-import com.google.common.annotations.VisibleForTesting;
-
 public class Carrier {
     private Skier[] passengers;
     private int passengerCount;
@@ -29,12 +27,10 @@ public class Carrier {
         }
     }
 
-    @VisibleForTesting
     Lift getLift() {
         return lift;
     }
 
-    @VisibleForTesting
     Skier[] getPassengers() {
         return passengers;
     }

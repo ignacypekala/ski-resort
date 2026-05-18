@@ -1,11 +1,8 @@
 package io.github.ignacypekala.lift;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
-import io.github.ignacypekala.utils.*;
 
 public class Lift extends Edge {
     private LiftQueue queue;
@@ -77,7 +74,6 @@ public class Lift extends Edge {
         skier.liftQueueJoinedHook(this);
     }
 
-    @VisibleForTesting
     class Depart extends RelativeEvent {
         public Depart() {
             super(clock, waitTime);
@@ -92,7 +88,6 @@ public class Lift extends Edge {
         }
     }
 
-    @VisibleForTesting
     class LiftStart extends Event {
         public LiftStart() {
             super(clock.getStartTime());
@@ -107,7 +102,6 @@ public class Lift extends Edge {
         }
     }
 
-    @VisibleForTesting
     class Arrival extends RelativeEvent {
         Carrier carrier;
 
@@ -120,7 +114,6 @@ public class Lift extends Edge {
             carrier.arrival();
         }
 
-        @VisibleForTesting
         Carrier getCarrier() {
             return carrier;
         }
@@ -150,12 +143,10 @@ public class Lift extends Edge {
         getStart().addLift(this);
     }
 
-    @VisibleForTesting
     public int getWaitTime() {
         return waitTime;
     }
 
-    @VisibleForTesting
     public int getPassengerCapacity() {
         return passengerCapacity;
     }

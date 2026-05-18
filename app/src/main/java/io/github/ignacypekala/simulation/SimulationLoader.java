@@ -3,8 +3,6 @@ package io.github.ignacypekala.simulation;
 import java.util.Locale;
 import java.util.Scanner;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
@@ -54,7 +52,6 @@ public class SimulationLoader {
         }
     }
 
-    @VisibleForTesting
     Vertex loadVertex(String line, int identifier) {
         Scanner lineScanner = new Scanner(line);
         lineScanner.useLocale(Locale.ENGLISH);
@@ -77,7 +74,6 @@ public class SimulationLoader {
         return vertex;
     }
 
-    @VisibleForTesting
     Lift loadLift(String line, int identifier) {
         Scanner lineScanner = new Scanner(line);
         lineScanner.useLocale(Locale.ENGLISH);
@@ -102,7 +98,6 @@ public class SimulationLoader {
         return lift;
     }
 
-    @VisibleForTesting
     Slope loadSlope(String line, int identifier) {
         Scanner lineScanner = new Scanner(line);
         lineScanner.useLocale(Locale.ENGLISH);
@@ -127,7 +122,6 @@ public class SimulationLoader {
         return slope;
     }
 
-    @VisibleForTesting
     Time loadTime(String timeString) {
         Scanner scanner = new Scanner(timeString);
         scanner.useLocale(Locale.ENGLISH);
@@ -141,7 +135,6 @@ public class SimulationLoader {
         return new Time(hours, minutes, seconds);
     }
 
-    @VisibleForTesting
     Skier[] loadSkierGroup(Scanner scanner) {
         Scanner line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
