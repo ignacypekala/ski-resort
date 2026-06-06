@@ -1,10 +1,10 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.skier;
 
-import io.github.ignacypekala.event.*;
-import io.github.ignacypekala.simulation.Clock;
-import io.github.ignacypekala.simulation.SimulationObject;
-import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.*;
 import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.event.*;
+import io.github.ignacypekala.simulation.*;
 
 import java.util.Random;
 import java.util.Objects;

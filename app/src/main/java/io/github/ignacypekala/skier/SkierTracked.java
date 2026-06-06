@@ -1,9 +1,10 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.skier;
 
+import io.github.ignacypekala.*;
+import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.event.*;
-import io.github.ignacypekala.lift.Lift;
-import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.simulation.*;
 
 public class SkierTracked extends Skier {
     private final Reporter reporter;
