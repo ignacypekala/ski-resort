@@ -36,33 +36,33 @@ public abstract class StrategicSkier extends Skier {
             );
         }
 
-        Slope leader = null;
-        Queue<Edge> leaderPath = new ArrayDeque<>();
-        HashMap<Vertex, Edge> visited = new HashMap<>();
+        Slope bestSlope = null;
+        Queue<Edge> bestSlopePath = new ArrayDeque<>();
+        HashMap<Vertex, Edge> traversalRegistry = new HashMap<>();
         Queue<Vertex> bfsQueue = new ArrayDeque<>();
 
         bfsQueue.add(getLocation());
         while (!bfsQueue.isEmpty()) {
             Vertex vertex = bfsQueue.remove();
             for (Slope slope : vertex.getSlopes()) {
-                if (leader == null || compareSlopes(slope, leader) > 0) {
-                    leader = slope;
-                    leaderPath = reconstructPath(visited, leader.getStart());
-                    leaderPath.add(slope);
+                if (bestSlope == null || compareSlopes(slope, bestSlope) > 0) {
+                    bestSlope = slope;
+                    bestSlopePath = reconstructPath(traversalRegistry, bestSlope.getStart());
+                    bestSlopePath.add(slope);
                 };
             }
+
             for (Edge edge : vertex.getEdges()) {
                 Vertex destination = edge.getEnd();
-                if (!visited.containsKey(destination)) {
+                if (!traversalRegistry.containsKey(destination)) {
                     bfsQueue.add(destination);
-                    visited.put(destination, edge);
+                    traversalRegistry.put(destination, edge);
                 } 
             }
         }
-        return leaderPath;
+        return bestSlopePath;
     };
 
-    // Reconstructs the path to the given destination vertex based on the visited hashmap.
     private Queue<Edge> reconstructPath(HashMap<Vertex, Edge> visited, Vertex destination) {
         Queue<Edge> queue = new ArrayDeque<>();
         Vertex vertex = destination;
@@ -75,7 +75,6 @@ public abstract class StrategicSkier extends Skier {
         return queue;
     }
 
-    // Compares two slopes.
     //  - positive if a better than b
     //  - 0 if equal
     //  - negative if a worse than b
