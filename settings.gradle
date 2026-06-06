@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = 'narciarze'
 include 'app'
+include 'generator-mapek'

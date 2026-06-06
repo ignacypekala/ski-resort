@@ -8,6 +8,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':generator-mapek')
     testImplementation libs.junit.jupiter
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
