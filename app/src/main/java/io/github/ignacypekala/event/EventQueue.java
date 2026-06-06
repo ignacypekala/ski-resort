@@ -43,7 +43,7 @@ public class EventQueue implements Broker {
         if (queue.isEmpty()) {
             throw new IllegalStateException("Cannot poll an event from an empty queue.");
         }
-        return queue.poll().getEvent();
+        return queue.remove().getEvent();
     }
 
     @Override
