@@ -14,7 +14,7 @@ public class EventQueue implements Broker {
         private final Event event;
         private final int priority;
 
-        protected PrioritizedEvent(Event event, int priority) {
+        private PrioritizedEvent(Event event, int priority) {
             this.event = event;
             this.priority = priority;
         }
@@ -25,10 +25,10 @@ public class EventQueue implements Broker {
             return comparison == 0 ? priority - other.getPriority() : comparison;
         }
 
-        protected Event getEvent() {
+        private Event getEvent() {
             return event;
         }
-        protected int getPriority() {
+        private int getPriority() {
             return priority;
         }
     }
