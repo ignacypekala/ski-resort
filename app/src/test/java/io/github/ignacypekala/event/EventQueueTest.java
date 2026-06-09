@@ -83,7 +83,7 @@ public class EventQueueTest {
     }
 
     @Test
-    void simultenous() {
+    void simulatenous() {
         EventQueue eq = new EventQueue();
         Event a = new TestEvent(new Time(9, 0, 0));
         Event b = new TestEvent(new Time(9, 0, 0));
