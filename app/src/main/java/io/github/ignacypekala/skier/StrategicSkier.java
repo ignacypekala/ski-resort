@@ -86,9 +86,9 @@ public abstract class StrategicSkier extends Skier {
         return queue;
     }
 
-    //  - positive if a better than b
-    //  - 0 if equal
-    //  - negative if a worse than b
+    //  - positive if a > b
+    //  - 0 if a == b
+    //  - negative if a < b
     protected abstract int compareSlopes(Slope slopeA, Slope slopeB);
 
 }
