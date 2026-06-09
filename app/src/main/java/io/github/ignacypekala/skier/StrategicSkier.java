@@ -5,29 +5,17 @@ import java.util.ArrayDeque;
 import java.util.HashMap;
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.simulation.*;
-import io.github.ignacypekala.utils.Time;
+import io.github.ignacypekala.utils.*;
 
 public abstract class StrategicSkier extends Skier {
     private Queue<Edge> plan;
 
     public StrategicSkier(
             final int identifier,
-            final Vertex startPoint,
-            final int proficiency,
-            final double spontaneity,
-            final double difficultyWeight,
-            final double surfaceWeight,
+            final SkierGroupProfile groupProfile,
             final Time startTime,
             final SimulationContext simulationContext) {
-        super(
-                identifier,
-                startPoint,
-                proficiency,
-                spontaneity,
-                difficultyWeight,
-                surfaceWeight,
-                startTime,
-                simulationContext);
+        super(identifier, groupProfile, startTime, simulationContext);
         plan = new ArrayDeque<>();
     }
 

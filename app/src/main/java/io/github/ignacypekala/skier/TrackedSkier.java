@@ -10,23 +10,11 @@ public class TrackedSkier extends Skier {
 
     public TrackedSkier(
             final int identifier,
-            final Vertex startPoint,
-            final int proficiency,
-            final double spontaneity,
-            final double difficultyWeight,
-            final double surfaceWeight,
+            final SkierGroupProfile groupProfile,
             final Time startTime,
             final SimulationContext simulationContext,
             final Reporter reporter) {
-        super(
-                identifier,
-                startPoint,
-                proficiency,
-                spontaneity,
-                difficultyWeight,
-                surfaceWeight,
-                startTime,
-                simulationContext);
+        super(identifier, groupProfile, startTime, simulationContext);
         this.reporter = reporter;
     }
 

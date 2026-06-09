@@ -167,17 +167,20 @@ public class Loader {
 
         final Skier[] skiers = new Skier[skierCount];
 
+        SkierGroupProfile groupProfile = new SkierGroupProfile(
+                startPoint,
+                proficiency,
+                spontaneity,
+                difficultyWeight,
+                surfaceWeight);
+
         Time startTime = firstStartTime;
         for (int i = 0; i < skierCount; i++) {
             final int skierIdentifier = nextSkierIdentifier++;
             if (tracked) {
                 skiers[i] = new TrackedSkier(
                         skierIdentifier,
-                        startPoint,
-                        proficiency,
-                        spontaneity,
-                        difficultyWeight,
-                        surfaceWeight,
+                        groupProfile,
                         startTime,
                         simulationContext,
                         reporter);
@@ -185,11 +188,7 @@ public class Loader {
             } else {
                 skiers[i] = new Skier(
                         skierIdentifier,
-                        startPoint,
-                        proficiency,
-                        spontaneity,
-                        difficultyWeight,
-                        surfaceWeight,
+                        groupProfile,
                         startTime,
                         simulationContext);
             }

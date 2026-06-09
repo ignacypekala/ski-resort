@@ -25,40 +25,37 @@ public class Skier extends SimulationObject {
 
     public Skier(
             final int identifier,
-            final Vertex startPoint,
-            final int proficiency,
-            final double spontaneity,
-            final double difficultyWeight,
-            final double surfaceWeight,
+            final SkierGroupProfile groupProfile,
             final Time startTime,
             final SimulationContext simulationContext) {
         super(identifier);
-        this.startPoint = startPoint;
+
+        startPoint = groupProfile.startPoint();
         location = startPoint;
 
+        proficiency = groupProfile.proficiency();
         if (proficiency < 0 || proficiency > 10) {
             throw new IllegalArgumentException(
                     "Proficiency must be in range {0, ..., 10}");
         }
-        this.proficiency = proficiency;
 
+        spontaneity = groupProfile.spontaneity();
         if (spontaneity < 0 || spontaneity > 1) {
             throw new IllegalArgumentException(
                     "Spontaneity must be in range [0, 1]");
         }
-        this.spontaneity = spontaneity;
 
+        difficultyWeight = groupProfile.difficultyWeight();
         if (difficultyWeight < 0 || difficultyWeight > 1) {
             throw new IllegalArgumentException(
                     "The difficulty appeal weight must be in range [0, 1]");
         }
-        this.difficultyWeight = difficultyWeight;
 
+        surfaceWeight = groupProfile.surfaceWeight();
         if (surfaceWeight < 0 || surfaceWeight > 1) {
             throw new IllegalArgumentException(
                     "The surface appeal weight must be in range [0, 1]");
         }
-        this.surfaceWeight = surfaceWeight;
 
         this.startTime = startTime;
 
