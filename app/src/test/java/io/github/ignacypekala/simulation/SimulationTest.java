@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SimulationTest {
     private Simulation simulation;
-    private Broker eventBroker;
     private ArrayList<Event> eventHistory;
     private Vertex a;
     private Vertex b;
@@ -23,7 +22,6 @@ public class SimulationTest {
     void intializeEnvironment() {
         simulation = new Simulation();
         eventHistory = new ArrayList<Event>();
-        eventBroker = simulation.getEventBroker();
         VertexRegistry vertices = simulation.getVertexRegistry();
         vertices.initialize(2);
         a = new Vertex(0, 0, new Coordinates(0, 0));
@@ -79,9 +77,10 @@ public class SimulationTest {
         slope.addStartEdge();
         slopes.register(slope);
 
+        SkierGroupProfile groupProfile = new SkierGroupProfile(a, 5, 0, 0.5, 0.5);
         Skier skier = new Skier(
                 0,
-                a, 5, 0, 0.5, 0.5,
+                groupProfile,
                 new Time(14, 0, 0),
                 simulation.getContext());
 

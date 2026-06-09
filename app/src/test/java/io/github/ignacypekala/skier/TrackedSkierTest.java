@@ -22,24 +22,21 @@ public class TrackedSkierTest {
         Vertex vertexA = new Vertex(0, 0, pos);
         Vertex vertexB = new Vertex(1, 0, pos);
         Lift lift = new Lift(
-            0,
-            vertexA,
-            vertexB,
-            3 * 60,
-            4 * 60,
-            3,
-            simulationContext
-        );
+                0,
+                vertexA,
+                vertexB,
+                3 * 60,
+                4 * 60,
+                3,
+                simulationContext);
         lift.addStartEdge();
         Slope slope = new Slope(0, vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
         slope.addStartEdge();
+
+        SkierGroupProfile groupProfile = new SkierGroupProfile(vertexA, 1, 0.0, 1.0, 0.0);
         Skier skier = new TrackedSkier(
                 0,
-                vertexA,
-                1,
-                0.0,
-                1.0,
-                0.0,
+                groupProfile,
                 simulation.getClock().getStartTime(),
                 simulationContext,
                 simulation);

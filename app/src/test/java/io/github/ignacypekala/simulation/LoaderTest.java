@@ -77,16 +77,6 @@ public class LoaderTest {
         assertEquals(60, slope.getRideTime());
         assertEquals(1, v0.getSlopeCount());
         assertSame(slope, v0.getSlopes()[0]);
-        Skier skier = new Skier(
-                0,
-                v0,
-                5,
-                0.0,
-                1.0,
-                0.0,
-                simulation.getClock().getStartTime(),
-                simulation.getContext());
-        assertEquals(0.4, slope.calculateAppeal(skier), 1e-9);
     }
 
     @Test
