@@ -78,11 +78,7 @@ public class SimulationTest {
         slopes.register(slope);
 
         SkierGroupProfile groupProfile = new SkierGroupProfile(a, 5, 0, 0.5, 0.5);
-        Skier skier = new Skier(
-                0,
-                groupProfile,
-                new Time(14, 0, 0),
-                simulation.getContext());
+        Skier skier = new Skier(0, groupProfile, new Time(14, 0, 0), simulation.getContext());
 
         simulation.run();
         simulation.printSummary();
