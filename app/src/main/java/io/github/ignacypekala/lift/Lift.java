@@ -130,7 +130,6 @@ public class Lift extends Edge {
             if (!carrier.equals(other.getCarrier())) {
                 return false;
             }
-            System.out.println("Here" + super.equals(obj));
             return super.equals(obj);
         }
     }
