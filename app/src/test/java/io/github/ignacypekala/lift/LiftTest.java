@@ -1,7 +1,6 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
-import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.event.EventQueue;
@@ -65,7 +64,7 @@ public class LiftTest {
         // Check if the lift has scheduled its startup
         Event event = eventBroker.poll();
         assertEquals(
-            lift.new Start(),
+            new Start(lift, clock),
             event
         );
 
@@ -102,10 +101,11 @@ public class LiftTest {
             skiers[i] = skier;
         }
 
+        // TODO: Remove instanceof and cast
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Start);
-        Lift.Start departEvent = (Lift.Start) event;
+        assertTrue(event instanceof Start);
+        Start departEvent = (Start) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
@@ -128,8 +128,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Start);
-        Lift.Start liftStart = (Lift.Start) event;
+        assertTrue(event instanceof Start);
+        Start liftStart = (Start) event;
         liftStart.handle();
 
         // Check if the correct passengers got a ride
@@ -171,8 +171,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Start);
-        Lift.Start departEvent = (Lift.Start) event;
+        assertTrue(event instanceof Start);
+        Start departEvent = (Start) event;
 
         assertFalse(startHook, "The skier has started their ride prematurely.");
         departEvent.handle();

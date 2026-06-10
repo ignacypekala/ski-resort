@@ -28,10 +28,10 @@ public class Lift extends Edge {
         this.eventPublisher = eventPublisher;
         this.clock = clock;
 
-        eventPublisher.publish(new Start());
+        eventPublisher.publish(new Start(this, clock));
     }
 
-    private void depart() {
+    public void depart() {
         int i = 0;
         final Skier[] passengers = new Skier[passengerCapacity];
         while (i < passengerCapacity && !queue.empty()) {
@@ -88,19 +88,6 @@ public class Lift extends Edge {
         }
     }
 
-    class Start extends Event {
-        public Start() {
-            super(clock.getStartTime());
-        }
-
-        public void handle() {
-            depart();
-        }
-
-        public String toString() {
-            return String.format("%s has started", Lift.this);
-        }
-    }
 
     class Arrival extends RelativeEvent {
         Carrier carrier;
