@@ -108,11 +108,11 @@ public class LoaderTest {
     @Test
     void skierGroupSingleUntracked() {
         registerVerticesThrough(2);
-        Scanner scanner = new Scanner(String.join(
-                "\n",
-                "1 4 0.25",
-                "0.6 0.4",
-                "2 10:15:30"));
+        Scanner scanner = new Scanner(
+                String.join("\n", """
+                        1 4 0.25
+                        0.6 0.4
+                        2 10:15:30"""));
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(1, skiers.length);
@@ -130,10 +130,10 @@ public class LoaderTest {
     void skierGroupSingleTracked() {
         registerVerticesThrough(0);
         Scanner scanner = new Scanner(String.join(
-                "\n",
-                "1 7 1.0 s",
-                "0.0 1.0",
-                "0 09:00:00"));
+                "\n", """
+                        1 7 1.0 s
+                        0.0 1.0
+                        0 09:00:00"""));
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(1, skiers.length);
@@ -145,10 +145,10 @@ public class LoaderTest {
     void skierGroupMultipleIncrementsIdentifiersAndStartTimes() {
         registerVerticesThrough(1);
         Scanner scanner = new Scanner(String.join(
-                "\n",
-                "2 3 0.0",
-                "1.0 0.0",
-                "1 12:00:00 90"));
+                "\n", """
+                        2 3 0.0
+                        1.0 0.0
+                        1 12:00:00 90"""));
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(2, skiers.length);
@@ -160,39 +160,39 @@ public class LoaderTest {
 
     @Test
     void loadExample() {
-        String testCase = String.join("\n",
-                "4",
-                "859 5 1 s",
-                "919 3 6",
-                "879 1 2 s",
-                "1120 2 9",
+        String testCase = String.join("\n", """
+                        4
+                        859 5 1 s
+                        919 3 6
+                        879 1 2 s
+                        1120 2 9
 
-                "2",
-                "0 1 10 4 240",
-                "2 3 8 6 360",
+                        2
+                        0 1 10 4 240
+                        2 3 8 6 360
 
-                "4",
-                "1 0 3 150 0.3 0.9998",
-                "3 1 7 180 0.3 0.9997",
-                "1 2 4 120 0.3 0.9998",
-                "2 0 2 60 0.3 0.99985",
+                        4
+                        1 0 3 150 0.3 0.9998
+                        3 1 7 180 0.3 0.9997
+                        1 2 4 120 0.3 0.9998
+                        2 0 2 60 0.3 0.99985
 
-                "5",
-                "180 3 0.1",
-                "1 0",
-                "0 09:00:00 15",
-                "120 7 0.1",
-                "1 0",
-                "2 09:00:00 20",
-                "1 2 0 s",
-                "0.8 0.2",
-                "0 09:05:30",
-                "1 10 0 s",
-                "0.8 0.2",
-                "0 09:10:00",
-                "1 5 1 s",
-                "0.8 0.2",
-                "2 09:15:00");
+                        5
+                        180 3 0.1
+                        1 0
+                        0 09:00:00 15
+                        120 7 0.1
+                        1 0
+                        2 09:00:00 20
+                        1 2 0 s
+                        0.8 0.2
+                        0 09:05:30
+                        1 10 0 s
+                        0.8 0.2
+                        0 09:10:00
+                        1 5 1 s
+                        0.8 0.2
+                        2 09:15:00""");
         assertDoesNotThrow(() -> loader.load(new Scanner(testCase)));
     }
 
