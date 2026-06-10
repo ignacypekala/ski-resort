@@ -8,11 +8,11 @@ public class Vertex extends SimulationObject {
     private final int altitude;
     private final Coordinates position;
 
-    private final int INITIAL_LIFT_CAPACITY = 10;
+    private final static int INITIAL_LIFT_CAPACITY = 10;
     private int liftCount;
     private Lift[] lifts;
 
-    private final int INITIAL_SLOPE_CAPACITY = 10;
+    private final static int INITIAL_SLOPE_CAPACITY = 10;
     private int slopeCount;
     private Slope[] slopes;
 
