@@ -70,11 +70,11 @@ public class Skier extends SimulationObject {
     }
 
     private void scheduleDayStart() {
-        final DayStart event = new DayStart();
+        final DayStart event = new DayStart(this);
         eventPublisher.publish(event);
     }
 
-    private void decideAndRide() {
+    public void decideAndRide() {
         chooseEdge().ride(this);
     }
 
@@ -131,24 +131,6 @@ public class Skier extends SimulationObject {
     public void liftQueueJoinedHook(final Lift lift) {
     }
 
-    private class DayStart extends Event {
-        public DayStart() {
-            super(startTime);
-        }
-
-        @Override
-        public void handle() {
-            decideAndRide();
-        }
-
-        @Override
-        public String toString() {
-            return String.format(
-                    "%s has arrived at %s",
-                    Skier.this,
-                    startPoint);
-        }
-    }
 
     @Override
     public String toString() {
