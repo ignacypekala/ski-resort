@@ -64,7 +64,7 @@ public class LiftTest {
         // Check if the lift has scheduled its startup
         Event event = eventBroker.poll();
         assertEquals(
-            new Start(lift, clock),
+            new LiftStart(lift, clock),
             event
         );
 
@@ -104,8 +104,8 @@ public class LiftTest {
         // TODO: Remove instanceof and cast
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Start);
-        Start departEvent = (Start) event;
+        assertTrue(event instanceof LiftStart);
+        LiftStart departEvent = (LiftStart) event;
         departEvent.handle();
 
         // Check if the correct passengers got a ride
@@ -128,8 +128,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Start);
-        Start liftStart = (Start) event;
+        assertTrue(event instanceof LiftStart);
+        LiftStart liftStart = (LiftStart) event;
         liftStart.handle();
 
         // Check if the correct passengers got a ride
@@ -171,8 +171,8 @@ public class LiftTest {
 
         // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Start);
-        Start departEvent = (Start) event;
+        assertTrue(event instanceof LiftStart);
+        LiftStart departEvent = (LiftStart) event;
 
         assertFalse(startHook, "The skier has started their ride prematurely.");
         departEvent.handle();

@@ -28,7 +28,7 @@ public class Lift extends Edge {
         this.eventPublisher = eventPublisher;
         this.clock = clock;
 
-        eventPublisher.publish(new Start(this, clock));
+        eventPublisher.publish(new LiftStart(this, clock));
     }
 
     public void depart() {
