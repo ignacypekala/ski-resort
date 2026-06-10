@@ -121,6 +121,18 @@ public class Lift extends Edge {
         public String toString() {
             return String.format("%s has arrived", carrier);
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof Arrival other)) {
+                return false;
+            }
+            if (!carrier.equals(other.getCarrier())) {
+                return false;
+            }
+            System.out.println("Here" + super.equals(obj));
+            return super.equals(obj);
+        }
     }
 
     @Override
@@ -143,6 +155,30 @@ public class Lift extends Edge {
         getStart().addLift(this);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } if (obj == null) {
+            return false;
+        } if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Lift other = (Lift) obj;
+        if (queue == null) {
+            if (other.queue != null) {
+                return false;
+            }
+        } else if (!queue.equals(other.queue)) {
+            return false;
+        } if (departureInterval != other.departureInterval) {
+            return false;
+        } if (passengerCapacity != other.passengerCapacity) {
+            return false;
+        }
+        return true;
+    }
+
     public int getDepartureInterval() {
         return departureInterval;
     }
@@ -150,4 +186,5 @@ public class Lift extends Edge {
     public int getPassengerCapacity() {
         return passengerCapacity;
     }
+
 }

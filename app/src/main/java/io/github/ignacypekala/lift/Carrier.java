@@ -2,6 +2,8 @@ package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
 
+import java.util.Arrays;
+
 public class Carrier {
     private final Skier[] passengers;
     private final int passengerCount;
@@ -35,11 +37,35 @@ public class Carrier {
         return passengers;
     }
 
+    int getPassengerCount() {
+        return passengerCount;
+    }
+
     @Override
     public String toString() {
         return String.format(
                 "carrier (%s) with %d passengers",
                 lift,
                 passengerCount);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Carrier other)) {
+            return false;
+        }
+        if (passengerCount != other.getPassengerCount()) {
+            return false;
+        }
+        if (!lift.equals(other.getLift())) {
+            return false;
+        }
+        if (!Arrays.equals(passengers, other.getPassengers())) {
+            return false;
+        }
+        return true;
     }
 }

@@ -7,6 +7,7 @@ import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.lift.*;
 
 import java.util.Random;
+import java.util.Objects;
 
 public class Skier extends SimulationObject {
     private final Vertex startPoint;
@@ -202,6 +203,33 @@ public class Skier extends SimulationObject {
 
     public Vertex getLocation() {
         return location;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Skier other = (Skier) obj;
+        if (proficiency != other.proficiency) {
+            return false;
+        }
+        if (Double.compare(spontaneity, other.spontaneity) != 0) {
+            return false;
+        }
+        if (Double.compare(difficultyWeight, other.difficultyWeight) != 0) {
+            return false;
+        }
+        if (Double.compare(surfaceWeight, other.surfaceWeight) != 0) {
+            return false;
+        }
+
+        return Objects.equals(startPoint, other.startPoint)
+                && Objects.equals(location, other.location)
+                && Objects.equals(startTime, other.startTime);
     }
 
 }

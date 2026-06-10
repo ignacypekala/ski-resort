@@ -14,4 +14,17 @@ public abstract class Event {
     }
 
     public abstract void handle();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Event other = (Event) obj;
+        return time.equals(other.getTime());
+    };
 }
+

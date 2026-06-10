@@ -1,6 +1,7 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
+import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.event.EventQueue;
@@ -61,25 +62,28 @@ public class LiftTest {
         Lift lift = new Lift(0, a, b, 1 * 60, 2 * 60, 3, eventBroker, clock);
         assertTrue(eventBroker.hasEvents());
 
-        // Check if the lift has scheduled its first depart
+        // Check if the lift has scheduled its startup
         Event event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Start);
-        Lift.Start liftStart = (Lift.Start) event;
+        assertEquals(
+            lift.new Start(),
+            event
+        );
 
         assertFalse(eventBroker.hasEvents());
-        liftStart.handle();
+        event.handle();
         assertTrue(eventBroker.hasEvents());
 
         // Check if the first departed carrier has arrived
         event = eventBroker.poll();
         assertTrue(eventBroker.hasEvents());
-        assertTrue(event instanceof Lift.Arrival);
-        Lift.Arrival carrierArrival = (Lift.Arrival) event;
-        assertSame(lift, carrierArrival.getCarrier().getLift());
+        assertEquals(
+            lift.new Arrival(new Carrier(new Skier[3], 0, lift)),
+            event
+        );
 
         // Check if the next lift depart was scheduled
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Departure);
+        assertEquals(lift.new Departure(), event);
 
         assertFalse(eventBroker.hasEvents());
     }
