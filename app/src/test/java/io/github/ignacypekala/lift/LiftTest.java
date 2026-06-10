@@ -76,7 +76,7 @@ public class LiftTest {
         event = eventBroker.poll();
         assertTrue(eventBroker.hasEvents());
         assertEquals(
-            lift.new Arrival(new Carrier(new Skier[3], 0, lift)),
+            new LiftArrival(new Carrier(new Skier[3], 0, lift), clock),
             event
         );
 
@@ -110,8 +110,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Arrival);
-        Lift.Arrival arrival = (Lift.Arrival) event;
+        assertTrue(event instanceof LiftArrival);
+        LiftArrival arrival = (LiftArrival) event;
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
         assertArrayEquals(
                 passengers,
@@ -134,8 +134,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Arrival);
-        Lift.Arrival arrival = (Lift.Arrival) event;
+        assertTrue(event instanceof LiftArrival);
+        LiftArrival arrival = (LiftArrival) event;
         Skier[] passengers = new Skier[liftCapacity];
         passengers[0] = skier;
         assertArrayEquals(
@@ -180,8 +180,8 @@ public class LiftTest {
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof Lift.Arrival);
-        Lift.Arrival arrival = (Lift.Arrival) event;
+        assertTrue(event instanceof LiftArrival);
+        LiftArrival arrival = (LiftArrival) event;
 
         assertFalse(finishHook, "The skier has finished their ride prematurely.");
         arrival.handle();

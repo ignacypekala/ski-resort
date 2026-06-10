@@ -39,7 +39,7 @@ public class Lift extends Edge {
             queue.dequeue();
         }
         final Carrier carrier = new Carrier(passengers, i, this);
-        final Arrival event = new Arrival(carrier);
+        final LiftArrival event = new LiftArrival(carrier, clock);
         eventPublisher.publish(event);
         carrier.depart();
         scheduleLiftDepart();
@@ -70,38 +70,6 @@ public class Lift extends Edge {
     public void ride(final Skier skier) {
         queue.enqueue(skier);
         skier.liftQueueJoinedHook(this);
-    }
-
-    class Arrival extends RelativeEvent {
-        Carrier carrier;
-
-        public Arrival(final Carrier carrier) {
-            super(clock, getRideTime());
-            this.carrier = carrier;
-        }
-
-        public void handle() {
-            carrier.arrival();
-        }
-
-        Carrier getCarrier() {
-            return carrier;
-        }
-
-        public String toString() {
-            return String.format("%s has arrived", carrier);
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Arrival other)) {
-                return false;
-            }
-            if (!carrier.equals(other.getCarrier())) {
-                return false;
-            }
-            return super.equals(obj);
-        }
     }
 
     @Override
