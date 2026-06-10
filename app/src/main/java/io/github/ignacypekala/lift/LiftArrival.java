@@ -3,7 +3,7 @@ package io.github.ignacypekala.lift;
 import io.github.ignacypekala.event.RelativeEvent;
 import io.github.ignacypekala.simulation.Clock;
 
-class LiftArrival extends RelativeEvent {
+public class LiftArrival extends RelativeEvent {
     private final Carrier carrier;
 
     public LiftArrival(final Carrier carrier, final Clock clock) {
