@@ -22,6 +22,7 @@ public class Simulation implements Reporter {
         slopes = new EdgeRegistry();
     }
 
+    /* Package-private */
     void tick() {
         final Event event = eventBroker.poll();
         clock.setTime(event.getTime());
@@ -34,6 +35,7 @@ public class Simulation implements Reporter {
         }
     }
 
+    /* Package-private */
     void printSummary() {
         for (final Edge lift : lifts.getEdges()) {
             System.out.println(String.format(
