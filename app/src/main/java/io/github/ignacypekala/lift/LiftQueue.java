@@ -23,8 +23,8 @@ public class LiftQueue {
         return (start + length - 1) % queue.length;
     }
 
-    private void realloc(int newLength) {
-        Skier[] newQueue = new Skier[newLength];
+    private void realloc(final int newLength) {
+        final Skier[] newQueue = new Skier[newLength];
 
         if (start + length > queue.length) {
             System.arraycopy(
@@ -43,7 +43,7 @@ public class LiftQueue {
         start = 0;
     }
 
-    public void enqueue(Skier skier) {
+    public void enqueue(final Skier skier) {
         if (length == queue.length) {
             realloc(length * REALLOC_MULTIPLIER);
         }

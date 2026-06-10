@@ -9,15 +9,15 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 
 public class Loader {
-    private VertexRegistry vertices;
-    private EdgeRegistry lifts;
-    private EdgeRegistry slopes;
-    private Clock clock;
-    private Publisher publisher;
-    private Reporter reporter;
+    private final VertexRegistry vertices;
+    private final EdgeRegistry lifts;
+    private final EdgeRegistry slopes;
+    private final Clock clock;
+    private final Publisher publisher;
+    private final Reporter reporter;
     private int nextSkierIdentifier;
 
-    public Loader(Simulation simulation) {
+    public Loader(final Simulation simulation) {
         vertices = simulation.getVertexRegistry();
         lifts = simulation.getLiftRegistry();
         slopes = simulation.getSlopeRegistry();
@@ -26,42 +26,42 @@ public class Loader {
         reporter = simulation;
     }
 
-    public void load(Scanner scanner) {
+    public void load(final Scanner scanner) {
         nextSkierIdentifier = 0;
-        int vertexCount = Integer.parseInt(getLine(scanner));
+        final int vertexCount = Integer.parseInt(getLine(scanner));
         vertices.initialize(vertexCount);
         for (int i = 0; i < vertexCount; i++) {
             vertices.register(loadVertex(getLine(scanner), i));
         }
 
-        int liftCount = Integer.parseInt(getLine(scanner));
+        final int liftCount = Integer.parseInt(getLine(scanner));
         lifts.initialize(liftCount);
         for (int i = 0; i < liftCount; i++) {
             lifts.register(loadLift(getLine(scanner), i));
         }
 
-        int slopeCount = Integer.parseInt(getLine(scanner));
+        final int slopeCount = Integer.parseInt(getLine(scanner));
         slopes.initialize(slopeCount);
         for (int i = 0; i < slopeCount; i++) {
             slopes.register(loadSlope(scanner.nextLine(), i));
         }
 
-        int skierGroupCount = Integer.parseInt(getLine(scanner));
+        final int skierGroupCount = Integer.parseInt(getLine(scanner));
         for (int i = 0; i < skierGroupCount; i++) {
             loadSkierGroup(scanner);
         }
     }
 
-    Vertex loadVertex(String line, int identifier) {
-        Scanner lineScanner = new Scanner(line);
+    Vertex loadVertex(final String line, final int identifier) {
+        final Scanner lineScanner = new Scanner(line);
         lineScanner.useLocale(Locale.ENGLISH);
 
-        int altitude = lineScanner.nextInt();
-        Coordinates position = new Coordinates(
+        final int altitude = lineScanner.nextInt();
+        final Coordinates position = new Coordinates(
                 lineScanner.nextInt(),
                 lineScanner.nextInt());
 
-        boolean accessible = lineScanner.hasNext() && lineScanner.next().charAt(0) == 's';
+        final boolean accessible = lineScanner.hasNext() && lineScanner.next().charAt(0) == 's';
 
         Vertex vertex;
         if (accessible) {
@@ -74,18 +74,18 @@ public class Loader {
         return vertex;
     }
 
-    Lift loadLift(String line, int identifier) {
-        Scanner lineScanner = new Scanner(line);
+    Lift loadLift(final String line, final int identifier) {
+        final Scanner lineScanner = new Scanner(line);
         lineScanner.useLocale(Locale.ENGLISH);
 
-        Vertex start = vertices.fetch(lineScanner.nextInt());
-        Vertex end = vertices.fetch(lineScanner.nextInt());
-        int departureInterval = lineScanner.nextInt();
-        int passengerCapacity = lineScanner.nextInt();
-        int rideTime = lineScanner.nextInt();
+        final Vertex start = vertices.fetch(lineScanner.nextInt());
+        final Vertex end = vertices.fetch(lineScanner.nextInt());
+        final int departureInterval = lineScanner.nextInt();
+        final int passengerCapacity = lineScanner.nextInt();
+        final int rideTime = lineScanner.nextInt();
 
         lineScanner.close();
-        Lift lift = new Lift(
+        final Lift lift = new Lift(
                 identifier,
                 start,
                 end,
@@ -98,19 +98,19 @@ public class Loader {
         return lift;
     }
 
-    Slope loadSlope(String line, int identifier) {
-        Scanner lineScanner = new Scanner(line);
+    Slope loadSlope(final String line, final int identifier) {
+        final Scanner lineScanner = new Scanner(line);
         lineScanner.useLocale(Locale.ENGLISH);
 
-        Vertex start = vertices.fetch(lineScanner.nextInt());
-        Vertex end = vertices.fetch(lineScanner.nextInt());
-        int difficulty = lineScanner.nextInt();
-        int rideTime = lineScanner.nextInt();
-        double baseAppeal = lineScanner.nextDouble();
-        double wearResistance = lineScanner.nextDouble();
+        final Vertex start = vertices.fetch(lineScanner.nextInt());
+        final Vertex end = vertices.fetch(lineScanner.nextInt());
+        final int difficulty = lineScanner.nextInt();
+        final int rideTime = lineScanner.nextInt();
+        final double baseAppeal = lineScanner.nextDouble();
+        final double wearResistance = lineScanner.nextDouble();
 
         lineScanner.close();
-        Slope slope = new Slope(
+        final Slope slope = new Slope(
                 identifier,
                 start,
                 end,
@@ -122,52 +122,52 @@ public class Loader {
         return slope;
     }
 
-    Time loadTime(String timeString) {
-        Scanner scanner = new Scanner(timeString);
+    Time loadTime(final String timeString) {
+        final Scanner scanner = new Scanner(timeString);
         scanner.useLocale(Locale.ENGLISH);
         scanner.useDelimiter(":");
 
-        int hours = scanner.nextInt();
-        int minutes = scanner.nextInt();
-        int seconds = scanner.nextInt();
+        final int hours = scanner.nextInt();
+        final int minutes = scanner.nextInt();
+        final int seconds = scanner.nextInt();
 
         scanner.close();
         return new Time(hours, minutes, seconds);
     }
 
-    Skier[] loadSkierGroup(Scanner scanner) {
+    Skier[] loadSkierGroup(final Scanner scanner) {
         Scanner line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
 
-        int skierCount = line.nextInt();
-        int proficiency = line.nextInt();
-        double spontaneity = line.nextDouble();
-        boolean tracked = line.hasNext() && line.next().charAt(0) == 's';
+        final int skierCount = line.nextInt();
+        final int proficiency = line.nextInt();
+        final double spontaneity = line.nextDouble();
+        final boolean tracked = line.hasNext() && line.next().charAt(0) == 's';
 
         line.close();
         line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
 
-        double difficultyWeight = line.nextDouble();
-        double surfaceWeight = line.nextDouble();
+        final double difficultyWeight = line.nextDouble();
+        final double surfaceWeight = line.nextDouble();
 
         line.close();
         line = new Scanner(getLine(scanner));
         line.useLocale(Locale.ENGLISH);
 
-        Vertex startPoint = vertices.fetch(line.nextInt());
-        Time firstStartTime = loadTime(line.next());
+        final Vertex startPoint = vertices.fetch(line.nextInt());
+        final Time firstStartTime = loadTime(line.next());
 
         int interval = 0;
         if (skierCount > 1) {
             interval = line.nextInt();
         }
 
-        Skier[] skiers = new Skier[skierCount];
+        final Skier[] skiers = new Skier[skierCount];
 
         Time startTime = firstStartTime;
         for (int i = 0; i < skierCount; i++) {
-            int skierIdentifier = nextSkierIdentifier++;
+            final int skierIdentifier = nextSkierIdentifier++;
             if (tracked) {
                 skiers[i] = new SkierTracked(
                         skierIdentifier,
@@ -199,7 +199,7 @@ public class Loader {
         return skiers;
     }
 
-    private String getLine(Scanner scanner) {
+    private String getLine(final Scanner scanner) {
         String line = scanner.nextLine().trim();
         if (line == "") {
             line = scanner.nextLine().trim();

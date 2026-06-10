@@ -8,11 +8,11 @@ import java.util.Scanner;
 import java.util.Locale;
 
 public class Simulation implements Reporter {
-    private SimulationClock clock;
-    private Broker eventBroker;
-    private VertexRegistry vertices;
-    private EdgeRegistry lifts;
-    private EdgeRegistry slopes;
+    private final SimulationClock clock;
+    private final Broker eventBroker;
+    private final VertexRegistry vertices;
+    private final EdgeRegistry lifts;
+    private final EdgeRegistry slopes;
 
     public Simulation() {
         clock = new SimulationClock();
@@ -23,7 +23,7 @@ public class Simulation implements Reporter {
     }
 
     void tick() {
-        Event event = eventBroker.poll();
+        final Event event = eventBroker.poll();
         clock.setTime(event.getTime());
         event.handle();
     }
@@ -35,13 +35,13 @@ public class Simulation implements Reporter {
     }
 
     void printSummary() {
-        for (Edge lift : lifts.getEdges()) {
+        for (final Edge lift : lifts.getEdges()) {
             System.out.println(String.format(
                     "%s: %d rides",
                     lift,
                     lift.getRideCount()));
         }
-        for (Edge slope : slopes.getEdges()) {
+        for (final Edge slope : slopes.getEdges()) {
             System.out.println(String.format(
                     "%s: %d rides",
                     slope,
@@ -49,12 +49,12 @@ public class Simulation implements Reporter {
         }
     }
 
-    public static void main(String[] args) {
-        Scanner stdin = new Scanner(System.in);
+    public static void main(final String[] args) {
+        final Scanner stdin = new Scanner(System.in);
         stdin.useLocale(Locale.ENGLISH);
 
-        Simulation simulation = new Simulation();
-        Loader loader = new Loader(simulation);
+        final Simulation simulation = new Simulation();
+        final Loader loader = new Loader(simulation);
         loader.load(stdin);
 
         simulation.run();

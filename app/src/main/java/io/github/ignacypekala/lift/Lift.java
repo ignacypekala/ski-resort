@@ -5,21 +5,21 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
 
 public class Lift extends Edge {
-    private LiftQueue queue;
-    private int departureInterval;
-    private int passengerCapacity;
-    private Publisher eventPublisher;
-    private Clock clock;
+    private final LiftQueue queue;
+    private final int departureInterval;
+    private final int passengerCapacity;
+    private final Publisher eventPublisher;
+    private final Clock clock;
 
     public Lift(
-            int identifier,
-            Vertex start,
-            Vertex end,
-            int rideTime,
-            int departureInterval,
-            int passengerCapacity,
-            Publisher eventPublisher,
-            Clock clock) {
+            final int identifier,
+            final Vertex start,
+            final Vertex end,
+            final int rideTime,
+            final int departureInterval,
+            final int passengerCapacity,
+            final Publisher eventPublisher,
+            final Clock clock) {
         super(identifier, start, end, rideTime);
 
         this.departureInterval = departureInterval;
@@ -33,13 +33,13 @@ public class Lift extends Edge {
 
     private void depart() {
         int i = 0;
-        Skier[] passengers = new Skier[passengerCapacity];
+        final Skier[] passengers = new Skier[passengerCapacity];
         while (i < passengerCapacity && !queue.empty()) {
             passengers[i++] = queue.peek();
             queue.dequeue();
         }
-        Carrier carrier = new Carrier(passengers, i, this);
-        Arrival event = new Arrival(carrier);
+        final Carrier carrier = new Carrier(passengers, i, this);
+        final Arrival event = new Arrival(carrier);
         eventPublisher.publish(event);
         carrier.depart();
         if (!clock.isTimeUp()) {
@@ -48,19 +48,19 @@ public class Lift extends Edge {
     }
 
     private void scheduleLiftDepart() {
-        Departure event = new Departure();
+        final Departure event = new Departure();
         eventPublisher.publish(event);
     }
 
     // Appeal for lifts is defined as the maximum appeal of the slopes outgoing from
     // the end vertex.
     @Override
-    public double calculateAppeal(Skier skier) {
+    public double calculateAppeal(final Skier skier) {
         double maxAppeal = 0;
-        Slope[] slopes = getEnd().getSlopes();
+        final Slope[] slopes = getEnd().getSlopes();
         for (int i = 0; i < getEnd().getSlopeCount(); i++) {
-            Slope slope = slopes[i];
-            double appeal = slope.calculateAppeal(skier);
+            final Slope slope = slopes[i];
+            final double appeal = slope.calculateAppeal(skier);
             if (appeal > maxAppeal) {
                 maxAppeal = appeal;
             }
@@ -69,7 +69,7 @@ public class Lift extends Edge {
     }
 
     @Override
-    public void ride(Skier skier) {
+    public void ride(final Skier skier) {
         queue.enqueue(skier);
         skier.liftQueueJoinedHook(this);
     }
@@ -105,7 +105,7 @@ public class Lift extends Edge {
     class Arrival extends RelativeEvent {
         Carrier carrier;
 
-        public Arrival(Carrier carrier) {
+        public Arrival(final Carrier carrier) {
             super(clock, getRideTime());
             this.carrier = carrier;
         }
@@ -124,12 +124,12 @@ public class Lift extends Edge {
     }
 
     @Override
-    public String getRideStartMessage(Skier skier) {
+    public String getRideStartMessage(final Skier skier) {
         return skier + " has boarded " + this + ".";
     }
 
     @Override
-    public String getRideFinishMessage(Skier skier) {
+    public String getRideFinishMessage(final Skier skier) {
         return skier + " has gotten off " + this + ".";
     }
 

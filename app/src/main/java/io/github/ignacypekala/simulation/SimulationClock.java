@@ -31,7 +31,7 @@ public class SimulationClock implements Clock {
         return END_TIME.compareTo(time) <= 0;
     }
 
-    public void setTime(Time newTime) {
+    public void setTime(final Time newTime) {
         time = newTime;
     }
 

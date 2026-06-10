@@ -1,10 +1,10 @@
 package io.github.ignacypekala.utils;
 
 public class Coordinates {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
-    public Coordinates(int x, int y) {
+    public Coordinates(final int x, final int y) {
         this.x = x;
         this.y = y;
     }

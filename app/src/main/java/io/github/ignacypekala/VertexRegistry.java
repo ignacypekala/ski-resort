@@ -5,12 +5,12 @@ import java.util.NoSuchElementException;
 public class VertexRegistry {
     private Vertex[] vertices;
 
-    public void initialize(int size) {
+    public void initialize(final int size) {
         vertices = new Vertex[size];
     }
 
-    public void register(Vertex vertex) {
-        int identifier = vertex.getIdentifier();
+    public void register(final Vertex vertex) {
+        final int identifier = vertex.getIdentifier();
         if (vertices == null) {
             throw new IllegalStateException(
                     "Cannot register vertices to a an uninitialized registry");
@@ -26,7 +26,7 @@ public class VertexRegistry {
         vertices[vertex.getIdentifier()] = vertex;
     }
 
-    public Vertex fetch(int identifier) {
+    public Vertex fetch(final int identifier) {
         if (vertices == null) {
             throw new IllegalStateException(
                     "Cannot fetch from an uninitialized registry");
@@ -39,7 +39,7 @@ public class VertexRegistry {
             throw new NoSuchElementException(
                     "There is no vertex with an identifier this high in the registry.");
         }
-        Vertex vertex = vertices[identifier];
+        final Vertex vertex = vertices[identifier];
         if (vertex == null) {
             throw new NoSuchElementException(
                     "There is no vertex with this identifier in the registry.");

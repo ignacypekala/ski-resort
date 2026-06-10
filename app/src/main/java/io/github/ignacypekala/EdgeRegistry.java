@@ -5,18 +5,18 @@ import java.util.NoSuchElementException;
 public class EdgeRegistry {
     private Edge[] edges;
 
-    public void initialize(int size) {
+    public void initialize(final int size) {
         edges = new Edge[size];
     }
 
-    public void resize(int size) {
-        Edge[] newEdges = new Edge[size];
+    public void resize(final int size) {
+        final Edge[] newEdges = new Edge[size];
         System.arraycopy(edges, 0, newEdges, 0, edges.length);
         edges = newEdges;
     }
 
-    public void register(Edge edge) {
-        int identifier = edge.getIdentifier();
+    public void register(final Edge edge) {
+        final int identifier = edge.getIdentifier();
         if (identifier < 0) {
             throw new IllegalArgumentException(
                     "Identifiers cannot be negative.");
@@ -27,7 +27,7 @@ public class EdgeRegistry {
         edges[edge.getIdentifier()] = edge;
     }
 
-    public Edge fetch(int identifier) {
+    public Edge fetch(final int identifier) {
         if (identifier < 0) {
             throw new IllegalArgumentException(
                     "Identifiers cannot be negative.");
@@ -35,7 +35,7 @@ public class EdgeRegistry {
             throw new NoSuchElementException(
                     "There is no edge with an identifier this high in the registry.");
         }
-        Edge edge = edges[identifier];
+        final Edge edge = edges[identifier];
         if (edge == null) {
             throw new NoSuchElementException(
                     "There is no edge with this identifier in the registry."

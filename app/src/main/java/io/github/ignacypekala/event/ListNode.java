@@ -4,11 +4,11 @@ public class ListNode {
     Event event;
     ListNode next;
 
-    public ListNode(Event event) {
+    public ListNode(final Event event) {
         this.event = event;
     }
 
-    public ListNode(Event event, ListNode next) {
+    public ListNode(final Event event, final ListNode next) {
         this.event = event;
         this.next = next;
     }
@@ -21,7 +21,7 @@ public class ListNode {
         return next;
     }
 
-    public void setNext(ListNode node) {
+    public void setNext(final ListNode node) {
         next = node;
     }
 }

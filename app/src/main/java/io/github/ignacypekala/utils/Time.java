@@ -6,14 +6,14 @@ public class Time implements Comparable<Time> {
     private int seconds;
 
     private void normalize() {
-        int secondsCarry = seconds / 60;
+        final int secondsCarry = seconds / 60;
         seconds = seconds % 60;
-        int minutesCarry = (minutes + secondsCarry) / 60;
+        final int minutesCarry = (minutes + secondsCarry) / 60;
         minutes = (minutes + secondsCarry) % 60;
         hours = (hours + minutesCarry) % 24;
     }
 
-    public Time(int hours, int minutes, int seconds) {
+    public Time(final int hours, final int minutes, final int seconds) {
         if (hours < 0) {
             throw new IllegalArgumentException("Hours shouldn't be negative.");
         }
@@ -32,7 +32,7 @@ public class Time implements Comparable<Time> {
         normalize();
     }
 
-    public static Time secondsLater(Time time, int delay) {
+    public static Time secondsLater(final Time time, final int delay) {
         return new Time(time.getHours(), time.getMinutes(), time.getSeconds() + delay);
     }
 
@@ -52,7 +52,7 @@ public class Time implements Comparable<Time> {
         return seconds;
     }
 
-    private static String paddedInt(int number) {
+    private static String paddedInt(final int number) {
         return String.format("%02d", number);
     }
 
@@ -65,7 +65,7 @@ public class Time implements Comparable<Time> {
     }
 
     @Override
-    public int compareTo(Time other) {
+    public int compareTo(final Time other) {
         return Integer.compare(this.toSeconds(), other.toSeconds());
     }
 

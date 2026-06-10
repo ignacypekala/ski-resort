@@ -8,7 +8,7 @@ public class EventQueue implements Broker {
     }
 
     @Override
-    public void publish(Event event) {
+    public void publish(final Event event) {
         ListNode previous = null;
         ListNode current = head;
         while (current != null &&
@@ -16,7 +16,7 @@ public class EventQueue implements Broker {
             previous = current;
             current = current.getNext();
         }
-        ListNode newNode = new ListNode(event);
+        final ListNode newNode = new ListNode(event);
         newNode.setNext(current);
         if (previous == null) {
             head = newNode;
@@ -31,7 +31,7 @@ public class EventQueue implements Broker {
             throw new IllegalStateException(
                     "Cannot dequeue an event from an empty queue.");
         }
-        Event event = head.getEvent();
+        final Event event = head.getEvent();
         head = head.getNext();
         return event;
     }

@@ -3,11 +3,11 @@ package io.github.ignacypekala.lift;
 import io.github.ignacypekala.*;
 
 public class Carrier {
-    private Skier[] passengers;
-    private int passengerCount;
-    private Lift lift;
+    private final Skier[] passengers;
+    private final int passengerCount;
+    private final Lift lift;
 
-    public Carrier(Skier[] passengers, int passengerCount, Lift lift) {
+    public Carrier(final Skier[] passengers, final int passengerCount, final Lift lift) {
         this.passengers = passengers;
         this.passengerCount = passengerCount;
         this.lift = lift;
@@ -15,14 +15,14 @@ public class Carrier {
 
     public void depart() {
         for (int i = 0; i < passengerCount; i++) {
-            Skier passenger = passengers[i];
+            final Skier passenger = passengers[i];
             passenger.rideStarted(lift);
         }
     }
 
     public void arrival() {
         for (int i = 0; i < passengerCount; i++) {
-            Skier passenger = passengers[i];
+            final Skier passenger = passengers[i];
             passenger.rideFinished(lift);
         }
     }

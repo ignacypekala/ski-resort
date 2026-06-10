@@ -16,7 +16,7 @@ public class Vertex extends SimulationObject {
     private int slopeCount;
     private Slope[] slopes;
 
-    public Vertex(int identifier, int altitude, Coordinates position) {
+    public Vertex(final int identifier, final int altitude, final Coordinates position) {
         super(identifier);
         this.altitude = altitude;
         this.position = position;
@@ -24,18 +24,18 @@ public class Vertex extends SimulationObject {
         slopes = new Slope[INITIAL_SLOPE_CAPACITY];
     }
 
-    public void addLift(Lift lift) {
+    public void addLift(final Lift lift) {
         if (liftCount == lifts.length) {
-            Lift[] newLifts = new Lift[lifts.length * 2];
+            final Lift[] newLifts = new Lift[lifts.length * 2];
             System.arraycopy(lifts, 0, newLifts, 0, lifts.length);
             lifts = newLifts;
         }
         lifts[liftCount++] = lift;
     }
 
-    public void addSlope(Slope slope) {
+    public void addSlope(final Slope slope) {
         if (slopeCount == slopes.length) {
-            Slope[] newSlopes = new Slope[slopes.length * 2];
+            final Slope[] newSlopes = new Slope[slopes.length * 2];
             System.arraycopy(slopes, 0, newSlopes, 0, slopes.length);
             slopes = newSlopes;
         }
@@ -47,7 +47,7 @@ public class Vertex extends SimulationObject {
     }
 
     public Edge[] getEdges() {
-        Edge[] edges = new Edge[slopeCount + liftCount];
+        final Edge[] edges = new Edge[slopeCount + liftCount];
         System.arraycopy(slopes, 0, edges, 0, slopeCount);
         System.arraycopy(lifts, 0, edges, slopeCount, liftCount);
         return edges;

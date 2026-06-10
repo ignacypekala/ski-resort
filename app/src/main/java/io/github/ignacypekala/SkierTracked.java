@@ -6,19 +6,19 @@ import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.utils.*;
 
 public class SkierTracked extends Skier {
-    private Reporter reporter;
+    private final Reporter reporter;
 
     public SkierTracked(
-            int identifier,
-            Vertex startPoint,
-            int proficiency,
-            double spontaneity,
-            double difficultyWeight,
-            double surfaceWeight,
-            Time startTime,
-            Publisher eventPublisher,
-            Clock clock,
-            Reporter reporter) {
+            final int identifier,
+            final Vertex startPoint,
+            final int proficiency,
+            final double spontaneity,
+            final double difficultyWeight,
+            final double surfaceWeight,
+            final Time startTime,
+            final Publisher eventPublisher,
+            final Clock clock,
+            final Reporter reporter) {
         super(
                 identifier,
                 startPoint,
@@ -33,17 +33,17 @@ public class SkierTracked extends Skier {
     }
 
     @Override
-    public void rideStartedHook(Edge edge) {
+    public void rideStartedHook(final Edge edge) {
         reporter.report(edge.getRideStartMessage(this));
     }
 
     @Override
-    public void rideFinishedHook(Edge edge) {
+    public void rideFinishedHook(final Edge edge) {
         reporter.report(edge.getRideFinishMessage(this));
     }
 
     @Override
-    public void liftQueueJoinedHook(Lift lift) {
+    public void liftQueueJoinedHook(final Lift lift) {
         reporter.report(String.format(
                 "%s has joined the queue for %s.",
                 this,

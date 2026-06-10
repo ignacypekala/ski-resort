@@ -1,18 +1,18 @@
 package io.github.ignacypekala;
 
 public class Slope extends Edge {
-    private int difficulty;
-    private double baseAppeal;
-    private double wearResistance;
+    private final int difficulty;
+    private final double baseAppeal;
+    private final double wearResistance;
 
     public Slope(
-            int identifier,
-            Vertex start,
-            Vertex end,
-            int rideTime,
-            double wearResistance,
-            int difficulty,
-            double baseAppeal) {
+            final int identifier,
+            final Vertex start,
+            final Vertex end,
+            final int rideTime,
+            final double wearResistance,
+            final int difficulty,
+            final double baseAppeal) {
         super(identifier, start, end, rideTime);
         if (wearResistance < 0 || wearResistance > 1) {
             throw new IllegalArgumentException(
@@ -33,7 +33,7 @@ public class Slope extends Edge {
         this.baseAppeal = baseAppeal;
     }
 
-    public double difficultyAppeal(int proficiency) {
+    public double difficultyAppeal(final int proficiency) {
         if (difficulty >= proficiency + 5) {
             return 0;
         } else if (proficiency + 5 > difficulty && difficulty >= proficiency) {
@@ -50,18 +50,18 @@ public class Slope extends Edge {
     }
 
     @Override
-    public double calculateAppeal(Skier skier) {
-        double diffWeight = skier.getDifficultyWeight();
-        double surfWeight = skier.getSurfaceWeight();
+    public double calculateAppeal(final Skier skier) {
+        final double diffWeight = skier.getDifficultyWeight();
+        final double surfWeight = skier.getSurfaceWeight();
 
-        double skillMatch = diffWeight * difficultyAppeal(skier.getProficiency());
-        double surfMatch = surfWeight * surfaceAppeal();
+        final double skillMatch = diffWeight * difficultyAppeal(skier.getProficiency());
+        final double surfMatch = surfWeight * surfaceAppeal();
 
         return skillMatch + surfMatch;
     }
 
     @Override
-    public void ride(Skier skier) {
+    public void ride(final Skier skier) {
         skier.rideSlope(this);
     }
 
@@ -71,12 +71,12 @@ public class Slope extends Edge {
     }
 
     @Override
-    public String getRideStartMessage(Skier skier) {
+    public String getRideStartMessage(final Skier skier) {
         return skier + " has started their run on " + this + ".";
     }
 
     @Override
-    public String getRideFinishMessage(Skier skier) {
+    public String getRideFinishMessage(final Skier skier) {
         return skier + " has finished their run on " + this + ".";
     }
 

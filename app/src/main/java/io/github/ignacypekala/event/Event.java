@@ -3,9 +3,9 @@ package io.github.ignacypekala.event;
 import io.github.ignacypekala.utils.Time;
 
 public abstract class Event {
-    private Time time;
+    private final Time time;
 
-    protected Event(Time time) {
+    protected Event(final Time time) {
         this.time = time;
     }
 

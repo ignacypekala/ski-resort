@@ -3,16 +3,16 @@ package io.github.ignacypekala;
 import io.github.ignacypekala.simulation.SimulationObject;
 
 public abstract class Edge extends SimulationObject {
-    private Vertex start;
-    private Vertex end;
-    private int rideTime;
+    private final Vertex start;
+    private final Vertex end;
+    private final int rideTime;
     private int rideCount = 0;
 
     public Edge(
-            int identifier,
-            Vertex start,
-            Vertex end,
-            int rideTime) {
+            final int identifier,
+            final Vertex start,
+            final Vertex end,
+            final int rideTime) {
         super(identifier);
         this.start = start;
         this.end = end;

@@ -9,29 +9,29 @@ import io.github.ignacypekala.lift.*;
 import java.util.Random;
 
 public class Skier extends SimulationObject {
-    private Vertex startPoint;
+    private final Vertex startPoint;
     private Vertex location;
-    private int proficiency;
-    private double spontaneity;
-    private double difficultyWeight;
-    private double surfaceWeight;
-    private Time startTime;
+    private final int proficiency;
+    private final double spontaneity;
+    private final double difficultyWeight;
+    private final double surfaceWeight;
+    private final Time startTime;
 
-    private Random generator = new Random();
+    private final Random generator = new Random();
 
-    private Publisher eventPublisher;
-    private Clock clock;
+    private final Publisher eventPublisher;
+    private final Clock clock;
 
     public Skier(
-            int identifier,
-            Vertex startPoint,
-            int proficiency,
-            double spontaneity,
-            double difficultyWeight,
-            double surfaceWeight,
-            Time startTime,
-            Publisher eventPublisher,
-            Clock clock) {
+            final int identifier,
+            final Vertex startPoint,
+            final int proficiency,
+            final double spontaneity,
+            final double difficultyWeight,
+            final double surfaceWeight,
+            final Time startTime,
+            final Publisher eventPublisher,
+            final Clock clock) {
         super(identifier);
         this.startPoint = startPoint;
         location = startPoint;
@@ -69,7 +69,7 @@ public class Skier extends SimulationObject {
     }
 
     private void scheduleDayStart() {
-        DayStart event = new DayStart();
+        final DayStart event = new DayStart();
         eventPublisher.publish(event);
     }
 
@@ -82,15 +82,15 @@ public class Skier extends SimulationObject {
             throw new IllegalStateException(
                     "Unfulfilled assumption that every vertex has at least one edge.");
         }
-        Edge[] edges = location.getEdges();
+        final Edge[] edges = location.getEdges();
         if (generator.nextDouble() < spontaneity) {
             return edges[generator.nextInt(0, location.getEdgeCount())];
         } else {
             double maxAppeal = -1;
             Edge mostAppealing = null;
             for (int i = 0; i < location.getEdgeCount(); i++) {
-                Edge edge = edges[i];
-                double appeal = edge.calculateAppeal(this);
+                final Edge edge = edges[i];
+                final double appeal = edge.calculateAppeal(this);
                 if (appeal > maxAppeal) {
                     maxAppeal = appeal;
                     mostAppealing = edge;
@@ -100,18 +100,18 @@ public class Skier extends SimulationObject {
         }
     }
 
-    public void rideSlope(Slope slope) {
-        SlopeRideFinished event = new SlopeRideFinished(slope, clock);
+    public void rideSlope(final Slope slope) {
+        final SlopeRideFinished event = new SlopeRideFinished(slope, clock);
         eventPublisher.publish(event);
         rideStarted(slope);
     }
 
-    public void rideStarted(Edge edge) {
+    public void rideStarted(final Edge edge) {
         location = null;
         rideStartedHook(edge);
     }
 
-    public void rideFinished(Edge edge) {
+    public void rideFinished(final Edge edge) {
         location = edge.getEnd();
         rideFinishedHook(edge);
         edge.rideFinished();
@@ -121,19 +121,19 @@ public class Skier extends SimulationObject {
     }
 
     // Empty hooks to be overridden by subclasses
-    public void rideStartedHook(Edge edge) {
+    public void rideStartedHook(final Edge edge) {
     }
 
-    public void rideFinishedHook(Edge edge) {
+    public void rideFinishedHook(final Edge edge) {
     }
 
-    public void liftQueueJoinedHook(Lift lift) {
+    public void liftQueueJoinedHook(final Lift lift) {
     }
 
     private class SlopeRideFinished extends RelativeEvent {
-        private Edge edge;
+        private final Edge edge;
 
-        public SlopeRideFinished(Edge edge, Clock clock) {
+        public SlopeRideFinished(final Edge edge, final Clock clock) {
             super(clock, edge.getRideTime());
             this.edge = edge;
         }

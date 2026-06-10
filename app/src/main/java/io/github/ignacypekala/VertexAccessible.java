@@ -4,7 +4,7 @@ import io.github.ignacypekala.utils.Coordinates;
 
 public class VertexAccessible extends Vertex {
 
-    public VertexAccessible(int identifier, int altitude, Coordinates position) {
+    public VertexAccessible(final int identifier, final int altitude, final Coordinates position) {
         super(identifier, altitude, position);
     }
 
