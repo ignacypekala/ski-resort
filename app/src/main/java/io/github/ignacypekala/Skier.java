@@ -109,13 +109,13 @@ public class Skier extends SimulationObject {
 
     public void rideStarted(final Edge edge) {
         location = null;
+        edge.rideStarted();
         rideStartedHook(edge);
     }
 
     public void rideFinished(final Edge edge) {
         location = edge.getEnd();
         rideFinishedHook(edge);
-        edge.rideFinished();
         if (!clock.isTimeUp()) {
             decideAndRide();
         }

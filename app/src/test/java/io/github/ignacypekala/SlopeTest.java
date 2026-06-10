@@ -82,9 +82,9 @@ public class SlopeTest {
     void surfaceVulnerable() {
         Slope slope = new TestClass.TestSlope(0, 0.5, 0, 0.75, 0);
         assertEquals(0.75 + 0.25 * 1, slope.surfaceAppeal());
-        slope.rideFinished();
+        slope.rideStarted();
         assertEquals(0.75 + 0.25 * 0.5, slope.surfaceAppeal());
-        slope.rideFinished();
+        slope.rideStarted();
         assertEquals(0.75 + 0.25 * 0.5 * 0.5, slope.surfaceAppeal());
     }
 

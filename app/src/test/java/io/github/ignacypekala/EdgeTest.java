@@ -16,7 +16,7 @@ public class EdgeTest {
         }
 
         public void ride(Skier skier) {
-            super.rideFinished();
+            super.rideStarted();
         }
 
         @Override

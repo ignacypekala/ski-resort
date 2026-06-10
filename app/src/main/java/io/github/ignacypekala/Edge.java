@@ -32,7 +32,7 @@ public abstract class Edge extends SimulationObject {
 
     public abstract String getRideFinishMessage(Skier skier);
 
-    public void rideFinished() {
+    public void rideStarted() {
         rideCount += 1;
     }
 
