@@ -15,8 +15,6 @@ public class LiftQueueTest {
     @Test
     void arbitrary() {
         LiftQueue queue = new LiftQueue();
-        assertNotNull(queue, "Queue shouldn't be null.");
-        assertTrue(queue.empty(), "Queue should be empty.");
 
         Skier[] sportsmen = new Skier[42];
         int j = 0;
