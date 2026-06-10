@@ -138,10 +138,12 @@ public class Skier extends SimulationObject {
             this.edge = edge;
         }
 
+        @Override
         public void handle() {
             rideFinished(edge);
         }
 
+        @Override
         public String toString() {
             return String.format(
                     "%s finished a ride on %s",
@@ -155,10 +157,12 @@ public class Skier extends SimulationObject {
             super(startTime);
         }
 
+        @Override
         public void handle() {
             decideAndRide();
         }
 
+        @Override
         public String toString() {
             return String.format(
                     "%s has arrived at %s",
