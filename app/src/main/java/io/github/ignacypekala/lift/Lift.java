@@ -46,7 +46,7 @@ public class Lift extends Edge {
     }
 
     private void scheduleLiftDepart() {
-        final Departure event = new Departure(clock, this);
+        final LiftDeparture event = new LiftDeparture(clock, this);
         eventPublisher.publish(event);
     }
 
