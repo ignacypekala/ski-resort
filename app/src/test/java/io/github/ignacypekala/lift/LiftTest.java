@@ -82,7 +82,7 @@ public class LiftTest {
 
         // Check if the next lift depart was scheduled
         event = eventBroker.poll();
-        assertEquals(lift.new Departure(), event);
+        assertEquals(new Departure(clock, lift), event);
 
         assertFalse(eventBroker.hasEvents());
     }

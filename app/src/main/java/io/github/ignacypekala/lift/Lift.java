@@ -46,7 +46,7 @@ public class Lift extends Edge {
     }
 
     private void scheduleLiftDepart() {
-        final Departure event = new Departure();
+        final Departure event = new Departure(clock, this);
         eventPublisher.publish(event);
     }
 
@@ -71,23 +71,6 @@ public class Lift extends Edge {
         queue.enqueue(skier);
         skier.liftQueueJoinedHook(this);
     }
-
-    class Departure extends RelativeEvent {
-        public Departure() {
-            super(clock, departureInterval);
-        }
-
-        public void handle() {
-            if (!clock.isTimeUp()) {
-                depart();
-            }
-        }
-
-        public String toString() {
-            return String.format("%s has departed", Lift.this);
-        }
-    }
-
 
     class Arrival extends RelativeEvent {
         Carrier carrier;
