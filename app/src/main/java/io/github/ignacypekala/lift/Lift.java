@@ -42,9 +42,7 @@ public class Lift extends Edge {
         final Arrival event = new Arrival(carrier);
         eventPublisher.publish(event);
         carrier.depart();
-        if (!clock.isTimeUp()) {
-            scheduleLiftDepart();
-        }
+        scheduleLiftDepart();
     }
 
     private void scheduleLiftDepart() {
@@ -80,7 +78,9 @@ public class Lift extends Edge {
         }
 
         public void handle() {
-            depart();
+            if (!clock.isTimeUp()) {
+                depart();
+            }
         }
 
         public String toString() {
