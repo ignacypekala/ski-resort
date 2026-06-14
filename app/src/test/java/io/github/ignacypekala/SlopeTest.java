@@ -5,10 +5,29 @@ import io.github.ignacypekala.skier.Skier;
 
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.skier.*;
+import io.github.ignacypekala.simulation.Simulation;
+import io.github.ignacypekala.simulation.SimulationContext;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SlopeTest {
-    private Skier skier = new TestClass.TestSkier(0, 0, 0.0, 0.0);
+    private Vertex vertex = new Vertex(0, 0, new Coordinates(0, 0));
+    private SkierGroupProfile groupProfile = new SkierGroupProfile(
+        vertex,
+        0,
+        0.0,
+        0.0,
+        0.0
+    );
+    private Simulation simulation = new Simulation();
+    private Time startTime = simulation.getClock().getStartTime();
+    private SimulationContext simulationContext = simulation.getContext();
+    private Skier skier = new Skier(
+        0,
+        groupProfile,
+        simulation.getClock().getStartTime(),
+        simulation.getContext()
+    );
 
     @Test
     void construct() {
@@ -93,15 +112,53 @@ public class SlopeTest {
     @Test
     void accumulativeAppeal() {
         Slope surfaceSlope = new TestClass.TestSlope(0, 1, 10, 1, 0);
-        Skier surfaceSkier = new TestClass.TestSkier(0, 0, 0, 1);
+        SkierGroupProfile surfaceSkierGroup = new SkierGroupProfile(
+            vertex,
+            0,
+            0,
+            0,
+            1
+        );
+        Skier surfaceSkier = new Skier(
+            0,
+            surfaceSkierGroup,
+            startTime,
+            simulationContext
+        );
         assertEquals(1.0, surfaceSlope.calculateAppeal(surfaceSkier));
 
         Slope difficultySlope = new TestClass.TestSlope(0, 0, 10, 0, 0);
-        Skier proficientSkier = new TestClass.TestSkier(1, 10, 1, 0);
+
+        SkierGroupProfile proficiencyGroup = new SkierGroupProfile(
+            vertex,
+            10,
+            0.0,
+            1.0,
+            1.0
+        );
+        Skier proficientSkier = new Skier(
+            1,
+            proficiencyGroup,
+            startTime,
+            simulationContext
+        );
         assertEquals(1.0, difficultySlope.calculateAppeal(proficientSkier));
 
         Slope allRoundSlope = new TestClass.TestSlope(0, 0.5, 5, 0.5, 0);
-        Skier allRoundSkier = new TestClass.TestSkier(2, 5, 0.5, 0.5);
+
+        SkierGroupProfile allRoundGroup = new SkierGroupProfile(
+            vertex,
+            5,
+            0,
+            0.5,
+            0.5
+        );
+        Skier allRoundSkier = new Skier(
+            2,
+            allRoundGroup,
+            startTime,
+            simulationContext
+        );
         assertEquals(1.0, allRoundSlope.calculateAppeal(allRoundSkier));
     }
 }
