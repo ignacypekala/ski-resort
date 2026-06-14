@@ -28,39 +28,21 @@ public class TestClass {
         }
     }
 
-    public static class TestSkier extends Skier {
-        static Coordinates pos = new Coordinates(0, 0);
-        static Vertex a = new Vertex(0, 0, pos);
-
-        public TestSkier(
-                int identifier,
-                int proficiency,
-                double difficultyWeight,
-                double surfaceWeight) {
-            super(
-                    identifier,
-                    a,
-                    proficiency,
-                    0,
-                    difficultyWeight,
-                    surfaceWeight,
-                    clock.getStartTime(),
-                    simulation.getContext());
-        }
-    }
-
-    public static class SnitchSkier extends TestSkier {
+    public static class SnitchSkier extends Skier {
         Consumer<Edge> rideStartedCallback;
         Consumer<Edge> rideFinishedCallback;
 
         public SnitchSkier(
                 int identifier,
-                int proficiency,
-                double difficultyWeight,
-                double surfaceWeight,
+                SkierGroupProfile groupProfile,
                 Consumer<Edge> rideStartedCallback,
                 Consumer<Edge> rideFinishedCallback) {
-            super(identifier, proficiency, difficultyWeight, surfaceWeight);
+            super(
+                identifier,
+                groupProfile,
+                clock.getStartTime(),
+                simulation.getContext()
+            );
             this.rideStartedCallback = rideStartedCallback;
             this.rideFinishedCallback = rideFinishedCallback;
         }
