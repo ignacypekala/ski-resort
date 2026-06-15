@@ -1,7 +1,6 @@
-package io.github.ignacypekala;
+package io.github.ignacypekala.skier;
 
 import io.github.ignacypekala.event.Event;
-import io.github.ignacypekala.skier.Skier;
 
 public class DayStart extends Event {
     private final Skier skier;
