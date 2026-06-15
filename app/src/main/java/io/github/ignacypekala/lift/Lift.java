@@ -4,6 +4,7 @@ import io.github.ignacypekala.*;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
+import io.github.ignacypekala.simulation.SimulationContext;
 
 public class Lift extends Edge {
     private final LiftQueue queue;
@@ -19,15 +20,15 @@ public class Lift extends Edge {
             final int rideTime,
             final int departureInterval,
             final int passengerCapacity,
-            final Publisher eventPublisher,
-            final Clock clock) {
+            final SimulationContext simulationContext) {
         super(identifier, start, end, rideTime);
 
         this.departureInterval = departureInterval;
         this.passengerCapacity = passengerCapacity;
         queue = new LiftQueue();
-        this.eventPublisher = eventPublisher;
-        this.clock = clock;
+
+        this.eventPublisher = simulationContext.publisher();
+        this.clock = simulationContext.clock();
 
         eventPublisher.publish(new LiftStart(this, clock));
     }

@@ -31,8 +31,7 @@ public class Skier extends SimulationObject {
             final double difficultyWeight,
             final double surfaceWeight,
             final Time startTime,
-            final Publisher eventPublisher,
-            final Clock clock) {
+            final SimulationContext simulationContext) {
         super(identifier);
         this.startPoint = startPoint;
         location = startPoint;
@@ -63,8 +62,8 @@ public class Skier extends SimulationObject {
 
         this.startTime = startTime;
 
-        this.eventPublisher = eventPublisher;
-        this.clock = clock;
+        this.eventPublisher = simulationContext.publisher();
+        this.clock = simulationContext.clock();
 
         scheduleDayStart();
     }

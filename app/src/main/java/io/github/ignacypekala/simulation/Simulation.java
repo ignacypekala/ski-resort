@@ -64,10 +64,6 @@ public class Simulation implements Reporter {
         stdin.close();
     }
 
-    public Clock getClock() {
-        return clock;
-    }
-
     protected VertexRegistry getVertexRegistry() {
         return vertices;
     }
@@ -86,7 +82,15 @@ public class Simulation implements Reporter {
         System.out.println(String.format("%s: %s", clock.getTime(), message));
     }
 
+    public Clock getClock() {
+        return clock;
+    }
+
     public Broker getEventBroker() {
         return eventBroker;
+    }
+
+    public SimulationContext getContext() {
+        return new SimulationContext(clock, eventBroker);
     }
 }

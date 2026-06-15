@@ -45,8 +45,7 @@ public class TestClass {
                     difficultyWeight,
                     surfaceWeight,
                     clock.getStartTime(),
-                    eventBroker,
-                    clock);
+                    simulation.getContext());
         }
     }
 

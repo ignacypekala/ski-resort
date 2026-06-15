@@ -8,10 +8,8 @@ import java.util.Queue;
 
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.lift.*;
-import io.github.ignacypekala.skier.*;
-import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
-import io.github.ignacypekala.simulation.Simulation;
+import io.github.ignacypekala.simulation.*;
 
 public class TrackedSkierTest {
     private Queue<String> reports = new ArrayDeque<String>();
@@ -19,7 +17,7 @@ public class TrackedSkierTest {
     @Test
     void reports() {
         Simulation simulation = new HijackedSimulation();
-        Broker eventBroker = simulation.getEventBroker();
+        SimulationContext simulationContext = simulation.getContext();
         Coordinates pos = new Coordinates(0, 0);
         Vertex vertexA = new Vertex(0, 0, pos);
         Vertex vertexB = new Vertex(1, 0, pos);
@@ -30,8 +28,7 @@ public class TrackedSkierTest {
             3 * 60,
             4 * 60,
             3,
-            eventBroker,
-            simulation.getClock()
+            simulationContext
         );
         lift.addStartEdge();
         Slope slope = new Slope(0, vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
@@ -44,8 +41,7 @@ public class TrackedSkierTest {
                 1.0,
                 0.0,
                 simulation.getClock().getStartTime(),
-                eventBroker,
-                simulation.getClock(),
+                simulationContext,
                 simulation);
 
         // Lift start
@@ -60,7 +56,7 @@ public class TrackedSkierTest {
             ),
             reports.remove()
         );
-        assertTrue(eventBroker.hasEvents());
+        assertTrue(simulation.getEventBroker().hasEvents());
 
         // Empty carriage arrival
         simulation.tick();

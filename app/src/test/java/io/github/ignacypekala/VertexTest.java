@@ -3,17 +3,12 @@ package io.github.ignacypekala;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-import io.github.ignacypekala.event.EventQueue;
-import io.github.ignacypekala.event.Broker;
 import io.github.ignacypekala.lift.Lift;
-import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class VertexTest {
-    private static Broker eventBroker = new EventQueue();
     private static Simulation simulation = new Simulation();
-    private static Clock clock = simulation.getClock();
     private static Coordinates coordinates = new Coordinates(11, 0);
     private static int altitude = 2001;
     private Vertex vertex;
@@ -60,8 +55,7 @@ public class VertexTest {
                     i,
                     vertex, vertex,
                     20, 20, 20,
-                    eventBroker,
-                    clock);
+                    simulation.getContext());
             lift.addStartEdge();
             lifts[i] = lift;
         }

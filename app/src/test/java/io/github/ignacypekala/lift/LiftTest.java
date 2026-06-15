@@ -4,7 +4,6 @@ import io.github.ignacypekala.*;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
-import io.github.ignacypekala.event.EventQueue;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.*;
 
@@ -17,6 +16,7 @@ public class LiftTest {
     private static Coordinates pos;
     private static Vertex a;
     private static Vertex b;
+    private static SimulationContext simulationContext;
     private static Broker eventBroker;
     private static Clock clock;
 
@@ -25,14 +25,15 @@ public class LiftTest {
         pos = new Coordinates(0, 0);
         a = new Vertex(0, 0, pos);
         b = new Vertex(1, 0, pos);
-        eventBroker = new EventQueue();
         Simulation simulation = new Simulation();
-        clock = simulation.getClock();
+        simulationContext = simulation.getContext();
+        clock = simulationContext.clock();
+        eventBroker = simulation.getEventBroker();
     }
 
     @Test
     void construct() {
-        Lift lift = new Lift(0, a, b, 3, 1, 2, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 3, 1, 2, simulationContext);
         lift.addStartEdge();
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
@@ -52,14 +53,14 @@ public class LiftTest {
         end.addSlope(goodSlope);
         end.addSlope(badSlope);
         Skier skier = new TestClass.TestSkier(0, 10, 1.0, 0.0);
-        Lift lift = new Lift(0, a, end, 0, 0, 0, eventBroker, clock);
+        Lift lift = new Lift(0, a, end, 0, 0, 0, simulationContext);
         assertEquals(goodSlope.calculateAppeal(skier), lift.calculateAppeal(skier));
     }
 
     @Test
     void dryRun() {
         assertFalse(eventBroker.hasEvents());
-        Lift lift = new Lift(0, a, b, 1 * 60, 2 * 60, 3, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 1 * 60, 2 * 60, 3, simulationContext);
         assertTrue(eventBroker.hasEvents());
 
         // Check if the lift has scheduled its startup
@@ -93,7 +94,7 @@ public class LiftTest {
         int liftCapacity = 3;
         // Longer departureInterval than rideTime so that the first carrier arrives
         // before the 2nd depart.
-        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
 
         Skier[] skiers = new Skier[5];
         for (int i = 0; i < 5; i++) {
@@ -122,7 +123,7 @@ public class LiftTest {
     @Test
     void partialLoad() {
         int liftCapacity = 3;
-        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, eventBroker, clock);
+        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
 
         Skier skier = new TestClass.TestSkier(0, 0, 0.5, 0.5);
         lift.ride(skier);
@@ -164,7 +165,7 @@ public class LiftTest {
                 this::startHookConsumer,
                 this::finishHookConsumer);
 
-        Lift lift = new Lift(0, skier.getLocation(), b, 1, 2, 1, eventBroker, clock);
+        Lift lift = new Lift(0, skier.getLocation(), b, 1, 2, 1, simulationContext);
         // Create a loop so that the end vertex has an outgoing edge.
         b.addLift(lift);
 

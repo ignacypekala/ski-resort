@@ -69,8 +69,7 @@ public class SimulationTest {
                 15 * 60,
                 60,
                 3,
-                eventBroker,
-                simulation.getClock());
+                simulation.getContext());
         lift.addStartEdge();
         lifts.register(lift);
 
@@ -84,8 +83,7 @@ public class SimulationTest {
                 0,
                 a, 5, 0, 0.5, 0.5,
                 new Time(14, 0, 0),
-                eventBroker,
-                simulation.getClock());
+                simulation.getContext());
 
         simulation.run();
         simulation.printSummary();

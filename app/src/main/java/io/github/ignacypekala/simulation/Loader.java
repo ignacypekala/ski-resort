@@ -17,6 +17,7 @@ public class Loader {
     private final Publisher publisher;
     private final Reporter reporter;
     private int nextSkierIdentifier;
+    private final SimulationContext simulationContext;
 
     public Loader(final Simulation simulation) {
         vertices = simulation.getVertexRegistry();
@@ -25,6 +26,7 @@ public class Loader {
         clock = simulation.getClock();
         publisher = simulation.getEventBroker();
         reporter = simulation;
+        simulationContext = new SimulationContext(clock, publisher);
     }
 
     public void load(final Scanner scanner) {
@@ -93,8 +95,7 @@ public class Loader {
                 rideTime,
                 departureInterval,
                 passengerCapacity,
-                publisher,
-                clock);
+                simulationContext);
         lift.addStartEdge();
         return lift;
     }
@@ -178,8 +179,7 @@ public class Loader {
                         difficultyWeight,
                         surfaceWeight,
                         startTime,
-                        publisher,
-                        clock,
+                        simulationContext,
                         reporter);
 
             } else {
@@ -191,8 +191,7 @@ public class Loader {
                         difficultyWeight,
                         surfaceWeight,
                         startTime,
-                        publisher,
-                        clock);
+                        simulationContext);
             }
             startTime = Time.secondsLater(startTime, interval);
         }

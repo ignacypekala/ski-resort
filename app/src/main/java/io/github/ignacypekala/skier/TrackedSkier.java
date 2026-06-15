@@ -2,7 +2,6 @@ package io.github.ignacypekala.skier;
 
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.lift.*;
-import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.simulation.*;
 
@@ -17,8 +16,7 @@ public class TrackedSkier extends Skier {
             final double difficultyWeight,
             final double surfaceWeight,
             final Time startTime,
-            final Publisher eventPublisher,
-            final Clock clock,
+            final SimulationContext simulationContext,
             final Reporter reporter) {
         super(
                 identifier,
@@ -28,8 +26,7 @@ public class TrackedSkier extends Skier {
                 difficultyWeight,
                 surfaceWeight,
                 startTime,
-                eventPublisher,
-                clock);
+                simulationContext);
         this.reporter = reporter;
     }
 
