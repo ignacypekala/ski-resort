@@ -109,7 +109,7 @@ public class SlopeTest {
 
     @Test
     void surfaceVulnerable() {
-        Slope slope = new TestClass.TestSlope(0, 0.5, 0, 0.75, 0);
+        Slope slope = new Slope(0, a, b, 0, 0.5, 0, 0.75);
         assertEquals(0.75 + 0.25 * 1, slope.surfaceAppeal());
 
         slope.rideStarted();
@@ -131,7 +131,7 @@ public class SlopeTest {
         Skier proficientSkier = new Skier(1, proficiencyGroup, startTime, simulationContext);
         assertEquals(1.0, difficultySlope.calculateAppeal(proficientSkier));
 
-        Slope allRoundSlope = new TestClass.TestSlope(0, 0.5, 5, 0.5, 0);
+        Slope allRoundSlope = new Slope(0, a, b, 0, 0.5, 5, 0.5);
 
         SkierGroupProfile allRoundGroup = new SkierGroupProfile(a, 5, 0, 0.5, 0.5);
         Skier allRoundSkier = new Skier(2, allRoundGroup, startTime, simulationContext);

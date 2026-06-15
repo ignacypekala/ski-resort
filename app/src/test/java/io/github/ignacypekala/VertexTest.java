@@ -8,13 +8,20 @@ import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.utils.Coordinates;
 
 public class VertexTest {
-    private static Simulation simulation = new Simulation();
-    private static Coordinates coordinates = new Coordinates(11, 0);
-    private static int altitude = 2001;
+    private Vertex a;
+    private Vertex b;
+    private Simulation simulation;
+    private Coordinates coordinates;
+    private int altitude;
     private Vertex vertex;
 
     @BeforeEach
     void intializeEnvironment() {
+        a = new Vertex(0, 0, new Coordinates(0, 0));
+        b = new Vertex(1, 0, new Coordinates(0, 0));
+        simulation = new Simulation();
+        coordinates = new Coordinates(11, 0);
+        altitude = 2001;
         vertex = new Vertex(0, altitude, coordinates);
     }
 
@@ -33,9 +40,7 @@ public class VertexTest {
         for (int i = 0; i < expected.length; i++) {
             assertSame(
                     expected[i], actual[i],
-                    String.format(
-                            "The expected and actual edges don't match at position i = %d",
-                            i));
+                    String.format("The expected and actual edges don't match at position i = %d", i));
         }
     }
 
@@ -44,7 +49,7 @@ public class VertexTest {
         int slopeCount = 6;
         Slope[] slopes = new Slope[slopeCount];
         for (int i = 0; i < slopeCount; i++) {
-            Slope slope = new TestClass.TestSlope(i, 1, 0, 1, 1);
+            Slope slope = new Slope(i, a, b, 1, 1, 0, 1);
             vertex.addSlope(slope);
             slopes[i] = slope;
         }
