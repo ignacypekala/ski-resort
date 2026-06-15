@@ -17,8 +17,10 @@ public class LiftTest {
     private static Vertex a;
     private static Vertex b;
     private static SimulationContext simulationContext;
+    private static Time startTime;
     private static Broker eventBroker;
     private static Clock clock;
+    private static SkierGroupProfile groupProfile;
 
     @BeforeEach
     void initiateEnvironment() {
@@ -29,6 +31,8 @@ public class LiftTest {
         simulationContext = simulation.getContext();
         clock = simulationContext.clock();
         eventBroker = simulation.getEventBroker();
+        startTime = simulationContext.clock().getStartTime();
+        groupProfile = new SkierGroupProfile(a, 10, 0, 1.0, 0.0);
     }
 
     @Test
@@ -52,7 +56,11 @@ public class LiftTest {
         Slope badSlope = new TestClass.TestSlope(1, 0, 0, 0, 0);
         end.addSlope(goodSlope);
         end.addSlope(badSlope);
-        Skier skier = new TestClass.TestSkier(0, 10, 1.0, 0.0);
+        Skier skier = new Skier(
+                0,
+                groupProfile,
+                simulationContext.clock().getStartTime(),
+                simulationContext);
         Lift lift = new Lift(0, a, end, 0, 0, 0, simulationContext);
         assertEquals(goodSlope.calculateAppeal(skier), lift.calculateAppeal(skier));
     }
@@ -96,9 +104,15 @@ public class LiftTest {
         // before the 2nd depart.
         Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
 
+        
+
         Skier[] skiers = new Skier[5];
         for (int i = 0; i < 5; i++) {
-            Skier skier = new TestClass.TestSkier(i, i, 0.5, 0.5);
+            Skier skier = new Skier(
+                    i,
+                    groupProfile,
+                    simulationContext.clock().getStartTime(),
+                    simulationContext);
             lift.ride(skier);
             skiers[i] = skier;
         }
@@ -124,25 +138,39 @@ public class LiftTest {
     void partialLoad() {
         int liftCapacity = 3;
         Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
+        a.addLift(lift);
+        b.addLift(lift);
+        Skier skier = new Skier(0, groupProfile, startTime, simulationContext);
 
-        Skier skier = new TestClass.TestSkier(0, 0, 0.5, 0.5);
-        lift.ride(skier);
-
-        // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof LiftStart);
-        LiftStart liftStart = (LiftStart) event;
-        liftStart.handle();
+        assertEquals(new LiftStart(lift, clock), event);
+        event.handle();
 
-        // Check if the correct passengers got a ride
         event = eventBroker.poll();
-        assertTrue(event instanceof LiftArrival);
-        LiftArrival arrival = (LiftArrival) event;
+        assertEquals(new DayStart(skier), event);
+        event.handle();
+
+        event = eventBroker.poll();
+        assertEquals(
+                new LiftArrival(new Carrier(new Skier[3], 0, lift), clock),
+                event);
+        event.handle();
+
+        event = eventBroker.poll();
+        assertEquals(new LiftDeparture(clock, lift), event);
+        event.handle();
+
+        event = eventBroker.poll();
+        event.handle();
+
+        // Check if correct passengers got a lift
         Skier[] passengers = new Skier[liftCapacity];
         passengers[0] = skier;
-        assertArrayEquals(
-                passengers,
-                arrival.getCarrier().getPassengers());
+        assertEquals(new LiftArrival(
+            new Carrier(passengers, 1, lift),
+            clock
+        ), event);
+
     }
 
     private boolean startHook = false;
@@ -161,7 +189,7 @@ public class LiftTest {
     void aftermath() {
         Skier skier = new TestClass.SnitchSkier(
                 0,
-                0, 0.5, 0.5,
+                groupProfile,
                 this::startHookConsumer,
                 this::finishHookConsumer);
 

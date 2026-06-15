@@ -1,12 +1,18 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
+import io.github.ignacypekala.simulation.Simulation;
+import io.github.ignacypekala.simulation.SimulationContext;
 import io.github.ignacypekala.skier.*;
+import io.github.ignacypekala.utils.Coordinates;
+import io.github.ignacypekala.utils.Time;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LiftQueueTest {
+    private SimulationContext context = new Simulation().getContext();
+    private Time startTime = context.clock().getStartTime();
     @Test
     void popEmpty() {
         LiftQueue queue = new LiftQueue();
@@ -54,8 +60,10 @@ public class LiftQueueTest {
 
         Skier[] sportsmen = new Skier[42];
         int j = 0;
+        SkierGroupProfile groupProfile = new SkierGroupProfile(
+                new Vertex(0, 0, new Coordinates(0, 0)), 0, 0, 0, 0);
         for (int i = 0; i < 42; i++) {
-            Skier sportsman = new TestClass.TestSkier(i, 0, 0, 0);
+            Skier sportsman = new Skier(i, groupProfile, startTime, context);
             sportsmen[i] = sportsman;
             queue.enqueue(sportsman);
             assertSame(queue.peek(), sportsmen[j]);
