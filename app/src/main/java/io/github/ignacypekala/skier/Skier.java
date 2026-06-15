@@ -79,22 +79,31 @@ public class Skier extends SimulationObject {
             throw new IllegalStateException(
                     "Unfulfilled assumption that every vertex has at least one edge.");
         }
-        final Edge[] edges = location.getEdges();
         if (generator.nextDouble() < spontaneity) {
-            return edges[generator.nextInt(0, location.getEdgeCount())];
+            return chooseRandomEdge();
         } else {
-            double maxAppeal = -1;
-            Edge mostAppealing = null;
-            for (int i = 0; i < location.getEdgeCount(); i++) {
-                final Edge edge = edges[i];
-                final double appeal = edge.calculateAppeal(this);
-                if (appeal > maxAppeal) {
-                    maxAppeal = appeal;
-                    mostAppealing = edge;
-                }
-            }
-            return mostAppealing;
+            return chooseBestEdge();
         }
+    }
+
+    private Edge chooseRandomEdge() {
+        int chosenEdgeIndex = generator.nextInt(0, location.getEdgeCount());
+        return location.getEdges()[chosenEdgeIndex];
+    }
+
+    protected Edge chooseBestEdge() {
+        Edge[] edges = location.getEdges();
+        double maxAppeal = -1;
+        Edge mostAppealing = null;
+        for (int i = 0; i < location.getEdgeCount(); i++) {
+            final Edge edge = edges[i];
+            final double appeal = edge.calculateAppeal(this);
+            if (appeal > maxAppeal) {
+                maxAppeal = appeal;
+                mostAppealing = edge;
+            }
+        }
+        return mostAppealing;
     }
 
     private void ride(final Edge edge) {
