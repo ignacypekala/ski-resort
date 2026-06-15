@@ -7,8 +7,9 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import io.github.ignacypekala.*;
-import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
+import io.github.ignacypekala.skier.*;
+import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.simulation.Simulation;
 

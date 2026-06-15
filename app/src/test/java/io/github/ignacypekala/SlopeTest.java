@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import io.github.ignacypekala.skier.Skier;
 
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.skier.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SlopeTest {

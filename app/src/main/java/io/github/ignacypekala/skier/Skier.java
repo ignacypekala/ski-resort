@@ -78,7 +78,7 @@ public class Skier extends SimulationObject {
         ride(chooseEdge());
     }
 
-    private Edge chooseEdge() {
+    Edge chooseEdge() {
         if (location.getEdgeCount() <= 0) {
             throw new IllegalStateException(
                     "Unfulfilled assumption that every vertex has at least one edge.");

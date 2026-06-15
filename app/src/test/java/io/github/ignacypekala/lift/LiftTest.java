@@ -1,12 +1,12 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
+import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.event.EventQueue;
 import io.github.ignacypekala.simulation.Clock;
-import io.github.ignacypekala.simulation.Simulation;
-import io.github.ignacypekala.skier.Skier;
+import io.github.ignacypekala.simulation.*;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;

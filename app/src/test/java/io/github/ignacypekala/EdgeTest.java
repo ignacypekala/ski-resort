@@ -1,10 +1,10 @@
 package io.github.ignacypekala;
 
-import org.junit.jupiter.api.Test;
-import io.github.ignacypekala.utils.Coordinates;
-import static org.junit.jupiter.api.Assertions.*;
-
+import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.skier.*;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EdgeTest {
     private class ConcreteEdge extends Edge {

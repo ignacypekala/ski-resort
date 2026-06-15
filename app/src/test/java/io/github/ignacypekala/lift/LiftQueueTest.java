@@ -1,7 +1,7 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
-import io.github.ignacypekala.skier.Skier;
+import io.github.ignacypekala.skier.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,6 +49,8 @@ public class LiftQueueTest {
     @Test
     void arbitrary() {
         LiftQueue queue = new LiftQueue();
+        assertNotNull(queue, "Queue shouldn't be null.");
+        assertTrue(queue.empty(), "Queue should be empty.");
 
         Skier[] sportsmen = new Skier[42];
         int j = 0;
