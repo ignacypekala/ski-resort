@@ -23,8 +23,19 @@ public class LiftQueueTest {
     void simple() {
         LiftQueue queue = new LiftQueue();
         Skier[] skiers = new Skier[5];
+        SkierGroupProfile groupProfile = new SkierGroupProfile(
+                new Vertex(0, 0, new Coordinates(0, 0)),
+                0,
+                0,
+                0,
+                0);
+
         for (int i = 0; i < 5; i++) {
-            skiers[i] = new TestClass.TestSkier(i, 0, 0, 0);
+            skiers[i] = new Skier(
+                    i,
+                    groupProfile,
+                    context.clock().getStartTime(),
+                    context);
         }
 
         assertTrue(queue.empty());

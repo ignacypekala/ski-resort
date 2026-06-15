@@ -1,6 +1,8 @@
 package io.github.ignacypekala;
 
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.simulation.Simulation;
+import io.github.ignacypekala.simulation.SimulationContext;
 import io.github.ignacypekala.skier.*;
 
 import org.junit.jupiter.api.Test;
@@ -53,7 +55,11 @@ public class EdgeTest {
         assertSame(b, edge.getEnd());
 
         assertEquals(0, edge.getRideCount());
-        edge.ride(new TestClass.TestSkier(0, 0, 0.0, 0.0));
+        SkierGroupProfile groupProfile = new SkierGroupProfile(
+            new Vertex(0, 0, new Coordinates(0, 0)), 0, 0.0, 0.0, 0.0);
+        SimulationContext context = new Simulation().getContext();
+
+        edge.ride(new Skier(0, groupProfile, context.clock().getStartTime(), context));
         assertEquals(1, edge.getRideCount());
     }
 
