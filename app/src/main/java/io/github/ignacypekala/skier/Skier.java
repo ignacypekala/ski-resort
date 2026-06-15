@@ -75,7 +75,7 @@ public class Skier extends SimulationObject {
     }
 
     public void decideAndRide() {
-        chooseEdge().ride(this);
+        ride(chooseEdge());
     }
 
     private Edge chooseEdge() {
@@ -101,8 +101,12 @@ public class Skier extends SimulationObject {
         }
     }
 
-    public void rideSlope(final Slope slope) {
-        final SlopeRideFinished event = new SlopeRideFinished(slope, this, clock);
+    private void ride(Edge edge) {
+        edge.ride(this);
+    }
+
+    public void rideSlope(Slope slope) {
+        SlopeRideFinished event = new SlopeRideFinished(slope, this, clock);
         eventPublisher.publish(event);
         rideStarted(slope);
     }
