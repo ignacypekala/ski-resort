@@ -20,6 +20,15 @@ public abstract class StrategicSkier extends Skier {
     }
 
     @Override
+    Edge chooseEdge() {
+        if (plan.isEmpty()) {
+            return super.chooseEdge();
+        } else {
+            return chooseBestEdge();
+        }
+    }
+
+    @Override
     protected Edge chooseBestEdge() {
         if (plan.isEmpty()) {
             plan = createNewPlan();
