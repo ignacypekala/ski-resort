@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class EventQueue implements Broker {
     private int nextPriority = 0;
-    private PriorityQueue<PrioritizedEvent> queue;
+    private final PriorityQueue<PrioritizedEvent> queue;
 
     public EventQueue() {
         queue = new PriorityQueue<PrioritizedEvent>();
@@ -14,14 +14,14 @@ public class EventQueue implements Broker {
         private final Event event;
         private final int priority;
 
-        private PrioritizedEvent(Event event, int priority) {
+        private PrioritizedEvent(final Event event, final int priority) {
             this.event = event;
             this.priority = priority;
         }
 
         @Override
-        public int compareTo(PrioritizedEvent other) {
-            int comparison = event.compareTo(other.getEvent());
+        public int compareTo(final PrioritizedEvent other) {
+            final int comparison = event.compareTo(other.getEvent());
             return comparison == 0 ? priority - other.getPriority() : comparison;
         }
 
@@ -34,7 +34,7 @@ public class EventQueue implements Broker {
     }
 
     @Override
-    public void publish(Event event) {
+    public void publish(final Event event) {
         queue.add(new PrioritizedEvent(event, nextPriority++));
     }
 

@@ -3,7 +3,7 @@ package io.github.ignacypekala.event;
 import io.github.ignacypekala.utils.Time;
 
 public abstract class Event implements Comparable<Event> {
-    private Time time;
+    private final Time time;
 
     protected Event(final Time time) {
         this.time = time;
@@ -27,7 +27,7 @@ public abstract class Event implements Comparable<Event> {
         return time.equals(other.getTime());
     };
 
-    public int compareTo(Event other) {
+    public int compareTo(final Event other) {
         return time.compareTo(other.getTime());
     }
 }
