@@ -147,7 +147,8 @@ public class LiftTest {
         event.handle();
 
         event = eventBroker.poll();
-        passengers = Arrays.copyOfRange(skiers, 3, skiers.length);
+        passengers = new Skier[3];
+        System.arraycopy(skiers, 3, passengers, 0, 2);
         assertEquals(new LiftArrival(new Carrier(passengers, 2, lift), clock), event);
     }
 
