@@ -62,7 +62,9 @@ public abstract class StrategicSkier extends Skier {
         return bestSlopePath;
     };
 
-    private Queue<Edge> reconstructPath(final HashMap<Vertex, Edge> visited, final Vertex destination) {
+    private Queue<Edge> reconstructPath(
+            final HashMap<Vertex, Edge> visited,
+            final Vertex destination) {
         final Queue<Edge> queue = new ArrayDeque<>();
         Vertex vertex = destination;
         Edge edge = visited.get(vertex);
