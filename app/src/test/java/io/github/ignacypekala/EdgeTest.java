@@ -55,11 +55,12 @@ public class EdgeTest {
         assertSame(b, edge.getEnd());
 
         assertEquals(0, edge.getRideCount());
-        SkierGroupProfile groupProfile = new SkierGroupProfile(
-            new Vertex(0, 0, new Coordinates(0, 0)), 0, 0.0, 0.0, 0.0);
-        SimulationContext context = new Simulation().getContext();
 
+        SimulationContext context = new Simulation().getContext();
+        SkierGroupProfile groupProfile = new SkierGroupProfile(
+                new Vertex(0, 0, new Coordinates(0, 0)), 0, 0.0, 0.0, 0.0);
         edge.ride(new Skier(0, groupProfile, context.clock().getStartTime(), context));
+
         assertEquals(1, edge.getRideCount());
     }
 
