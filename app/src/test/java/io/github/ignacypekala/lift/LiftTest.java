@@ -103,8 +103,7 @@ public class LiftTest {
         // Longer departureInterval than rideTime so that the first carrier arrives
         // before the 2nd depart.
         Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
-
-        
+        a.addLift(lift);
 
         Skier[] skiers = new Skier[5];
         for (int i = 0; i < 5; i++) {
@@ -113,25 +112,43 @@ public class LiftTest {
                     groupProfile,
                     simulationContext.clock().getStartTime(),
                     simulationContext);
-            lift.ride(skier);
             skiers[i] = skier;
         }
 
-        // TODO: Remove instanceof and cast
-        // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof LiftStart);
-        LiftStart departEvent = (LiftStart) event;
-        departEvent.handle();
+        assertEquals(new LiftStart(lift, clock), event);
+        event.handle();
 
-        // Check if the correct passengers got a ride
+        for (int i = 0; i < 5; i++) {
+            event = eventBroker.poll();
+            assertEquals(new DayStart(skiers[i]), event);
+            event.handle();
+        }
+
+        // The initial empty carrier
         event = eventBroker.poll();
-        assertTrue(event instanceof LiftArrival);
-        LiftArrival arrival = (LiftArrival) event;
+        assertEquals(
+                new LiftArrival(new Carrier(new Skier[liftCapacity], 0, lift), clock),
+                event);
+        event.handle();
+
+        // First non-empty ride
+        event = eventBroker.poll();
+        assertEquals(new LiftDeparture(clock, lift), event);
+        event.handle();
+
+        event = eventBroker.poll();
         Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
-        assertArrayEquals(
-                passengers,
-                arrival.getCarrier().getPassengers());
+        assertEquals(new LiftArrival(new Carrier(passengers, 3, lift), clock), event);
+
+        // Second ride - 2/3 passengers
+        event = eventBroker.poll();
+        assertEquals(new LiftDeparture(clock, lift), event);
+        event.handle();
+
+        event = eventBroker.poll();
+        passengers = Arrays.copyOfRange(skiers, 3, skiers.length);
+        assertEquals(new LiftArrival(new Carrier(passengers, 3, lift), clock), event);
     }
 
     @Test
