@@ -116,7 +116,7 @@ public class LoaderTest {
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(1, skiers.length);
-        assertFalse(skiers[0] instanceof SkierTracked);
+        assertFalse(skiers[0] instanceof TrackedSkier);
         assertEquals(0, skiers[0].getIdentifier());
         assertEquals(4, skiers[0].getProficiency());
         assertEquals(0.6, skiers[0].getDifficultyWeight(), 0.0);
@@ -137,7 +137,7 @@ public class LoaderTest {
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner);
         assertEquals(1, skiers.length);
-        assertTrue(skiers[0] instanceof SkierTracked);
+        assertTrue(skiers[0] instanceof TrackedSkier);
         assertEquals(7, skiers[0].getProficiency());
     }
 

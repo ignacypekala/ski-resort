@@ -169,7 +169,7 @@ public class Loader {
         for (int i = 0; i < skierCount; i++) {
             final int skierIdentifier = nextSkierIdentifier++;
             if (tracked) {
-                skiers[i] = new SkierTracked(
+                skiers[i] = new TrackedSkier(
                         skierIdentifier,
                         startPoint,
                         proficiency,

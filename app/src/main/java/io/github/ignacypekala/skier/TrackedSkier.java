@@ -6,20 +6,20 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.simulation.*;
 
-public class SkierTracked extends Skier {
-    private final Reporter reporter;
+public class TrackedSkier extends Skier {
+    private Reporter reporter;
 
-    public SkierTracked(
-            final int identifier,
-            final Vertex startPoint,
-            final int proficiency,
-            final double spontaneity,
-            final double difficultyWeight,
-            final double surfaceWeight,
-            final Time startTime,
-            final Publisher eventPublisher,
-            final Clock clock,
-            final Reporter reporter) {
+    public TrackedSkier(
+            int identifier,
+            Vertex startPoint,
+            int proficiency,
+            double spontaneity,
+            double difficultyWeight,
+            double surfaceWeight,
+            Time startTime,
+            Publisher eventPublisher,
+            Clock clock,
+            Reporter reporter) {
         super(
                 identifier,
                 startPoint,

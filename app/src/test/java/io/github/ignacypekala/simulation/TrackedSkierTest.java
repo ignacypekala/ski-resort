@@ -11,7 +11,7 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 
-public class SkierTrackedTest {
+public class TrackedSkierTest {
     private Queue<String> reports = new ArrayDeque<String>();
 
     @Test
@@ -34,7 +34,7 @@ public class SkierTrackedTest {
         lift.addStartEdge();
         Slope slope = new Slope(0, vertexB, vertexA, 1 * 60, 1.0, 1, 1.0);
         slope.addStartEdge();
-        Skier skier = new SkierTracked(
+        Skier skier = new TrackedSkier(
                 0,
                 vertexA,
                 1,
