@@ -11,6 +11,7 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.simulation.*;
 
+// Checks the behavior of tracked skiers with a dependency-injected simulation
 public class TrackedSkierTest {
     private Queue<String> reports = new ArrayDeque<String>();
 
