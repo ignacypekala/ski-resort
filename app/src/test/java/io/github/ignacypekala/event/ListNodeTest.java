@@ -4,7 +4,7 @@ import io.github.ignacypekala.utils.Time;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EventListNodeTest {
+public class ListNodeTest {
     @Test
     void list() {
         Event eventA = new TestEvent(new Time(15, 0, 0));

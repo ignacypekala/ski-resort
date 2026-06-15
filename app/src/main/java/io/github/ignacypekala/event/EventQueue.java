@@ -1,43 +1,30 @@
 package io.github.ignacypekala.event;
 
+import java.util.PriorityQueue;
+
 public class EventQueue implements Broker {
-    private ListNode head;
+    private PriorityQueue<Event> queue;
 
     public EventQueue() {
-        head = null;
+        queue = new PriorityQueue<Event>();
     }
 
     @Override
-    public void publish(final Event event) {
-        ListNode previous = null;
-        ListNode current = head;
-        while (current != null &&
-                event.getTime().compareTo(current.getEvent().getTime()) >= 0) {
-            previous = current;
-            current = current.getNext();
-        }
-        final ListNode newNode = new ListNode(event);
-        newNode.setNext(current);
-        if (previous == null) {
-            head = newNode;
-        } else {
-            previous.setNext(newNode);
-        }
+    public void publish(Event event) {
+        queue.add(event);
     }
 
     @Override
     public Event poll() {
-        if (head == null) {
+        if (queue.isEmpty()) {
             throw new IllegalStateException(
-                    "Cannot dequeue an event from an empty queue.");
+                    "Cannot poll an event from an empty queue.");
         }
-        final Event event = head.getEvent();
-        head = head.getNext();
-        return event;
+        return queue.poll();
     }
 
     @Override
     public boolean hasEvents() {
-        return head != null;
+        return !queue.isEmpty();
     }
 }
