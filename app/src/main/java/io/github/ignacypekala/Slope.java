@@ -1,5 +1,7 @@
 package io.github.ignacypekala;
 
+import io.github.ignacypekala.skier.*;
+
 public class Slope extends Edge {
     private final int difficulty;
     private final double baseAppeal;

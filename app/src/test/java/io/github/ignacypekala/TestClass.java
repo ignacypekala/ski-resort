@@ -6,6 +6,7 @@ import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.utils.Coordinates;
+import io.github.ignacypekala.skier.Skier;
 
 public class TestClass {
     static Broker eventBroker = new EventQueue();

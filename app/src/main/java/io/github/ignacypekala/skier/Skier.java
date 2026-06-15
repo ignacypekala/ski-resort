@@ -153,7 +153,7 @@ public class Skier extends SimulationObject {
         return spontaneity;
     }
 
-    Vertex getStartPoint() {
+    public Vertex getStartPoint() {
         return startPoint;
     }
 

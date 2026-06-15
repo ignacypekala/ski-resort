@@ -1,4 +1,4 @@
-package io.github.ignacypekala.simulation;
+package io.github.ignacypekala.skier;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,6 +10,7 @@ import io.github.ignacypekala.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.simulation.Simulation;
 
 public class TrackedSkierTest {
     private Queue<String> reports = new ArrayDeque<String>();

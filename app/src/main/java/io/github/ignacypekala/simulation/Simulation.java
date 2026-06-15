@@ -22,8 +22,7 @@ public class Simulation implements Reporter {
         slopes = new EdgeRegistry();
     }
 
-    /* Package-private */
-    void tick() {
+    public void tick() {
         final Event event = eventBroker.poll();
         clock.setTime(event.getTime());
         event.handle();
@@ -87,7 +86,7 @@ public class Simulation implements Reporter {
         System.out.println(String.format("%s: %s", clock.getTime(), message));
     }
 
-    Broker getEventBroker() {
+    public Broker getEventBroker() {
         return eventBroker;
     }
 }

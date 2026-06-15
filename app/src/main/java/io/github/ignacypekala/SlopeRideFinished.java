@@ -2,6 +2,7 @@ package io.github.ignacypekala;
 
 import io.github.ignacypekala.event.RelativeEvent;
 import io.github.ignacypekala.simulation.Clock;
+import io.github.ignacypekala.skier.Skier;
 
 public class SlopeRideFinished extends RelativeEvent {
     private final Edge edge;

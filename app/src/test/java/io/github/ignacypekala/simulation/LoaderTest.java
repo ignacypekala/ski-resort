@@ -12,6 +12,7 @@ import io.github.ignacypekala.*;
 import io.github.ignacypekala.lift.Lift;
 import io.github.ignacypekala.utils.Coordinates;
 import io.github.ignacypekala.utils.Time;
+import io.github.ignacypekala.skier.*;
 
 public class LoaderTest {
     Simulation simulation;

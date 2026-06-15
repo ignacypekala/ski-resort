@@ -1,6 +1,7 @@
 package io.github.ignacypekala;
 
 import org.junit.jupiter.api.Test;
+import io.github.ignacypekala.skier.Skier;
 
 import io.github.ignacypekala.utils.*;
 import static org.junit.jupiter.api.Assertions.*;
