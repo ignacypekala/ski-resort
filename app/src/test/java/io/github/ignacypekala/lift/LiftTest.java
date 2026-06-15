@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class LiftTest {
     private static Coordinates pos;
@@ -51,17 +52,17 @@ public class LiftTest {
 
     @Test
     void appeal() {
-        Vertex end = new Vertex(2, 0, pos);
-        Slope goodSlope = new TestClass.TestSlope(0, 1, 10, 1, 0);
-        Slope badSlope = new TestClass.TestSlope(1, 0, 0, 0, 0);
-        end.addSlope(goodSlope);
-        end.addSlope(badSlope);
+        Slope goodSlope = new Slope(0, b, a, 0, 1, 10, 1);
+        Slope badSlope = new Slope(1, b, a, 0, 0, 0, 0);
+        b.addSlope(goodSlope);
+        b.addSlope(badSlope);
         Skier skier = new Skier(
                 0,
                 groupProfile,
                 simulationContext.clock().getStartTime(),
                 simulationContext);
-        Lift lift = new Lift(0, a, end, 0, 0, 0, simulationContext);
+        Lift lift = new Lift(0, a, b, 0, 0, 0, simulationContext);
+        
         assertEquals(goodSlope.calculateAppeal(skier), lift.calculateAppeal(skier));
     }
 
@@ -191,50 +192,84 @@ public class LiftTest {
 
     }
 
-    private boolean startHook = false;
-    private boolean finishHook = false;
-
-    private void startHookConsumer(Edge edge) {
-        startHook = true;
-    }
-
-    private void finishHookConsumer(Edge edge) {
-        finishHook = true;
-    }
-
-    // Check whether the passengers get correct feedback when using lifts.
     @Test
     void aftermath() {
-        Skier skier = new TestClass.SnitchSkier(
+        Skier skier = new SnitchSkier(
                 0,
                 groupProfile,
                 this::startHookConsumer,
                 this::finishHookConsumer);
 
-        Lift lift = new Lift(0, skier.getLocation(), b, 1, 2, 1, simulationContext);
+        Lift lift = new Lift(0, a, b, 1, 2, 1, simulationContext);
+
         // Create a loop so that the end vertex has an outgoing edge.
+        a.addLift(lift);
         b.addLift(lift);
 
-        lift.ride(skier);
-
-        // Send the lift
         Event event = eventBroker.poll();
-        assertTrue(event instanceof LiftStart);
-        LiftStart departEvent = (LiftStart) event;
+        assertEquals(new DayStart(skier), event);
+        event.handle();
 
-        assertFalse(startHook, "The skier has started their ride prematurely.");
-        departEvent.handle();
-        assertTrue(startHook, "The skier hasn't started their ride.");
+        event = eventBroker.poll();
+        assertEquals(new LiftStart(lift, clock), event);
+
+        assertFalse(startHookFlag, "The skier has started their ride prematurely.");
+        event.handle();
+        assertTrue(startHookFlag, "The skier hasn't started their ride.");
 
         // Check if the correct passengers got a ride
         event = eventBroker.poll();
         assertTrue(event instanceof LiftArrival);
         LiftArrival arrival = (LiftArrival) event;
 
-        assertFalse(finishHook, "The skier has finished their ride prematurely.");
+        assertFalse(finishHookFlag, "The skier has finished their ride prematurely.");
         arrival.handle();
-        assertTrue(finishHook, "The skier hasn't finished their ride.");
+        assertTrue(finishHookFlag, "The skier hasn't finished their ride.");
 
         assertSame(b, skier.getLocation());
     }
+
+    private boolean startHookFlag = false;
+    private boolean finishHookFlag = false;
+
+    private void startHookConsumer(Edge edge) {
+        startHookFlag = true;
+    }
+
+    private void finishHookConsumer(Edge edge) {
+        finishHookFlag = true;
+    }
+
+    private static class SnitchSkier extends Skier {
+        Consumer<Edge> rideStartedCallback;
+        Consumer<Edge> rideFinishedCallback;
+
+        public SnitchSkier(
+                int identifier,
+                SkierGroupProfile groupProfile,
+                Consumer<Edge> rideStartedCallback,
+                Consumer<Edge> rideFinishedCallback) {
+            super(
+                identifier,
+                groupProfile,
+                clock.getStartTime(),
+                simulationContext
+            );
+            this.rideStartedCallback = rideStartedCallback;
+            this.rideFinishedCallback = rideFinishedCallback;
+        }
+
+        @Override
+        public void rideStartedHook(Edge edge) {
+            super.rideStartedHook(edge);
+            rideStartedCallback.accept(edge);
+        }
+
+        @Override
+        public void rideFinishedHook(Edge edge) {
+            super.rideFinishedHook(edge);
+            rideFinishedCallback.accept(edge);
+        }
+    }
+
 }
