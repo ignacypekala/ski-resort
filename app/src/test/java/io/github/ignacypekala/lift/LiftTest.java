@@ -23,7 +23,7 @@ public class LiftTest {
     private static SkierGroupProfile groupProfile;
 
     @BeforeEach
-    void initiateEnvironment() {
+    void initializeEnvironment() {
         pos = new Coordinates(0, 0);
         a = new Vertex(0, 0, pos);
         b = new Vertex(1, 0, pos);

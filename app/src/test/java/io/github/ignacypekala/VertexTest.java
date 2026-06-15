@@ -14,7 +14,7 @@ public class VertexTest {
     private Vertex vertex;
 
     @BeforeEach
-    void intialiseEnvironment() {
+    void intializeEnvironment() {
         vertex = new Vertex(0, altitude, coordinates);
     }
 

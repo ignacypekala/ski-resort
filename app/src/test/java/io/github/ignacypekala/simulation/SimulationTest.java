@@ -5,7 +5,6 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
-import io.github.ignacypekala.skier.*;
 
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ public class SimulationTest {
     private Vertex b;
 
     @BeforeEach
-    void intializeEnvironment() {
+    void initializeEnvironment() {
         simulation = new Simulation();
         eventHistory = new ArrayList<Event>();
         VertexRegistry vertices = simulation.getVertexRegistry();
