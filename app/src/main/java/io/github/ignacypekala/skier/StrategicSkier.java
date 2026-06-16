@@ -74,11 +74,11 @@ public abstract class StrategicSkier extends Skier {
     private Queue<Edge> reconstructPath(
             final HashMap<Vertex, Edge> visited,
             final Vertex destination) {
-        final Queue<Edge> queue = new ArrayDeque<>();
+        final ArrayDeque<Edge> queue = new ArrayDeque<>();
         Vertex vertex = destination;
         Edge edge = visited.get(vertex);
         while (edge != null) {
-            queue.add(edge);
+            queue.addFirst(edge);
             vertex = edge.getStart();
             edge = visited.get(vertex);
         }
