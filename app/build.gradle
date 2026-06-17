@@ -18,9 +18,8 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-
 application {
-    mainClass = 'io.github.ignacypekala.simulation.Simulation'
+    mainClass = 'io.github.ignacypekala.Main'
 }
 
 run { 

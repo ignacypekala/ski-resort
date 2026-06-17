@@ -5,6 +5,7 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.utils.*;
+import io.github.ignacypekala.resort.Resort;
 
 import java.util.ArrayList;
 
@@ -21,28 +22,24 @@ public class SimulationTest {
     void initializeEnvironment() {
         simulation = new Simulation();
         eventHistory = new ArrayList<Event>();
-        VertexRegistry vertices = simulation.getVertexRegistry();
-        vertices.initialize(2);
         a = new Vertex(0, 0, new Coordinates(0, 0));
-        vertices.register(a);
         b = new Vertex(1, 0, new Coordinates(0, 0));
-        vertices.register(b);
     }
 
     @Test
     void artificial() {
         Broker eventBroker = simulation.getEventBroker();
-        Event a = new ArtificialEvent(0);
-        eventBroker.publish(a);
-        Event b = new ArtificialEvent(5);
-        eventBroker.publish(b);
-        Event c = new ArtificialEvent(2);
-        eventBroker.publish(c);
+        Event aEvent = new ArtificialEvent(0);
+        eventBroker.publish(aEvent);
+        Event bEvent = new ArtificialEvent(5);
+        eventBroker.publish(bEvent);
+        Event cEvent = new ArtificialEvent(2);
+        eventBroker.publish(cEvent);
         simulation.run();
 
-        assertSame(a, eventHistory.get(0));
-        assertSame(c, eventHistory.get(1));
-        assertSame(b, eventHistory.get(2));
+        assertSame(aEvent, eventHistory.get(0));
+        assertSame(cEvent, eventHistory.get(1));
+        assertSame(bEvent, eventHistory.get(2));
     }
 
     private class ArtificialEvent extends RelativeEvent {
@@ -57,8 +54,12 @@ public class SimulationTest {
 
     @Test
     void loop() {
-        EdgeRegistry lifts = simulation.getLiftRegistry();
-        lifts.initialize(1);
+        Vertex[] vertices = new Vertex[] { a, b };
+
+        SimulationClock clock = new SimulationClock();
+        EventQueue eventQueue = new EventQueue();
+        SimulationContext context = new SimulationContext(clock, eventQueue);
+
         Lift lift = new Lift(
                 0,
                 a,
@@ -66,18 +67,19 @@ public class SimulationTest {
                 15 * 60,
                 60,
                 3,
-                simulation.getContext());
+                context);
         lift.addStartEdge();
-        lifts.register(lift);
+        Lift[] lifts = new Lift[] { lift };
 
-        EdgeRegistry slopes = simulation.getSlopeRegistry();
-        slopes.initialize(1);
         Slope slope = new Slope(0, b, a, 5 * 60, 0.8, 5, 1.0);
         slope.addStartEdge();
-        slopes.register(slope);
+        Slope[] slopes = new Slope[] { slope };
+
+        Resort resort = new Resort(vertices, slopes, lifts);
+        simulation = new Simulation(resort, clock, eventQueue);
 
         SkierGroupProfile groupProfile = new SkierGroupProfile(a, 5, 0, 0.5, 0.5);
-        Skier skier = new Skier(0, groupProfile, new Time(14, 0, 0), simulation.getContext());
+        Skier skier = new Skier(0, groupProfile, new Time(14, 0, 0), context);
 
         simulation.run();
         simulation.printSummary();

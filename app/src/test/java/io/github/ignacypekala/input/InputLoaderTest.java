@@ -1,4 +1,4 @@
-package io.github.ignacypekala.simulation;
+package io.github.ignacypekala.input;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,15 +13,14 @@ import io.github.ignacypekala.lift.Lift;
 import io.github.ignacypekala.utils.Coordinates;
 import io.github.ignacypekala.utils.Time;
 import io.github.ignacypekala.skier.*;
+import io.github.ignacypekala.simulation.*;
 
-public class LoaderTest {
-    Simulation simulation;
-    Loader loader;
+public class InputLoaderTest {
+    private InputLoader loader;
 
     @BeforeEach
     void initializeEnvironment() {
-        simulation = new Simulation();
-        loader = new Loader(simulation);
+        loader = new InputLoader(new Scanner(""));
     }
 
     @Test
@@ -46,13 +45,12 @@ public class LoaderTest {
 
     @Test
     void lift() {
-        VertexRegistry vertices = simulation.getVertexRegistry();
         Vertex start = new Vertex(0, 100, new Coordinates(0, 0));
         Vertex end = new Vertex(1, 200, new Coordinates(1, 1));
-        vertices.initialize(2);
-        vertices.register(start);
-        vertices.register(end);
-        Lift lift = loader.loadLift("0 1 300 3 600", 42);
+        Vertex[] vertices = new Vertex[] { start, end };
+        SimulationContext context = new SimulationContext(new SimulationClock(), new io.github.ignacypekala.event.EventQueue());
+
+        Lift lift = loader.loadLift("0 1 300 3 600", 42, vertices, context);
 
         assertEquals(42, lift.getIdentifier());
         assertSame(start, lift.getStart());
@@ -64,13 +62,11 @@ public class LoaderTest {
 
     @Test
     void slope() {
-        VertexRegistry vertices = simulation.getVertexRegistry();
         Vertex v0 = new Vertex(0, 0, new Coordinates(0, 0));
         Vertex v1 = new Vertex(1, 0, new Coordinates(1, 0));
-        vertices.initialize(2);
-        vertices.register(v0);
-        vertices.register(v1);
-        Slope slope = loader.loadSlope("0 1 8 60 0.5 0.75", 7);
+        Vertex[] vertices = new Vertex[] { v0, v1 };
+
+        Slope slope = loader.loadSlope("0 1 8 60 0.5 0.75", 7, vertices);
         assertEquals(7, slope.getIdentifier());
         assertSame(v0, slope.getStart());
         assertSame(v1, slope.getEnd());
@@ -97,14 +93,15 @@ public class LoaderTest {
 
     @Test
     void skierGroupSingleUntracked() {
-        registerVerticesThrough(2);
+        Vertex[] vertices = createVertices(2);
+        SimulationContext context = new SimulationContext(new SimulationClock(), new io.github.ignacypekala.event.EventQueue());
         Scanner scanner = new Scanner(
                 String.join("\n", """
                         1 4 0.25
                         0.6 0.4
                         2 10:15:30"""));
         scanner.useLocale(Locale.ENGLISH);
-        Skier[] skiers = loader.loadSkierGroup(scanner);
+        Skier[] skiers = loader.loadSkierGroup(scanner, vertices, context, null);
         assertEquals(1, skiers.length);
         assertFalse(skiers[0] instanceof TrackedSkier);
         assertEquals(0, skiers[0].getIdentifier());
@@ -118,14 +115,16 @@ public class LoaderTest {
 
     @Test
     void skierGroupSingleTracked() {
-        registerVerticesThrough(0);
+        Vertex[] vertices = createVertices(0);
+        SimulationContext context = new SimulationContext(new SimulationClock(), new io.github.ignacypekala.event.EventQueue());
         Scanner scanner = new Scanner(String.join(
                 "\n", """
                         1 7 1.0 s
                         0.0 1.0
                         0 09:00:00"""));
         scanner.useLocale(Locale.ENGLISH);
-        Skier[] skiers = loader.loadSkierGroup(scanner);
+        DelegatingReporter reporter = new DelegatingReporter();
+        Skier[] skiers = loader.loadSkierGroup(scanner, vertices, context, reporter);
         assertEquals(1, skiers.length);
         assertTrue(skiers[0] instanceof TrackedSkier);
         assertEquals(7, skiers[0].getProficiency());
@@ -133,14 +132,15 @@ public class LoaderTest {
 
     @Test
     void skierGroupMultipleIncrementsIdentifiersAndStartTimes() {
-        registerVerticesThrough(1);
+        Vertex[] vertices = createVertices(1);
+        SimulationContext context = new SimulationContext(new SimulationClock(), new io.github.ignacypekala.event.EventQueue());
         Scanner scanner = new Scanner(String.join(
                 "\n", """
                         2 3 0.0
                         1.0 0.0
                         1 12:00:00 90"""));
         scanner.useLocale(Locale.ENGLISH);
-        Skier[] skiers = loader.loadSkierGroup(scanner);
+        Skier[] skiers = loader.loadSkierGroup(scanner, vertices, context, null);
         assertEquals(2, skiers.length);
         assertEquals(0, skiers[0].getIdentifier());
         assertEquals(1, skiers[1].getIdentifier());
@@ -156,17 +156,17 @@ public class LoaderTest {
                         919 3 6
                         879 1 2 s
                         1120 2 9
-
+ 
                         2
                         0 1 10 4 240
                         2 3 8 6 360
-
+ 
                         4
                         1 0 3 150 0.3 0.9998
                         3 1 7 180 0.3 0.9997
                         1 2 4 120 0.3 0.9998
                         2 0 2 60 0.3 0.99985
-
+ 
                         5
                         180 3 0.1
                         1 0
@@ -183,14 +183,15 @@ public class LoaderTest {
                         1 5 1 s
                         0.8 0.2
                         2 09:15:00""");
-        assertDoesNotThrow(() -> loader.load(new Scanner(testCase)));
+        InputLoader exampleLoader = new InputLoader(new Scanner(testCase));
+        assertDoesNotThrow(() -> exampleLoader.load());
     }
 
-    private void registerVerticesThrough(int maxIdentifier) {
-        VertexRegistry vertices = simulation.getVertexRegistry();
-        vertices.initialize(maxIdentifier + 1);
+    private Vertex[] createVertices(int maxIdentifier) {
+        Vertex[] vertices = new Vertex[maxIdentifier + 1];
         for (int i = 0; i <= maxIdentifier; i++) {
-            vertices.register(new Vertex(i, i, new Coordinates(i, 0)));
+            vertices[i] = new Vertex(i, i, new Coordinates(i, 0));
         }
+        return vertices;
     }
 }

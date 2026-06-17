@@ -3,23 +3,25 @@ package io.github.ignacypekala.simulation;
 import io.github.ignacypekala.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
-
-import java.util.Scanner;
-import java.util.Locale;
+import io.github.ignacypekala.resort.Resort;
 
 public class Simulation implements Reporter {
+    private final Resort resort;
     private final SimulationClock clock;
     private final Broker eventBroker;
-    private final VertexRegistry vertices;
-    private final EdgeRegistry lifts;
-    private final EdgeRegistry slopes;
+
+    public Simulation(final Resort resort, final SimulationClock clock, final EventQueue eventQueue) {
+        this.resort = resort;
+        this.clock = clock;
+        this.eventBroker = eventQueue;
+    }
 
     public Simulation() {
-        clock = new SimulationClock();
-        eventBroker = new EventQueue();
-        vertices = new VertexRegistry();
-        lifts = new EdgeRegistry();
-        slopes = new EdgeRegistry();
+        this(
+            new Resort(new Vertex[0], new Slope[0], new io.github.ignacypekala.lift.Lift[0]),
+            new SimulationClock(),
+            new EventQueue()
+        );
     }
 
     public void tick() {
@@ -34,46 +36,19 @@ public class Simulation implements Reporter {
         }
     }
 
-    /* Package-private */
-    void printSummary() {
-        for (final Edge lift : lifts.getEdges()) {
+    public void printSummary() {
+        for (final Edge lift : resort.getLifts()) {
             System.out.println(String.format(
                     "%s: %d rides",
                     lift,
                     lift.getRideCount()));
         }
-        for (final Edge slope : slopes.getEdges()) {
+        for (final Edge slope : resort.getSlopes()) {
             System.out.println(String.format(
                     "%s: %d rides",
                     slope,
                     slope.getRideCount()));
         }
-    }
-
-    public static void main(final String[] args) {
-        final Scanner stdin = new Scanner(System.in);
-        stdin.useLocale(Locale.ENGLISH);
-
-        final Simulation simulation = new Simulation();
-        final Loader loader = new Loader(simulation);
-        loader.load(stdin);
-
-        simulation.run();
-        simulation.printSummary();
-
-        stdin.close();
-    }
-
-    protected VertexRegistry getVertexRegistry() {
-        return vertices;
-    }
-
-    protected EdgeRegistry getLiftRegistry() {
-        return lifts;
-    }
-
-    protected EdgeRegistry getSlopeRegistry() {
-        return slopes;
     }
 
     @Override
