@@ -5,7 +5,7 @@ import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.event.*;
 import io.github.ignacypekala.resort.Resort;
 
-public class Simulation implements Reporter {
+public class Simulation {
     private final Resort resort;
     private final SimulationClock clock;
     private final Broker eventBroker;
@@ -51,11 +51,7 @@ public class Simulation implements Reporter {
         }
     }
 
-    @Override
-    public void report(String message) {
-        message = Character.toUpperCase(message.charAt(0)) + message.substring(1);
-        System.out.println(String.format("%s: %s", clock.getTime(), message));
-    }
+
 
     public Clock getClock() {
         return clock;

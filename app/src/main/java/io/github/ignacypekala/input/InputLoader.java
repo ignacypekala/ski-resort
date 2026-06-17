@@ -24,7 +24,7 @@ public class InputLoader {
         final SimulationClock clock = new SimulationClock();
         final EventQueue eventQueue = new EventQueue();
         final SimulationContext context = new SimulationContext(clock, eventQueue);
-        final DelegatingReporter reporter = new DelegatingReporter();
+        final Reporter reporter = new Reporter(clock);
 
         final int vertexCount = Integer.parseInt(getLine(scanner));
         final Vertex[] vertices = new Vertex[vertexCount];
@@ -50,7 +50,7 @@ public class InputLoader {
         }
 
         final Resort resort = new Resort(vertices, slopes, lifts);
-        return new InputData(resort, clock, eventQueue, reporter);
+        return new InputData(resort, clock, eventQueue);
     }
 
     Vertex loadVertex(final String line, final int identifier) {

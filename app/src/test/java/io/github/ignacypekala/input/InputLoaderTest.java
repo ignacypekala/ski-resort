@@ -12,6 +12,7 @@ import io.github.ignacypekala.*;
 import io.github.ignacypekala.lift.Lift;
 import io.github.ignacypekala.utils.Coordinates;
 import io.github.ignacypekala.utils.Time;
+import io.github.ignacypekala.utils.Reporter;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.simulation.*;
 
@@ -123,7 +124,7 @@ public class InputLoaderTest {
                         0.0 1.0
                         0 09:00:00"""));
         scanner.useLocale(Locale.ENGLISH);
-        DelegatingReporter reporter = new DelegatingReporter();
+        Reporter reporter = new Reporter(context.clock());
         Skier[] skiers = loader.loadSkierGroup(scanner, vertices, context, reporter);
         assertEquals(1, skiers.length);
         assertTrue(skiers[0] instanceof TrackedSkier);

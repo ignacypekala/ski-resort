@@ -17,7 +17,7 @@ public class TrackedSkierTest {
 
     @Test
     void reports() {
-        Simulation simulation = new HijackedSimulation();
+        Simulation simulation = new Simulation();
         SimulationContext simulationContext = simulation.getContext();
         Coordinates pos = new Coordinates(0, 0);
         Vertex vertexA = new Vertex(0, 0, pos);
@@ -35,12 +35,13 @@ public class TrackedSkierTest {
         slope.addStartEdge();
 
         SkierGroupProfile groupProfile = new SkierGroupProfile(vertexA, 1, 0.0, 1.0, 0.0);
+        Reporter reporter = new HijackedReporter(simulation.getClock());
         Skier skier = new TrackedSkier(
                 0,
                 groupProfile,
                 simulation.getClock().getStartTime(),
                 simulationContext,
-                simulation);
+                reporter);
 
         // Lift start
         simulation.tick();
@@ -105,7 +106,11 @@ public class TrackedSkierTest {
 
     }
 
-    private class HijackedSimulation extends Simulation {
+    private class HijackedReporter extends Reporter {
+        public HijackedReporter(Clock clock) {
+            super(clock);
+        }
+
         @Override
         public void report(String message) {
             reports.add(message);

@@ -9,21 +9,15 @@ public class InputData {
     private final Resort resort;
     private final SimulationClock clock;
     private final EventQueue eventQueue;
-    private final DelegatingReporter reporter;
 
-    public InputData(final Resort resort, final SimulationClock clock, final EventQueue eventQueue, final DelegatingReporter reporter) {
+    public InputData(final Resort resort, final SimulationClock clock, final EventQueue eventQueue) {
         this.resort = resort;
         this.clock = clock;
         this.eventQueue = eventQueue;
-        this.reporter = reporter;
     }
 
     public Simulation createSimulation() {
-        final Simulation simulation = new Simulation(resort, clock, eventQueue);
-        if (reporter != null) {
-            reporter.setDelegate(simulation);
-        }
-        return simulation;
+        return new Simulation(resort, clock, eventQueue);
     }
 
     public Resort getResort() {
