@@ -56,7 +56,7 @@ public class LiftTest {
         Slope badSlope = new Slope(1, b, a, 0, 0, 0, 0);
         b.addSlope(goodSlope);
         b.addSlope(badSlope);
-        Skier skier = new Skier(
+        Skier skier = new LocalSkier(
                 0,
                 groupProfile,
                 simulationContext.clock().getStartTime(),
@@ -108,7 +108,7 @@ public class LiftTest {
 
         Skier[] skiers = new Skier[5];
         for (int i = 0; i < 5; i++) {
-            Skier skier = new Skier(
+            Skier skier = new LocalSkier(
                     i,
                     groupProfile,
                     simulationContext.clock().getStartTime(),
@@ -159,7 +159,7 @@ public class LiftTest {
         Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
         a.addLift(lift);
         b.addLift(lift);
-        Skier skier = new Skier(0, groupProfile, startTime, simulationContext);
+        Skier skier = new LocalSkier(0, groupProfile, startTime, simulationContext);
 
         Event event = eventBroker.poll();
         assertEquals(new LiftStart(lift, clock), event);
@@ -240,7 +240,7 @@ public class LiftTest {
         finishHookFlag = true;
     }
 
-    private static class SnitchSkier extends Skier {
+    private static class SnitchSkier extends LocalSkier {
         Consumer<Edge> rideStartedCallback;
         Consumer<Edge> rideFinishedCallback;
 

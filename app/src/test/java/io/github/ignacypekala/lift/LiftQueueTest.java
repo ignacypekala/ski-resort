@@ -31,7 +31,7 @@ public class LiftQueueTest {
                 0);
 
         for (int i = 0; i < 5; i++) {
-            skiers[i] = new Skier(
+            skiers[i] = new LocalSkier(
                     i,
                     groupProfile,
                     context.clock().getStartTime(),
@@ -74,7 +74,7 @@ public class LiftQueueTest {
         SkierGroupProfile groupProfile = new SkierGroupProfile(
                 new Vertex(0, 0, new Coordinates(0, 0)), 0, 0, 0, 0);
         for (int i = 0; i < 42; i++) {
-            Skier sportsman = new Skier(i, groupProfile, startTime, context);
+            Skier sportsman = new LocalSkier(i, groupProfile, startTime, context);
             sportsmen[i] = sportsman;
             queue.enqueue(sportsman);
             assertSame(queue.peek(), sportsmen[j]);

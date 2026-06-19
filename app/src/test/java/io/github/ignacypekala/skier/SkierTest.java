@@ -157,6 +157,11 @@ public class SkierTest {
         }
 
         @Override
+        protected Edge chooseBestEdge() {
+            return null;
+        }
+
+        @Override
         public void rideStartedHook(final Edge edge) {
             this.lastStartedHookEdge = edge;
         }

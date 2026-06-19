@@ -183,7 +183,7 @@ public class InputLoader {
                         context,
                         reporter);
             } else {
-                skiers[i] = new Skier(
+                skiers[i] = new LocalSkier(
                         skierIdentifier,
                         groupProfile,
                         startTime,

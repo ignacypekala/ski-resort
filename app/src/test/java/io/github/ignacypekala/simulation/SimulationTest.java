@@ -79,7 +79,7 @@ public class SimulationTest {
         simulation = new Simulation(resort, clock, eventQueue);
 
         SkierGroupProfile groupProfile = new SkierGroupProfile(a, 5, 0, 0.5, 0.5);
-        Skier skier = new Skier(0, groupProfile, new Time(14, 0, 0), context);
+        Skier skier = new LocalSkier(0, groupProfile, new Time(14, 0, 0), context);
 
         simulation.run();
         simulation.printSummary();

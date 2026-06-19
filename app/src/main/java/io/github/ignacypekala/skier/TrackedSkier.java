@@ -5,7 +5,7 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.simulation.*;
 
-public class TrackedSkier extends Skier {
+public class TrackedSkier extends LocalSkier {
     private final Reporter reporter;
 
     public TrackedSkier(

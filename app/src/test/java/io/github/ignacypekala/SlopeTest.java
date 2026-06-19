@@ -29,7 +29,7 @@ public class SlopeTest {
         simulation = new Simulation();
         startTime = simulation.getClock().getStartTime();
         simulationContext = simulation.getContext();
-        skier = new Skier(
+        skier = new LocalSkier(
             0,
             groupProfile,
             simulation.getClock().getStartTime(),
@@ -123,18 +123,18 @@ public class SlopeTest {
     void accumulativeAppeal() {
         Slope surfaceSlope = new Slope(0, a, b, 0, 1, 10, 1);
         SkierGroupProfile surfaceSkierGroup = new SkierGroupProfile(a, 0, 0, 0, 1);
-        Skier surfaceSkier = new Skier(0, surfaceSkierGroup, startTime, simulationContext);
+        Skier surfaceSkier = new LocalSkier(0, surfaceSkierGroup, startTime, simulationContext);
         assertEquals(1.0, surfaceSlope.calculateAppeal(surfaceSkier));
 
         Slope difficultySlope = new Slope(0, a, b, 0, 0, 10, 0);
         SkierGroupProfile proficiencyGroup = new SkierGroupProfile(a, 10, 0.0, 1.0, 0.0);
-        Skier proficientSkier = new Skier(1, proficiencyGroup, startTime, simulationContext);
+        Skier proficientSkier = new LocalSkier(1, proficiencyGroup, startTime, simulationContext);
         assertEquals(1.0, difficultySlope.calculateAppeal(proficientSkier));
 
         Slope allRoundSlope = new Slope(0, a, b, 0, 0.5, 5, 0.5);
 
         SkierGroupProfile allRoundGroup = new SkierGroupProfile(a, 5, 0, 0.5, 0.5);
-        Skier allRoundSkier = new Skier(2, allRoundGroup, startTime, simulationContext);
+        Skier allRoundSkier = new LocalSkier(2, allRoundGroup, startTime, simulationContext);
         assertEquals(1.0, allRoundSlope.calculateAppeal(allRoundSkier));
     }
 }

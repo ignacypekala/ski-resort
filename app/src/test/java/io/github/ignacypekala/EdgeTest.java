@@ -59,7 +59,7 @@ public class EdgeTest {
         SimulationContext context = new Simulation().getContext();
         SkierGroupProfile groupProfile = new SkierGroupProfile(
                 new Vertex(0, 0, new Coordinates(0, 0)), 0, 0.0, 0.0, 0.0);
-        edge.ride(new Skier(0, groupProfile, context.clock().getStartTime(), context));
+        edge.ride(new LocalSkier(0, groupProfile, context.clock().getStartTime(), context));
 
         assertEquals(1, edge.getRideCount());
     }
