@@ -4,11 +4,11 @@ import io.github.ignacypekala.event.RelativeEvent;
 import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.Edge;
 
-public class SlopeRideFinished extends RelativeEvent {
+public class RideFinished extends RelativeEvent {
     private final Edge edge;
     private final Skier skier;
 
-    public SlopeRideFinished(
+    public RideFinished(
             final Edge edge,
             final Skier skier,
             final Clock clock) {
