@@ -23,6 +23,8 @@ public abstract class Skier extends SimulationObject {
     private final Publisher eventPublisher;
     private final Clock clock;
 
+    private SkierListener listener = null; // optional
+
     public Skier(
             final int identifier,
             final SkierGroupProfile groupProfile,
@@ -63,6 +65,16 @@ public abstract class Skier extends SimulationObject {
         this.clock = simulationContext.clock();
 
         scheduleDayStart();
+    }
+
+    public Skier(
+            final int identifier,
+            final SkierGroupProfile groupProfile,
+            final Time startTime,
+            final SimulationContext simulationContext,
+            final SkierListener listern) {
+        this(identifier, groupProfile, startTime, simulationContext);
+        this.listener = listener;
     }
 
     private void scheduleDayStart() {
@@ -106,25 +118,25 @@ public abstract class Skier extends SimulationObject {
     public void rideStarted(final Edge edge) {
         location = null;
         edge.rideStarted();
-        rideStartedHook(edge);
+        if (listener != null) {
+            listener.onRideStarted(this, edge);
+        }
     }
 
     public void rideFinished(final Edge edge) {
         location = edge.getEnd();
-        rideFinishedHook(edge);
+        if (listener != null) {
+            listener.onRideFinished(this, edge);
+        }
         if (!clock.isTimeUp()) {
             decideAndRide();
         }
     }
 
-    // Empty hooks to be overridden by subclasses
-    public void rideStartedHook(final Edge edge) {
-    }
-
-    public void rideFinishedHook(final Edge edge) {
-    }
-
     public void liftQueueJoinedHook(final Lift lift) {
+        if (listener != null) {
+            listener.onLiftQueueJoined(this, lift);
+        }
     }
 
     @Override
