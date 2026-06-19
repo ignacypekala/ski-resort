@@ -72,7 +72,7 @@ public abstract class Skier extends SimulationObject {
             final SkierGroupProfile groupProfile,
             final Time startTime,
             final SimulationContext simulationContext,
-            final SkierListener listern) {
+            final SkierListener listener) {
         this(identifier, groupProfile, startTime, simulationContext);
         this.listener = listener;
     }
@@ -170,6 +170,10 @@ public abstract class Skier extends SimulationObject {
 
     public Vertex getLocation() {
         return location;
+    }
+
+    public SkierListener getListener() {
+        return listener;
     }
 
     @Override

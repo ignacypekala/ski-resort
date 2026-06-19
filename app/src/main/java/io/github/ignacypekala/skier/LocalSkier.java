@@ -14,6 +14,15 @@ public class LocalSkier extends Skier {
         super(identifier, groupProfile, startTime, simulationContext);
     }
 
+    public LocalSkier(
+            int identifier,
+            SkierGroupProfile groupProfile,
+            Time startTime,
+            SimulationContext simulationContext,
+            SkierListener listener) {
+        super(identifier, groupProfile, startTime, simulationContext, listener);
+    }
+
     @Override
     protected Edge chooseBestEdge() {
         Vertex location = getLocation();
