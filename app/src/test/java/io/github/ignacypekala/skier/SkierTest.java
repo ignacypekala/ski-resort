@@ -162,12 +162,14 @@ public class SkierTest {
         }
 
         @Override
-        public void rideStartedHook(final Edge edge) {
+        public void rideStarted(final Edge edge) {
+            super.rideStarted(edge);
             this.lastStartedHookEdge = edge;
         }
 
         @Override
-        public void rideFinishedHook(final Edge edge) {
+        public void rideFinished(final Edge edge) {
+            super.rideFinished(edge);
             this.lastFinishedHookEdge = edge;
         }
     }

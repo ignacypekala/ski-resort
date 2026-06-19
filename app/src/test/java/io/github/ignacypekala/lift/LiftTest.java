@@ -241,9 +241,6 @@ public class LiftTest {
     }
 
     private static class SnitchSkier extends LocalSkier {
-        Consumer<Edge> rideStartedCallback;
-        Consumer<Edge> rideFinishedCallback;
-
         public SnitchSkier(
                 int identifier,
                 SkierGroupProfile groupProfile,
@@ -253,22 +250,23 @@ public class LiftTest {
                 identifier,
                 groupProfile,
                 clock.getStartTime(),
-                simulationContext
+                simulationContext,
+                new SkierListener() {
+                    @Override
+                    public void onRideStarted(Skier skier, Edge edge) {
+                        rideStartedCallback.accept(edge);
+                    }
+
+                    @Override
+                    public void onRideFinished(Skier skier, Edge edge) {
+                        rideFinishedCallback.accept(edge);
+                    }
+
+                    @Override
+                    public void onLiftQueueJoined(Skier skier, Lift lift) {
+                    }
+                }
             );
-            this.rideStartedCallback = rideStartedCallback;
-            this.rideFinishedCallback = rideFinishedCallback;
-        }
-
-        @Override
-        public void rideStartedHook(Edge edge) {
-            super.rideStartedHook(edge);
-            rideStartedCallback.accept(edge);
-        }
-
-        @Override
-        public void rideFinishedHook(Edge edge) {
-            super.rideFinishedHook(edge);
-            rideFinishedCallback.accept(edge);
         }
     }
 

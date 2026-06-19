@@ -104,7 +104,7 @@ public class InputLoaderTest {
         scanner.useLocale(Locale.ENGLISH);
         Skier[] skiers = loader.loadSkierGroup(scanner, vertices, context, null);
         assertEquals(1, skiers.length);
-        assertFalse(skiers[0] instanceof TrackedSkier);
+        assertNull(skiers[0].getListener());
         assertEquals(0, skiers[0].getIdentifier());
         assertEquals(4, skiers[0].getProficiency());
         assertEquals(0.6, skiers[0].getDifficultyWeight(), 0.0);
@@ -127,7 +127,8 @@ public class InputLoaderTest {
         Reporter reporter = new Reporter(context.clock());
         Skier[] skiers = loader.loadSkierGroup(scanner, vertices, context, reporter);
         assertEquals(1, skiers.length);
-        assertTrue(skiers[0] instanceof TrackedSkier);
+        assertNotNull(skiers[0].getListener());
+        assertTrue(skiers[0].getListener() instanceof SkierTracker);
         assertEquals(7, skiers[0].getProficiency());
     }
 

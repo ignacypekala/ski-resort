@@ -176,12 +176,12 @@ public class InputLoader {
         for (int i = 0; i < skierCount; i++) {
             final int skierIdentifier = nextSkierIdentifier++;
             if (tracked) {
-                skiers[i] = new TrackedSkier(
+                skiers[i] = new LocalSkier(
                         skierIdentifier,
                         groupProfile,
                         startTime,
                         context,
-                        reporter);
+                        new SkierTracker(reporter));
             } else {
                 skiers[i] = new LocalSkier(
                         skierIdentifier,

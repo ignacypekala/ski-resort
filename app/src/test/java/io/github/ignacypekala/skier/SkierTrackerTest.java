@@ -12,7 +12,7 @@ import io.github.ignacypekala.utils.*;
 import io.github.ignacypekala.simulation.*;
 
 // Checks the behavior of tracked skiers with a dependency-injected simulation
-public class TrackedSkierTest {
+public class SkierTrackerTest {
     private Queue<String> reports = new ArrayDeque<String>();
 
     @Test
@@ -36,12 +36,12 @@ public class TrackedSkierTest {
 
         SkierGroupProfile groupProfile = new SkierGroupProfile(vertexA, 1, 0.0, 1.0, 0.0);
         Reporter reporter = new HijackedReporter(simulation.getClock());
-        Skier skier = new TrackedSkier(
+        Skier skier = new LocalSkier(
                 0,
                 groupProfile,
                 simulation.getClock().getStartTime(),
                 simulationContext,
-                reporter);
+                new SkierTracker(reporter));
 
         // Lift start
         simulation.tick();
