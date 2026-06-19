@@ -111,7 +111,7 @@ public class Skier extends SimulationObject {
     }
 
     public void rideSlope(final Slope slope) {
-        final SlopeRideFinished event = new SlopeRideFinished(slope, clock);
+        final SlopeRideFinished event = new SlopeRideFinished(slope, this, clock);
         eventPublisher.publish(event);
         rideStarted(slope);
     }
@@ -139,27 +139,6 @@ public class Skier extends SimulationObject {
 
     public void liftQueueJoinedHook(final Lift lift) {
     }
-
-    private class SlopeRideFinished extends RelativeEvent {
-        private final Edge edge;
-
-        public SlopeRideFinished(final Edge edge, final Clock clock) {
-            super(clock, edge.getRideTime());
-            this.edge = edge;
-        }
-
-        public void handle() {
-            rideFinished(edge);
-        }
-
-        public String toString() {
-            return String.format(
-                    "%s finished a ride on %s",
-                    Skier.this,
-                    edge);
-        }
-    }
-
 
     @Override
     public String toString() {
