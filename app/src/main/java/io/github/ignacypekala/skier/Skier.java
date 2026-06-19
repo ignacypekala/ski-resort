@@ -9,7 +9,7 @@ import io.github.ignacypekala.simulation.*;
 import java.util.Random;
 import java.util.Objects;
 
-public class Skier extends SimulationObject {
+public abstract class Skier extends SimulationObject {
     private final Vertex startPoint;
     private Vertex location;
     private final int proficiency;
@@ -91,20 +91,7 @@ public class Skier extends SimulationObject {
         return location.getEdges()[chosenEdgeIndex];
     }
 
-    protected Edge chooseBestEdge() {
-        Edge[] edges = location.getEdges();
-        double maxAppeal = -1;
-        Edge mostAppealing = null;
-        for (int i = 0; i < location.getEdgeCount(); i++) {
-            final Edge edge = edges[i];
-            final double appeal = edge.calculateAppeal(this);
-            if (appeal > maxAppeal) {
-                maxAppeal = appeal;
-                mostAppealing = edge;
-            }
-        }
-        return mostAppealing;
-    }
+    protected abstract Edge chooseBestEdge();
 
     private void ride(final Edge edge) {
         edge.ride(this);
