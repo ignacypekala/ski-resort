@@ -1,16 +1,21 @@
 package io.github.ignacypekala.utils;
 
 public class Time implements Comparable<Time> {
+    private static int SECONDS_IN_A_MINUTE = 60;
+    private static int MINUTES_IN_AN_HOUR = 60;
+    private static int SECONDS_IN_AN_HOUR = SECONDS_IN_A_MINUTE * MINUTES_IN_AN_HOUR;
+    private static int HOURS_IN_A_DAY = 24;
+
     private int hours;
     private int minutes;
     private int seconds;
 
     private void normalize() {
-        final int secondsCarry = seconds / 60;
-        seconds = seconds % 60;
-        final int minutesCarry = (minutes + secondsCarry) / 60;
-        minutes = (minutes + secondsCarry) % 60;
-        hours = (hours + minutesCarry) % 24;
+        final int secondsCarry = seconds / SECONDS_IN_A_MINUTE;
+        seconds = seconds % SECONDS_IN_A_MINUTE;
+        final int minutesCarry = (minutes + secondsCarry) / MINUTES_IN_AN_HOUR;
+        minutes = (minutes + secondsCarry) % MINUTES_IN_AN_HOUR;
+        hours = (hours + minutesCarry) % HOURS_IN_A_DAY;
     }
 
     public Time(final int hours, final int minutes, final int seconds) {
@@ -37,7 +42,7 @@ public class Time implements Comparable<Time> {
     }
 
     public int toSeconds() {
-        return seconds + minutes * 60 + hours * 3600;
+        return seconds + minutes * SECONDS_IN_A_MINUTE + hours * SECONDS_IN_AN_HOUR;
     }
 
     public int getHours() {
