@@ -7,9 +7,11 @@ public class TestEvent extends Event {
         super(time);
     }
 
+    @Override
     public void handle() {
     }
 
+    @Override
     public String toString() {
         return super.getTime().toString();
     }
