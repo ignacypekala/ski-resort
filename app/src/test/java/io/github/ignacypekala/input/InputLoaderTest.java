@@ -26,7 +26,7 @@ public class InputLoaderTest {
 
     @Test
     void vertex() {
-        Vertex vertex = loader.loadVertex("102 6 9", 0);
+        Vertex vertex = loader.loadVertex(new Scanner("102 6 9"), 0);
         assertEquals(102, vertex.getAltitude());
         Coordinates position = vertex.getPosition();
         assertEquals(6, position.getX());
@@ -36,7 +36,7 @@ public class InputLoaderTest {
 
     @Test
     void vertexAccessible() {
-        Vertex vertex = loader.loadVertex("2147483647 -2147483648 0 s", 0);
+        Vertex vertex = loader.loadVertex(new Scanner("2147483647 -2147483648 0 s"), 0);
         assertEquals(2147483647, vertex.getAltitude());
         Coordinates position = vertex.getPosition();
         assertEquals(-2147483648, position.getX());
@@ -51,7 +51,7 @@ public class InputLoaderTest {
         Vertex[] vertices = new Vertex[] { start, end };
         SimulationContext context = new SimulationContext(new SimulationClock(), new io.github.ignacypekala.event.EventQueue());
 
-        Lift lift = loader.loadLift("0 1 300 3 600", 42, vertices, context);
+        Lift lift = loader.loadLift(new Scanner("0 1 300 3 600"), 42, vertices, context);
 
         assertEquals(42, lift.getIdentifier());
         assertSame(start, lift.getStart());
@@ -67,7 +67,7 @@ public class InputLoaderTest {
         Vertex v1 = new Vertex(1, 0, new Coordinates(1, 0));
         Vertex[] vertices = new Vertex[] { v0, v1 };
 
-        Slope slope = loader.loadSlope("0 1 8 60 0.5 0.75", 7, vertices);
+        Slope slope = loader.loadSlope(new Scanner("0 1 8 60 0.5 0.75"), 7, vertices);
         assertEquals(7, slope.getIdentifier());
         assertSame(v0, slope.getStart());
         assertSame(v1, slope.getEnd());
@@ -78,7 +78,7 @@ public class InputLoaderTest {
 
     @Test
     void time() {
-        Time time = loader.loadTime("1:2:3");
+        Time time = loader.loadTime(new Scanner("1:2:3"));
         assertEquals(1, time.getHours());
         assertEquals(2, time.getMinutes());
         assertEquals(3, time.getSeconds());
@@ -86,7 +86,7 @@ public class InputLoaderTest {
 
     @Test
     void timeNormalizesOverflow() {
-        Time time = loader.loadTime("0:0:3661");
+        Time time = loader.loadTime(new Scanner("0:0:3661"));
         assertEquals(1, time.getHours());
         assertEquals(1, time.getMinutes());
         assertEquals(1, time.getSeconds());

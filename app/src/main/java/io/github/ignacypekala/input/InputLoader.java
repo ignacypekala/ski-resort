@@ -12,10 +12,12 @@ import io.github.ignacypekala.lift.*;
 import io.github.ignacypekala.simulation.*;
 
 public class InputLoader {
+    private final static Locale LOCALE = Locale.ENGLISH;
     private final Scanner scanner;
     private int nextSkierIdentifier;
 
     public InputLoader(final Scanner scanner) {
+        scanner.useLocale(LOCALE);
         this.scanner = scanner;
     }
 
@@ -29,19 +31,19 @@ public class InputLoader {
         final int vertexCount = Integer.parseInt(getLine(scanner));
         final Vertex[] vertices = new Vertex[vertexCount];
         for (int i = 0; i < vertexCount; i++) {
-            vertices[i] = loadVertex(getLine(scanner), i);
+            vertices[i] = loadVertex(scanner, i);
         }
 
         final int liftCount = Integer.parseInt(getLine(scanner));
         final Lift[] lifts = new Lift[liftCount];
         for (int i = 0; i < liftCount; i++) {
-            lifts[i] = loadLift(getLine(scanner), i, vertices, context);
+            lifts[i] = loadLift(scanner, i, vertices, context);
         }
 
         final int slopeCount = Integer.parseInt(getLine(scanner));
         final Slope[] slopes = new Slope[slopeCount];
         for (int i = 0; i < slopeCount; i++) {
-            slopes[i] = loadSlope(scanner.nextLine(), i, vertices);
+            slopes[i] = loadSlope(scanner, i, vertices);
         }
 
         final int skierGroupCount = Integer.parseInt(getLine(scanner));
@@ -53,9 +55,8 @@ public class InputLoader {
         return new InputData(resort, clock, eventQueue);
     }
 
-    Vertex loadVertex(final String line, final int identifier) {
-        final Scanner lineScanner = new Scanner(line);
-        lineScanner.useLocale(Locale.ENGLISH);
+    Vertex loadVertex(final Scanner scanner, final int identifier) {
+        final Scanner lineScanner = scanLine(scanner);
 
         final int altitude = lineScanner.nextInt();
         final Coordinates position = new Coordinates(
@@ -75,9 +76,8 @@ public class InputLoader {
         return vertex;
     }
 
-    Lift loadLift(final String line, final int identifier, final Vertex[] vertices, final SimulationContext context) {
-        final Scanner lineScanner = new Scanner(line);
-        lineScanner.useLocale(Locale.ENGLISH);
+    Lift loadLift(final Scanner scanner, final int identifier, final Vertex[] vertices, final SimulationContext context) {
+        final Scanner lineScanner = scanLine(scanner);
 
         final Vertex start = vertices[lineScanner.nextInt()];
         final Vertex end = vertices[lineScanner.nextInt()];
@@ -98,9 +98,8 @@ public class InputLoader {
         return lift;
     }
 
-    Slope loadSlope(final String line, final int identifier, final Vertex[] vertices) {
-        final Scanner lineScanner = new Scanner(line);
-        lineScanner.useLocale(Locale.ENGLISH);
+    Slope loadSlope(final Scanner scanner, final int identifier, final Vertex[] vertices) {
+        final Scanner lineScanner = scanLine(scanner);
 
         final Vertex start = vertices[lineScanner.nextInt()];
         final Vertex end = vertices[lineScanner.nextInt()];
@@ -122,10 +121,8 @@ public class InputLoader {
         return slope;
     }
 
-    Time loadTime(final String timeString) {
-        final Scanner timeScanner = new Scanner(timeString);
-        timeScanner.useLocale(Locale.ENGLISH);
-        timeScanner.useDelimiter(":");
+    Time loadTime(final Scanner scanner) {
+        final Scanner timeScanner = scanNext(scanner, ":");
 
         final int hours = timeScanner.nextInt();
         final int minutes = timeScanner.nextInt();
@@ -136,8 +133,7 @@ public class InputLoader {
     }
 
     Skier[] loadSkierGroup(final Scanner scanner, final Vertex[] vertices, final SimulationContext context, final Reporter reporter) {
-        Scanner line = new Scanner(getLine(scanner));
-        line.useLocale(Locale.ENGLISH);
+        Scanner line = scanLine(scanner);
 
         final int skierCount = line.nextInt();
         final int proficiency = line.nextInt();
@@ -145,18 +141,16 @@ public class InputLoader {
         final boolean tracked = line.hasNext() && line.next().charAt(0) == 's';
 
         line.close();
-        line = new Scanner(getLine(scanner));
-        line.useLocale(Locale.ENGLISH);
+        line = scanLine(scanner);
 
         final double difficultyWeight = line.nextDouble();
         final double surfaceWeight = line.nextDouble();
 
         line.close();
-        line = new Scanner(getLine(scanner));
-        line.useLocale(Locale.ENGLISH);
+        line = scanLine(scanner);
 
         final Vertex startPoint = vertices[line.nextInt()];
-        final Time firstStartTime = loadTime(line.next());
+        final Time firstStartTime = loadTime(line);
 
         int interval = 0;
         if (skierCount > 1) {
@@ -201,5 +195,24 @@ public class InputLoader {
             line = scanner.nextLine().trim();
         }
         return line;
+    }
+
+    private Scanner scanLine(final Scanner scanner) {
+        Scanner newScanner = new Scanner(getLine(scanner));
+        newScanner.useLocale(LOCALE);
+        return newScanner;
+    }
+
+    // Only used in scanNext(), present for parity with scanLine().
+    private Scanner scanNext(final Scanner scanner) {
+        Scanner newScanner = new Scanner(scanner.next());
+        newScanner.useLocale(LOCALE);
+        return newScanner;
+    }
+
+    private Scanner scanNext(final Scanner scanner, final String delimiter) {
+        Scanner newScanner = scanNext(scanner);
+        newScanner.useDelimiter(delimiter);
+        return newScanner;
     }
 }
