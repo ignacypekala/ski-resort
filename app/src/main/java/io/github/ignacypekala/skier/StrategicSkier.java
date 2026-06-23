@@ -57,7 +57,7 @@ public abstract class StrategicSkier extends Skier {
                     bestSlope = slope;
                     bestSlopePath = reconstructPath(traversalRegistry, bestSlope.getStart());
                     bestSlopePath.add(slope);
-                };
+                }
             }
 
             for (final Edge edge : vertex.getEdges()) {
