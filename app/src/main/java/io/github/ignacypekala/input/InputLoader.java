@@ -65,12 +65,7 @@ public class InputLoader {
 
         final boolean accessible = lineScanner.hasNext() && lineScanner.next().charAt(0) == 's';
 
-        Vertex vertex;
-        if (accessible) {
-            vertex = new VertexAccessible(identifier, altitude, position);
-        } else {
-            vertex = new Vertex(identifier, altitude, position);
-        }
+        Vertex vertex = new Vertex(identifier, altitude, position, accessible);
 
         lineScanner.close();
         return vertex;

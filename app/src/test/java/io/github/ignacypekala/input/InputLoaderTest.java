@@ -31,7 +31,7 @@ public class InputLoaderTest {
         Coordinates position = vertex.getPosition();
         assertEquals(6, position.getX());
         assertEquals(9, position.getY());
-        assertFalse(vertex instanceof VertexAccessible);
+        assertFalse(vertex.getAccessible());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class InputLoaderTest {
         Coordinates position = vertex.getPosition();
         assertEquals(-2147483648, position.getX());
         assertEquals(0, position.getY());
-        assertTrue(vertex instanceof VertexAccessible);
+        assertTrue(vertex.getAccessible());
     }
 
     @Test
