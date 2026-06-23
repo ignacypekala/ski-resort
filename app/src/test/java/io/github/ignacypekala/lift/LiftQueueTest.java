@@ -14,7 +14,7 @@ public class LiftQueueTest {
     private SimulationContext context = new Simulation().getContext();
     private Time startTime = context.clock().getStartTime();
     @Test
-    void popEmpty() {
+    void popEmptyShouldThrow() {
         LiftQueue queue = new LiftQueue();
         assertThrows(IllegalStateException.class, () -> queue.dequeue());
     }
