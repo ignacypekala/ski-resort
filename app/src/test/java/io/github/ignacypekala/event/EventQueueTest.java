@@ -17,9 +17,9 @@ public class EventQueueTest {
         Event c = new TestEvent(new Time(15, 0, 2));
         eq.publish(c);
 
-        assertSame(a, eq.poll());
-        assertSame(b, eq.poll());
-        assertSame(c, eq.poll());
+        assertArrayEquals(
+                new Event[] { a, b, c },
+                new Event[] { eq.poll(), eq.poll(), eq.poll() });
     }
 
     @Test
@@ -33,9 +33,10 @@ public class EventQueueTest {
         Event c = new TestEvent(new Time(15, 0, 0));
         eq.publish(c);
 
-        assertSame(c, eq.poll());
-        assertSame(b, eq.poll());
-        assertSame(a, eq.poll());
+
+        assertArrayEquals(
+                new Event[] { c, b, a },
+                new Event[] { eq.poll(), eq.poll(), eq.poll() });
     }
 
     @Test
@@ -49,9 +50,10 @@ public class EventQueueTest {
         Event c = new TestEvent(new Time(15, 0, 1));
         eq.publish(c);
 
-        assertSame(a, eq.poll());
-        assertSame(c, eq.poll());
-        assertSame(b, eq.poll());
+        assertArrayEquals(
+                new Event[] { a, c, b },
+                new Event[] { eq.poll(), eq.poll(), eq.poll() });
+
     }
 
     @Test
@@ -83,7 +85,7 @@ public class EventQueueTest {
     }
 
     @Test
-    void simulatenous() {
+    void simultaneous() {
         EventQueue eq = new EventQueue();
         Event a = new TestEvent(new Time(9, 0, 0));
         Event b = new TestEvent(new Time(9, 0, 0));
