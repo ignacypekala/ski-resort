@@ -1,8 +1,7 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
-import io.github.ignacypekala.simulation.Clock;
-import io.github.ignacypekala.simulation.Simulation;
+import io.github.ignacypekala.simulation.SimulationClock;
 import io.github.ignacypekala.simulation.SimulationContext;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.utils.Coordinates;
@@ -16,15 +15,15 @@ import java.util.NoSuchElementException;
 
 public class LiftQueueTest {
     private SimulationContext context;
-    private Clock clock;
+    private SimulationClock clock;
     private Time startTime;
     private static SkierGroupProfile groupProfile = new SkierGroupProfile(
                 new Vertex(0, 0, new Coordinates(0, 0)), 0, 0, 0, 0);
 
     @BeforeEach
     void initializeEnvironment() {
-        context = new Simulation().getContext();
-        clock = context.clock();
+        clock = new SimulationClock();
+        context = new SimulationContext(clock, event -> {});
         startTime = clock.getStartTime();
     }
 
@@ -71,6 +70,27 @@ public class LiftQueueTest {
         assertTrue(queue.empty());
 
         assertEquals(4, queue.maxSize());
+    }
+
+    @Test
+    void averageSize() {
+        LiftQueue queue = new LiftQueue(clock);
+        Skier[] skiers = new Skier[5];
+        for (int i = 0; i < 5; i++) {
+            skiers[i] = new LocalSkier(i, groupProfile, startTime, context);
+        }
+
+        queue.enqueue(skiers[0]);
+
+        clock.setTime(Time.secondsLater(startTime, 10));
+        queue.enqueue(skiers[1]);
+
+        clock.setTime(Time.secondsLater(startTime, 30));
+        queue.dequeue();
+
+        clock.setTime(Time.secondsLater(startTime, 60));
+
+        assertEquals(80.0 / 60.0, queue.averageSize(), 1e-9);
     }
 
     @Test
