@@ -1,6 +1,5 @@
 package io.github.ignacypekala.skier;
 
-import java.util.Comparator;
 import java.util.HashMap;
 
 import io.github.ignacypekala.Slope;
