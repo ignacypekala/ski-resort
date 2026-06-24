@@ -10,13 +10,15 @@ import io.github.ignacypekala.utils.Time;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.NoSuchElementException;
+
 public class LiftQueueTest {
     private SimulationContext context = new Simulation().getContext();
     private Time startTime = context.clock().getStartTime();
     @Test
     void popEmptyShouldThrow() {
         LiftQueue queue = new LiftQueue();
-        assertThrows(IllegalStateException.class, () -> queue.dequeue());
+        assertThrows(NoSuchElementException.class, () -> queue.dequeue());
     }
 
     @Test

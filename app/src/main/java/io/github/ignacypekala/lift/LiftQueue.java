@@ -1,72 +1,30 @@
 package io.github.ignacypekala.lift;
 
+import java.util.ArrayDeque;
+
 import io.github.ignacypekala.skier.*;
 
 public class LiftQueue {
     private static final int INITIAL_SIZE = 10;
-    private static final int REALLOC_MULTIPLIER = 2;
-    private Skier[] queue;
-    private int start;
-    private int length;
+    private ArrayDeque<Skier> queue;
 
     public LiftQueue() {
-        queue = new Skier[INITIAL_SIZE];
-        start = 0;
-        length = 0;
-    }
-
-    private int getStartOffset() {
-        return queue.length - start;
-    }
-
-    private int getLastIndex() {
-        return (start + length - 1) % queue.length;
-    }
-
-    private void realloc(final int newLength) {
-        final Skier[] newQueue = new Skier[newLength];
-
-        if (start + length > queue.length) {
-            System.arraycopy(
-                    queue, start,
-                    newQueue, 0,
-                    getStartOffset());
-            System.arraycopy(
-                    queue, 0,
-                    newQueue, getStartOffset(),
-                    getLastIndex() + 1);
-        } else {
-            System.arraycopy(queue, start, newQueue, 0, length);
-        }
-
-        queue = newQueue;
-        start = 0;
+        queue = new ArrayDeque<>(INITIAL_SIZE);
     }
 
     public void enqueue(final Skier skier) {
-        if (length == queue.length) {
-            realloc(length * REALLOC_MULTIPLIER);
-        }
-        queue[(getLastIndex() + 1) % queue.length] = skier;
-        length++;
+        queue.addLast(skier);
     }
 
     public Skier peek() {
-        if (length == 0) {
-            throw new IllegalStateException("The queue is empty");
-        }
-        return queue[start];
+        return queue.getFirst();
     }
 
     public void dequeue() {
-        if (length == 0) {
-            throw new IllegalStateException("The queue is empty");
-        }
-        start = (start + 1) % queue.length;
-        length--;
+        queue.removeFirst();
     }
 
     public boolean empty() {
-        return length == 0;
+        return queue.isEmpty();
     }
 }
