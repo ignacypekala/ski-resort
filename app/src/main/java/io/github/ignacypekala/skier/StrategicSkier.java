@@ -10,7 +10,7 @@ import io.github.ignacypekala.utils.*;
 public abstract class StrategicSkier extends Skier {
     private Queue<Edge> plan;
 
-    public StrategicSkier(
+    protected StrategicSkier(
             final int identifier,
             final SkierGroupProfile groupProfile,
             final Time startTime,
