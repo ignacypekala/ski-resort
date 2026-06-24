@@ -4,7 +4,7 @@ import io.github.ignacypekala.utils.Time;
 
 public class SimulationClock implements Clock {
     private final Time START_TIME = new Time(9, 0, 0);
-    private final Time END_TIME = new Time(15, 0, 0);
+    private final Time END_TIME = new Time(14, 59, 59);
     private Time time;
 
     public SimulationClock() {
