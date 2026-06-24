@@ -54,9 +54,9 @@ public class LiftTest {
         lift.addStartEdge();
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
-        assertEquals(1, lift.getDepartureInterval());
-        assertEquals(2, lift.getPassengerCapacity());
-        assertEquals(3, lift.getRideTime());
+        assertEquals(LIFT_DEPARTURE_INTERVAL, lift.getDepartureInterval());
+        assertEquals(LIFT_CAPACITY, lift.getPassengerCapacity());
+        assertEquals(LIFT_RIDE_TIME, lift.getRideTime());
         assertTrue(
                 Arrays.asList(a.getLifts()).contains(lift),
                 "Lift hasn't been added to a's lift array.");
@@ -118,15 +118,13 @@ public class LiftTest {
 
     @Test
     void aftermath() {
-        checkLiftStarts(lift);
-
         Skier skier = new SnitchSkier(
                 0,
                 groupProfile,
                 this::startHookConsumer,
                 this::finishHookConsumer);
 
-        checkCarrierArrives(lift, new Skier[3], 0);
+        checkLiftStarts(lift);
 
         // Create a loop so that the end vertex has an outgoing edge.
         a.addLift(lift);
@@ -134,16 +132,22 @@ public class LiftTest {
 
         checkSkierArrives(skier);
 
-        checkLiftDeparts(lift);
+        checkCarrierArrives(lift, new Skier[3], 0);
+
+        Event departureEvent = eventBroker.poll();
+        assertEquals(new LiftDeparture(clock, lift), departureEvent);
 
         assertFalse(startHookFlag, "The skier has started their ride prematurely.");
-        eventBroker.poll().handle();
+        departureEvent.handle();
         assertTrue(startHookFlag, "The skier hasn't started their ride.");
 
         // Check if the correct passengers got a ride
-        event = eventBroker.poll();
-        assertTrue(event instanceof LiftArrival);
-        LiftArrival arrival = (LiftArrival) event;
+        Event arrivalEvent = eventBroker.poll();
+        assertEquals(
+            new LiftArrival(new Carrier(new Skier[]{skier, null, null}, 1, lift), clock),
+            arrivalEvent
+        );
+        LiftArrival arrival = (LiftArrival) arrivalEvent;
 
         assertFalse(finishHookFlag, "The skier has finished their ride prematurely.");
         arrival.handle();
