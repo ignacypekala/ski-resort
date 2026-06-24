@@ -126,4 +126,11 @@ public class Lift extends Edge {
         return passengerCapacity;
     }
 
+    public int maxQueueSize() {
+        return queue.maxSize();
+    }
+
+    public double averageQueueSize() {
+        return queue.averageSize();
+    }
 }
