@@ -82,20 +82,25 @@ public class LiftTest {
     @Test
     void fullLoad() {
         a.addLift(lift);
-        int skierCount = LIFT_CAPACITY;
+        int skierCount = 4;
         Skier[] skiers = createSkiers(skierCount);
 
         checkLiftStarts(lift);
 
-        for (int i = 0; i < skierCount; i++) {
-            checkSkierArrives(skiers[i]);
-        }
+        checkSkierArrives(skiers[0]);
+        checkSkierArrives(skiers[1]);
+        checkSkierArrives(skiers[2]);
+        checkSkierArrives(skiers[3]);
 
         checkCarrierArrives(lift, new Skier[LIFT_CAPACITY], 0);
 
         checkLiftDeparts(lift);
         checkCarrierArrives(lift, new Skier[]{skiers[0], skiers[1], skiers[2]}, 3);
-        // TODO: Add counter check
+        assertEquals(3, lift.getRideCount());
+
+        checkLiftDeparts(lift);
+        checkCarrierArrives(lift, new Skier[]{skiers[3], null, null}, 1);
+        assertEquals(4, lift.getRideCount());
     }
 
     @Test
@@ -113,7 +118,8 @@ public class LiftTest {
 
         checkLiftDeparts(lift);
         checkCarrierArrives(lift, new Skier[]{skiers[0], skiers[1], null}, 2);
-        // TODO: Add counter check
+
+        assertEquals(2, lift.getRideCount());
     }
 
     @Test
