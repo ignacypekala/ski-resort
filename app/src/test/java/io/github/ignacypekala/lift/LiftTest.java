@@ -18,10 +18,14 @@ public class LiftTest {
     private static Vertex a;
     private static Vertex b;
     private static SimulationContext simulationContext;
-    private static Time startTime;
     private static Broker eventBroker;
     private static Clock clock;
     private static SkierGroupProfile groupProfile;
+
+    private static final int LIFT_CAPACITY = 3;
+    private static final int LIFT_RIDE_TIME = 1;
+    private static final int LIFT_DEPARTURE_INTERVAL = 2;
+    private static Lift lift;
 
     @BeforeEach
     void initializeEnvironment() {
@@ -32,13 +36,21 @@ public class LiftTest {
         simulationContext = simulation.getContext();
         clock = simulationContext.clock();
         eventBroker = simulation.getEventBroker();
-        startTime = simulationContext.clock().getStartTime();
+
         groupProfile = new SkierGroupProfile(a, 10, 0, 1.0, 0.0);
+
+        lift = new Lift(
+                0,
+                a,
+                b,
+                LIFT_RIDE_TIME,
+                LIFT_DEPARTURE_INTERVAL,
+                LIFT_CAPACITY,
+                simulationContext);
     }
 
     @Test
     void construct() {
-        Lift lift = new Lift(0, a, b, 3, 1, 2, simulationContext);
         lift.addStartEdge();
         assertSame(a, lift.getStart());
         assertSame(b, lift.getEnd());
@@ -56,165 +68,76 @@ public class LiftTest {
         Slope badSlope = new Slope(1, b, a, 0, 0, 0, 0);
         b.addSlope(goodSlope);
         b.addSlope(badSlope);
-        Skier skier = new LocalSkier(
-                0,
-                groupProfile,
-                simulationContext.clock().getStartTime(),
-                simulationContext);
-        Lift lift = new Lift(0, a, b, 0, 0, 0, simulationContext);
-        
+        Skier skier = createSkiers(1)[0];
         assertEquals(goodSlope.calculateAppeal(skier), lift.calculateAppeal(skier));
     }
 
     @Test
     void dryRun() {
-        assertFalse(eventBroker.hasEvents());
-        Lift lift = new Lift(0, a, b, 1 * 60, 2 * 60, 3, simulationContext);
-        assertTrue(eventBroker.hasEvents());
-
-        // Check if the lift has scheduled its startup
-        Event event = eventBroker.poll();
-        assertEquals(
-            new LiftStart(lift, clock),
-            event
-        );
-
-        assertFalse(eventBroker.hasEvents());
-        event.handle();
-        assertTrue(eventBroker.hasEvents());
-
-        // Check if the first departed carrier has arrived
-        event = eventBroker.poll();
-        assertTrue(eventBroker.hasEvents());
-        assertEquals(
-            new LiftArrival(new Carrier(new Skier[3], 0, lift), clock),
-            event
-        );
-
-        // Check if the next lift depart was scheduled
-        event = eventBroker.poll();
-        assertEquals(new LiftDeparture(clock, lift), event);
-
-        assertFalse(eventBroker.hasEvents());
+        checkLiftStarts(lift);
+        checkCarrierArrives(lift, new Skier[3], 0);
+        checkLiftDeparts(lift);
     }
 
     @Test
     void fullLoad() {
-        int liftCapacity = 3;
-        // Longer departureInterval than rideTime so that the first carrier arrives
-        // before the 2nd depart.
-        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
         a.addLift(lift);
+        int skierCount = LIFT_CAPACITY;
+        Skier[] skiers = createSkiers(skierCount);
 
-        Skier[] skiers = new Skier[5];
-        for (int i = 0; i < 5; i++) {
-            Skier skier = new LocalSkier(
-                    i,
-                    groupProfile,
-                    simulationContext.clock().getStartTime(),
-                    simulationContext);
-            skiers[i] = skier;
+        checkLiftStarts(lift);
+
+        for (int i = 0; i < skierCount; i++) {
+            checkSkierArrives(skiers[i]);
         }
 
-        Event event = eventBroker.poll();
-        assertEquals(new LiftStart(lift, clock), event);
-        event.handle();
+        checkCarrierArrives(lift, new Skier[LIFT_CAPACITY], 0);
 
-        for (int i = 0; i < 5; i++) {
-            event = eventBroker.poll();
-            assertEquals(new DayStart(skiers[i]), event);
-            event.handle();
-        }
-
-        // The initial empty carrier
-        event = eventBroker.poll();
-        assertEquals(
-                new LiftArrival(new Carrier(new Skier[liftCapacity], 0, lift), clock),
-                event);
-        event.handle();
-
-        // First non-empty ride
-        event = eventBroker.poll();
-        assertEquals(new LiftDeparture(clock, lift), event);
-        event.handle();
-
-        event = eventBroker.poll();
-        Skier[] passengers = Arrays.copyOfRange(skiers, 0, liftCapacity);
-        assertEquals(new LiftArrival(new Carrier(passengers, 3, lift), clock), event);
-
-        // Second ride - 2/3 passengers
-        event = eventBroker.poll();
-        assertEquals(new LiftDeparture(clock, lift), event);
-        event.handle();
-
-        event = eventBroker.poll();
-        passengers = new Skier[3];
-        System.arraycopy(skiers, 3, passengers, 0, 2);
-        assertEquals(new LiftArrival(new Carrier(passengers, 2, lift), clock), event);
+        checkLiftDeparts(lift);
+        checkCarrierArrives(lift, new Skier[]{skiers[0], skiers[1], skiers[2]}, 3);
+        // TODO: Add counter check
     }
 
     @Test
     void partialLoad() {
-        int liftCapacity = 3;
-        Lift lift = new Lift(0, a, b, 1, 2, liftCapacity, simulationContext);
         a.addLift(lift);
         b.addLift(lift);
-        Skier skier = new LocalSkier(0, groupProfile, startTime, simulationContext);
 
-        Event event = eventBroker.poll();
-        assertEquals(new LiftStart(lift, clock), event);
-        event.handle();
+        checkLiftStarts(lift);
 
-        event = eventBroker.poll();
-        assertEquals(new DayStart(skier), event);
-        event.handle();
+        Skier[] skiers = createSkiers(2);
+        checkSkierArrives(skiers[0]);
+        checkSkierArrives(skiers[1]);
 
-        event = eventBroker.poll();
-        assertEquals(
-                new LiftArrival(new Carrier(new Skier[3], 0, lift), clock),
-                event);
-        event.handle();
+        checkCarrierArrives(lift, new Skier[3], 0);
 
-        event = eventBroker.poll();
-        assertEquals(new LiftDeparture(clock, lift), event);
-        event.handle();
-
-        event = eventBroker.poll();
-        event.handle();
-
-        // Check if correct passengers got a lift
-        Skier[] passengers = new Skier[liftCapacity];
-        passengers[0] = skier;
-        assertEquals(new LiftArrival(
-            new Carrier(passengers, 1, lift),
-            clock
-        ), event);
-
+        checkLiftDeparts(lift);
+        checkCarrierArrives(lift, new Skier[]{skiers[0], skiers[1], null}, 2);
+        // TODO: Add counter check
     }
 
     @Test
     void aftermath() {
+        checkLiftStarts(lift);
+
         Skier skier = new SnitchSkier(
                 0,
                 groupProfile,
                 this::startHookConsumer,
                 this::finishHookConsumer);
 
-        Lift lift = new Lift(0, a, b, 1, 2, 1, simulationContext);
+        checkCarrierArrives(lift, new Skier[3], 0);
 
         // Create a loop so that the end vertex has an outgoing edge.
         a.addLift(lift);
         b.addLift(lift);
 
-        Event event = eventBroker.poll();
-        assertEquals(new DayStart(skier), event);
-        event.handle();
+        checkSkierArrives(skier);
 
-        event = eventBroker.poll();
-        assertEquals(new LiftStart(lift, clock), event);
+        checkLiftDeparts(lift);
 
         assertFalse(startHookFlag, "The skier has started their ride prematurely.");
-        event.handle();
+        eventBroker.poll().handle();
         assertTrue(startHookFlag, "The skier hasn't started their ride.");
 
         // Check if the correct passengers got a ride
@@ -270,4 +193,43 @@ public class LiftTest {
         }
     }
 
+    private Skier[] createSkiers(int n) {
+        Skier[] skiers = new Skier[n];
+        for (int i = 0; i < n; i++) {
+            skiers[i] = new LocalSkier(i, groupProfile, clock.getStartTime(), simulationContext);
+        }
+        return skiers;
+    }
+
+    private void checkSkierArrives(Skier skier) {
+        Event event = eventBroker.poll();
+        assertEquals(new DayStart(skier), event);
+        event.handle();
+    }
+
+    private void checkLiftStarts(Lift lift) {
+        Event event = eventBroker.poll();
+        assertEquals(
+            new LiftStart(lift, clock),
+            event
+        );
+        event.handle();
+    }
+
+    // Doesn't handle the event as it's currently outside of scope of the tests and
+    // it would pollute the event queue.
+    private void checkCarrierArrives(Lift lift, Skier[] passengers, int passengerCount) {
+        Event event = eventBroker.poll();
+        assertTrue(eventBroker.hasEvents());
+        assertEquals(
+            new LiftArrival(new Carrier(passengers, passengerCount, lift), clock),
+            event
+        );
+    }
+
+    private void checkLiftDeparts(Lift lift) {
+        Event event = eventBroker.poll();
+        assertEquals(new LiftDeparture(clock, lift), event);
+        event.handle();
+    }
 }

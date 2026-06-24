@@ -14,6 +14,10 @@ Use the following command to run:
 ./gradlew test
 ```
 
+### Required tests
+The assignment-mandated tests are under:
+    - LiftTest.fullLoad
+
 ## Structure
 - main project logic:
     ```
