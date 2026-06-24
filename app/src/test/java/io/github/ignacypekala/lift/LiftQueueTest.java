@@ -1,37 +1,43 @@
 package io.github.ignacypekala.lift;
 
 import io.github.ignacypekala.*;
+import io.github.ignacypekala.simulation.Clock;
 import io.github.ignacypekala.simulation.Simulation;
 import io.github.ignacypekala.simulation.SimulationContext;
 import io.github.ignacypekala.skier.*;
 import io.github.ignacypekala.utils.Coordinates;
 import io.github.ignacypekala.utils.Time;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.NoSuchElementException;
 
 public class LiftQueueTest {
-    private SimulationContext context = new Simulation().getContext();
-    private Time startTime = context.clock().getStartTime();
+    private SimulationContext context;
+    private Clock clock;
+    private Time startTime;
+    private static SkierGroupProfile groupProfile = new SkierGroupProfile(
+                new Vertex(0, 0, new Coordinates(0, 0)), 0, 0, 0, 0);
+
+    @BeforeEach
+    void initializeEnvironment() {
+        context = new Simulation().getContext();
+        clock = context.clock();
+        startTime = clock.getStartTime();
+    }
+
     @Test
     void popEmptyShouldThrow() {
-        LiftQueue queue = new LiftQueue();
+        LiftQueue queue = new LiftQueue(clock);
         assertThrows(NoSuchElementException.class, () -> queue.dequeue());
     }
 
     @Test
     void simple() {
-        LiftQueue queue = new LiftQueue();
+        LiftQueue queue = new LiftQueue(clock);
         Skier[] skiers = new Skier[5];
-        SkierGroupProfile groupProfile = new SkierGroupProfile(
-                new Vertex(0, 0, new Coordinates(0, 0)),
-                0,
-                0,
-                0,
-                0);
-
         for (int i = 0; i < 5; i++) {
             skiers[i] = new LocalSkier(
                     i,
@@ -69,19 +75,19 @@ public class LiftQueueTest {
 
     @Test
     void arbitrary() {
-        LiftQueue queue = new LiftQueue();
+        LiftQueue queue = new LiftQueue(clock);
         assertNotNull(queue, "Queue shouldn't be null.");
         assertTrue(queue.empty(), "Queue should be empty.");
 
-        Skier[] sportsmen = new Skier[42];
+        Skier[] skiers = new Skier[42];
         int j = 0;
         SkierGroupProfile groupProfile = new SkierGroupProfile(
                 new Vertex(0, 0, new Coordinates(0, 0)), 0, 0, 0, 0);
         for (int i = 0; i < 42; i++) {
-            Skier sportsman = new LocalSkier(i, groupProfile, startTime, context);
-            sportsmen[i] = sportsman;
-            queue.enqueue(sportsman);
-            assertSame(queue.peek(), sportsmen[j]);
+            Skier skeir = new LocalSkier(i, groupProfile, startTime, context);
+            skiers[i] = skeir;
+            queue.enqueue(skeir);
+            assertSame(queue.peek(), skiers[j]);
             if (i % 3 == 0) {
                 assertDoesNotThrow(() -> queue.dequeue());
                 j++;

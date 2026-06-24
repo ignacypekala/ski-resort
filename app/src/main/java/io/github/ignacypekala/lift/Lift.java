@@ -22,13 +22,13 @@ public class Lift extends Edge {
             final int passengerCapacity,
             final SimulationContext simulationContext) {
         super(identifier, start, end, rideTime);
-
         this.departureInterval = departureInterval;
         this.passengerCapacity = passengerCapacity;
-        queue = new LiftQueue();
 
         this.eventPublisher = simulationContext.publisher();
         this.clock = simulationContext.clock();
+
+        queue = new LiftQueue(clock);
 
         eventPublisher.publish(new LiftStart(this, clock));
     }

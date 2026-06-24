@@ -34,5 +34,4 @@ public class SimulationClock implements Clock {
     public void setTime(final Time newTime) {
         time = newTime;
     }
-
 }

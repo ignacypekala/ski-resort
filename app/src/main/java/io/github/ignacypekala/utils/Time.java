@@ -57,6 +57,10 @@ public class Time implements Comparable<Time> {
         return seconds;
     }
 
+    public static int secondsBetween(final Time end, final Time start) {
+        return end.toSeconds() - start.toSeconds();
+    }
+
     private static String paddedInt(final int number) {
         return String.format("%02d", number);
     }
