@@ -63,6 +63,8 @@ public class LiftQueueTest {
         assertDoesNotThrow(() -> queue.dequeue());
         assertDoesNotThrow(() -> queue.dequeue());
         assertTrue(queue.empty());
+
+        assertEquals(4, queue.maxSize());
     }
 
     @Test
