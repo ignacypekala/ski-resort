@@ -36,6 +36,8 @@ public abstract class StrategicSkier extends Skier {
         return plan.poll();
     }
 
+    private record TraversalRegistryEntry(Edge enteredVia, int depth) {};
+
     // Creates a new plan based on the subclass-defined partial ordering.
     private Queue<Edge> createNewPlan() {
         if (getLocation() == null) {
@@ -44,19 +46,26 @@ public abstract class StrategicSkier extends Skier {
             );
         }
 
-        Slope bestSlope = null;
-        Queue<Edge> bestSlopePath = new ArrayDeque<>();
-        final HashMap<Vertex, Edge> traversalRegistry = new HashMap<>();
+        RouteOption bestRouteOption = null;
+        Queue<Edge> bestSlopePath = null;
+        final HashMap<Vertex, TraversalRegistryEntry> traversalRegistry = new HashMap<>();
         final Queue<Vertex> bfsQueue = new ArrayDeque<>();
 
         bfsQueue.add(getLocation());
         while (!bfsQueue.isEmpty()) {
             final Vertex vertex = bfsQueue.remove();
-            for (final Slope slope : vertex.getSlopes()) {
-                if (bestSlope == null || compareSlopes(slope, bestSlope) > 0) {
-                    bestSlope = slope;
-                    bestSlopePath = reconstructPath(traversalRegistry, bestSlope.getStart());
-                    bestSlopePath.add(slope);
+            TraversalRegistryEntry vertexEntry = traversalRegistry.get(vertex);
+            int depth = vertexEntry.depth();
+
+            for (final Slope contender : vertex.getSlopes()) {
+                RouteOption contenderRouteOption = new RouteOption(contender, depth + 1);
+                boolean isBetter = compareRouteOptions(contenderRouteOption, bestRouteOption) > 0;
+                if (bestRouteOption == null || isBetter) {
+                    bestRouteOption = contenderRouteOption;
+                    // The new best slope hasn't been added to the registry yet.
+                    bestSlopePath = reconstructPath(traversalRegistry, contender.getStart());
+                    bestSlopePath.add(contender);
+
                 }
             }
 
@@ -64,7 +73,7 @@ public abstract class StrategicSkier extends Skier {
                 final Vertex destination = edge.getEnd();
                 if (!traversalRegistry.containsKey(destination)) {
                     bfsQueue.add(destination);
-                    traversalRegistry.put(destination, edge);
+                    traversalRegistry.put(destination, new TraversalRegistryEntry(edge, depth + 1));
                 } 
             }
         }
@@ -72,22 +81,29 @@ public abstract class StrategicSkier extends Skier {
     };
 
     private Queue<Edge> reconstructPath(
-            final HashMap<Vertex, Edge> visited,
+            final HashMap<Vertex, TraversalRegistryEntry> traversalRegistry,
             final Vertex destination) {
-        final ArrayDeque<Edge> queue = new ArrayDeque<>();
+        TraversalRegistryEntry destinationEntry = traversalRegistry.get(destination);
+        int pathLength = destinationEntry == null ? 0 : destinationEntry.depth();
+
+        final ArrayDeque<Edge> path = new ArrayDeque<Edge>(pathLength);
+
         Vertex vertex = destination;
-        Edge edge = visited.get(vertex);
-        while (edge != null) {
-            queue.addFirst(edge);
+        TraversalRegistryEntry entry = traversalRegistry.get(vertex);
+        while (entry != null) {
+            Edge edge = entry.enteredVia();
+            path.addFirst(edge);
             vertex = edge.getStart();
-            edge = visited.get(vertex);
+            entry = traversalRegistry.get(vertex);
         }
-        return queue;
+        return path;
     }
+
+    protected record RouteOption(Slope slope, int distance) {};
 
     //  - positive if a > b
     //  - 0 if a == b
     //  - negative if a < b
-    protected abstract int compareSlopes(Slope slopeA, Slope slopeB);
+    protected abstract int compareRouteOptions(RouteOption a, RouteOption b);
 
 }

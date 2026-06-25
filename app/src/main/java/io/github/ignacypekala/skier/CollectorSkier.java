@@ -27,7 +27,11 @@ public class CollectorSkier extends StrategicSkier {
     }
 
     @Override
-    protected int compareSlopes(Slope slopeA, Slope slopeB) {
+    // Compares two slopes by: visit count, distance and appeal.
+    protected int compareRouteOptions(RouteOption a, RouteOption b) {
+        Slope slopeA = a.slope();
+        Slope slopeB = b.slope();
+
         Integer visitsA = visitCount.getOrDefault(slopeA, 0);
         Integer visitsB = visitCount.getOrDefault(slopeB, 0);
         int visitsComparison = Integer.compare(visitsA, visitsB);
@@ -36,10 +40,17 @@ public class CollectorSkier extends StrategicSkier {
             return -visitsComparison;
         }
 
+        int depthComparison = Integer.compare(a.distance(), b.distance());
+        if (depthComparison != 0) {
+            // Shorter distance = better
+            return -depthComparison;
+        }
+
         double appealA = slopeA.calculateAppeal(this);
         double appealB = slopeB.calculateAppeal(this);
         int appealComparision = Double.compare(appealA, appealB);
         if (appealComparision != 0) {
+            // Higher appeal = better
             return appealComparision;
         }
 
