@@ -29,11 +29,14 @@ public class GreedySkierTest {
 
         Slope slopeA = new Slope(101, startVertex, endVertex, 60, 1.0, 5, 0.0);
         Slope slopeB = new Slope(102, startVertex, endVertex, 60, 1.0, 10, 0.0);
-
-        assertTrue(skier.compareSlopes(slopeA, slopeB) > 0);
-        assertTrue(skier.compareSlopes(slopeB, slopeA) < 0);
-
         Slope slopeC = new Slope(103, startVertex, endVertex, 60, 1.0, 5, 0.0);
-        assertEquals(0, skier.compareSlopes(slopeA, slopeC));
+
+        StrategicSkier.RouteOption optionA = new StrategicSkier.RouteOption(slopeA, 0);
+        StrategicSkier.RouteOption optionB = new StrategicSkier.RouteOption(slopeB, 0);
+        StrategicSkier.RouteOption optionC = new StrategicSkier.RouteOption(slopeC, 0);
+
+        assertTrue(skier.compareRouteOptions(optionA, optionB) > 0);
+        assertTrue(skier.compareRouteOptions(optionB, optionA) < 0);
+        assertEquals(0, skier.compareRouteOptions(optionA, optionC));
     }
 }
